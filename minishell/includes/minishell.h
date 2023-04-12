@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <dirent.h>
+# include <unistd.h>
 
 typedef struct s_lexer
 {
@@ -41,5 +42,6 @@ void	init_lexer(t_lexer **lexer, char **words);
 void	clear_lexer(t_lexer **lexer, int n);
 //Cmds
 t_cmds	**init_cmds(t_lexer **lexer);
-
+void	b_pwd();
+void	builtins(char *str);
 #endif // MINISHELL_H

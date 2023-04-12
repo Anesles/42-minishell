@@ -19,8 +19,8 @@ CFLAGS = -Wall -Wextra -Werror -I ./includes
 SRC = main.c \
 		srcs/utils.c \
 		srcs/lexer.c \
-		srcs/cmds.c
-
+		srcs/cmds.c	\
+		srcs/builtins.c
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/

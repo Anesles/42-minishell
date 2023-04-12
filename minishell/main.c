@@ -14,7 +14,7 @@
 
 int	main()
 {
-	while (1)
+/* 	while (1)
 	{
 		int	n;
 		char *prompt;
@@ -31,6 +31,7 @@ int	main()
 		cmds = init_cmds(lexer);
 		clear_lexer(lexer, n);
 		clear_words(words, n);
-	}
+	} */
+	builtins("pwd");
 	return (1);
 }
