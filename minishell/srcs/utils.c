@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:22:12 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/11 16:11:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:54:52 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	clear_words(char **words, int n)
 	int	i;
 
 	i = -1;
-	while (i < n)
+	while (++i < n)
 		free(words[i]);
 	free(words);
 }

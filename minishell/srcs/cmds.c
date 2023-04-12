@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/12 15:13:24 by brumarti         ###   ########.fr       */
+/*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
+/*   Updated: 2023/04/12 15:18:21 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
-int	main()
+int	count_cmds(t_lexer *lexer)
 {
-	while (1)
+	int	count;
+	t_lexer	*temp;
+
+	temp = lexer;
+	count = 1;
+	while (temp)
 	{
-		int	n;
-		char *prompt;
-		char **words;
-		t_lexer **lexer;
-		
-		prompt = readline("minishell: ");
-		words = ft_split(prompt, ' ');
-		free(prompt);
-		n = count_words(words);
-		lexer = (t_lexer **)malloc(sizeof(t_lexer *) * n);
-		init_lexer(lexer, words);
-		init_cmds(lexer);
-		clear_lexer(lexer, n);
-		clear_words(words, n);
+		if (temp->word == '|')
+			count++;
+		temp = temp->next;	
 	}
-	return (1);
+	return (count);
+}
+
+void	init_cmds(t_lexer *lexer)
+{
+	t_cmds **cmds;
+
+	cmds = malloc(sizeof(t_cmds *) * count_cmds(lexer));
+	(void) cmds;	
 }
