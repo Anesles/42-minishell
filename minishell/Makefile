@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 14:37:51 by brumarti          #+#    #+#              #
-#    Updated: 2023/04/11 16:02:29 by brumarti         ###   ########.fr        #
+#    Updated: 2023/04/12 15:44:29 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror -I ./includes
 
 SRC = main.c \
 		srcs/utils.c \
-		srcs/lexer.c
+		srcs/lexer.c \
+		srcs/cmds.c
 
 OBJ = $(SRC:.c=.o)
 
