@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/12 15:44:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:55:59 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	clear_words(char **words, int n);
 void	init_lexer(t_lexer **lexer, char **words);
 void	clear_lexer(t_lexer **lexer, int n);
 //Cmds
-void	init_cmds(t_lexer **lexer);
+t_cmds	**init_cmds(t_lexer **lexer);
 
 #endif // MINISHELL_H

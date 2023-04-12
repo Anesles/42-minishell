@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/12 16:01:32 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:58:37 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,26 +81,13 @@ void	alloc_cmds(t_cmds **cmds, int n, t_lexer **lexer)
 	}
 }
 
-void	init_cmds(t_lexer **lexer)
+t_cmds	**init_cmds(t_lexer **lexer)
 {
 	t_cmds **cmds;
-	t_cmds *temp;
-	int	i;
 	int	n;
 
 	n = count_cmds(lexer);
 	cmds = malloc(sizeof(t_cmds *) * n);
 	alloc_cmds(cmds, n, lexer);
-	temp = cmds[0];
-	while (temp)
-	{
-		i = 0;
-		while (i < 3)
-		{
-			ft_printf("%s\n", temp->words[i]);
-			i++;
-		}
-		ft_printf("Cheguei !\n");
-		temp = temp->next;
-	}
+	return (cmds);
 }
