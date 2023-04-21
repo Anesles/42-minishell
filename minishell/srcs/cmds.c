@@ -6,18 +6,18 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/12 17:58:37 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:25:18 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_cmds(t_lexer **lexer)
+int	count_cmds(t_lexer *lexer)
 {
 	int	count;
 	t_lexer	*temp;
 
-	temp = lexer[0];
+	temp = lexer;
 	count = 1;
 	while (temp)
 	{
@@ -28,7 +28,7 @@ int	count_cmds(t_lexer **lexer)
 	return (count);
 }
 
-char	**alloc_words(t_lexer *lexer)
+char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {	
 	char **words;
 	t_lexer *temp;
@@ -45,6 +45,7 @@ char	**alloc_words(t_lexer *lexer)
 			count++;
 		temp = temp->next;
 	}
+	cmds->count_words = count;
 	words = malloc(sizeof(char *) * count);
 	temp = lexer;
 	i = -1;
@@ -56,38 +57,36 @@ char	**alloc_words(t_lexer *lexer)
 	return (words);
 }
 
-void	alloc_cmds(t_cmds **cmds, int n, t_lexer **lexer)
+void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 {
 	int	i;
 	int	start;
 	
 	i = -1;
-	while (++i < n)
-		cmds[i] = malloc(sizeof(t_cmds));
-	i = -1;
 	start = 0;
 	while(++i < n)
 	{
 		if (i == 0)
-			cmds[i]->prev = NULL;
+			cmds[i].prev = NULL;
 		else
-			cmds[i]->prev = cmds[i - 1];
+			cmds[i].prev = &cmds[i - 1];
 		if (i == n - 1)
-			cmds[i]->next = NULL;
+			cmds[i].next = NULL;
 		else
-			cmds[i]->next = cmds[i + 1];
-		cmds[i]->words = alloc_words(lexer[start]);
-		start = count_words(cmds[i]->words);
+			cmds[i].next = &cmds[i + 1];
+		cmds[i].built = &builtins;
+		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
+		start = cmds[i].count_words + 1;
 	}
 }
 
-t_cmds	**init_cmds(t_lexer **lexer)
+t_cmds	*init_cmds(t_lexer *lexer)
 {
-	t_cmds **cmds;
+	t_cmds *cmds;
 	int	n;
 
 	n = count_cmds(lexer);
-	cmds = malloc(sizeof(t_cmds *) * n);
+	cmds = malloc(sizeof(t_cmds) * n);
 	alloc_cmds(cmds, n, lexer);
 	return (cmds);
 }

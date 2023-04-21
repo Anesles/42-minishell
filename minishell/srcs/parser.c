@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 15:22:12 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/21 17:11:37 by brumarti         ###   ########.fr       */
+/*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
+/*   Updated: 2023/04/21 17:35:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_words(char **words)
+void parser(t_cmds *cmds)
 {
-	int	count;
-
-	count = 0;
-	while (words[count])
-		count++;
-	return (count);
-}
-
-void	clear_words(char **words, int n)
-{
-	int	i;
-
-	i = -1;
-	while (++i < n)
-		free(words[i]);
-	free(words);
+	cmds[0].built(cmds[0].words, cmds[0].count_words);
+	cmds[1].built(cmds[1].words, cmds[1].count_words);
 }

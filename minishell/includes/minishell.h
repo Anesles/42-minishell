@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/12 17:55:59 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:34:56 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,26 @@ typedef struct s_lexer
 typedef struct s_cmds
 {
 	char	**words;
-	struct s_cmds *next;
-	struct s_cmds *prev;
+	int		count_words;
+	void	(*built)(char **, int);
+	struct	s_cmds *next;
+	struct	s_cmds *prev;
 }	t_cmds;
+
+typedef struct s_mshell
+{
+	int	n_cmds;
+}	t_mshell;
+
 
 //Utils
 int		count_words(char **words);
 void	clear_words(char **words, int n);
 //Lexer
-void	init_lexer(t_lexer **lexer, char **words);
-void	clear_lexer(t_lexer **lexer, int n);
+t_lexer	*init_lexer(char **words, int n);
 //Cmds
-t_cmds	**init_cmds(t_lexer **lexer);
-void	b_pwd(void);
-void	builtins(char *str);
-void	b_echo(char **array, int argc);
-int	b_cd(char *direct);
+t_cmds	*init_cmds(t_lexer *lexer);
+void	builtins(char **cmds, int words);
+//Parser
+void	parser(t_cmds *cmds);
 #endif // MINISHELL_H
