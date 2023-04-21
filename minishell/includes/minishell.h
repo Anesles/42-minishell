@@ -6,19 +6,20 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/21 17:34:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:52:38 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "../libft/libft.h"
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/types.h>
-# include <dirent.h>
 # include <unistd.h>
+# include <dirent.h>
+# include<sys/wait.h>
+# include <sys/types.h>
+# include "../libft/libft.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 
 typedef struct s_lexer
 {
@@ -48,8 +49,8 @@ void	clear_words(char **words, int n);
 //Lexer
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
-t_cmds	*init_cmds(t_lexer *lexer);
+t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
 void	builtins(char **cmds, int words);
 //Parser
-void	parser(t_cmds *cmds);
+void	parser(t_cmds *cmds, t_mshell *mshell);
 #endif // MINISHELL_H

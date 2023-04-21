@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/21 17:25:18 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:41:32 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,13 @@ void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 	}
 }
 
-t_cmds	*init_cmds(t_lexer *lexer)
+t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
 {
 	t_cmds *cmds;
 	int	n;
 
 	n = count_cmds(lexer);
+	mshell->n_cmds = n;
 	cmds = malloc(sizeof(t_cmds) * n);
 	alloc_cmds(cmds, n, lexer);
 	return (cmds);
