@@ -11,11 +11,15 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+{
 
-void	builtins(char *str)
+	void (*trans)(char *)=&builtins
+	trans(echo);
+}
+void	builtins(char **cmd)
 {
 /* 	static void	*builtins[7][2] = {
-	{"echo", b_echo}, TODO
+	{"echo", b_echo}, DONE
 	{"cd", b_cd}, TODO
 	{"pwd", b_pwd}, DONE
 	{"export", b_export}, TODO
@@ -23,12 +27,14 @@ void	builtins(char *str)
 	{"env", b_env}, TODO
 	{"exit", b_exit} TODO
 	}; */
-	if (str)
+	if (cmd)
 	{
-		if (!ft_strncmp("pwd", str, ft_strlen("pwd")))
+		if (!ft_strncmp("pwd", cmd[0], ft_strlen("pwd")))
 			return (b_pwd());
-//		if (!ft_strncmp("echo", str, ft_strlen("echo")))
-//			return (b_echo());//transormar i input nos argv[1] ate acabarem	
+		if (!ft_strncmp("echo", cmd[0], ft_strlen("echo")))
+			return (b_echo());//transormar i input nos argv[1] ate acabarem	
+		if (!ft_strncmp("cd", cmd[0], ft_strlen("cd")))
+			return(b_cd(cmd[1]));
 	}
 }
 //pwd done
