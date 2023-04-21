@@ -12,8 +12,10 @@
 
 #include "includes/minishell.h"
 
-int	main()
+int	main(int argc, char *argv[])
 {
+	(void)argc;
+	(void)argv;
 /* 	while (1)
 	{
 		int	n;
@@ -32,6 +34,8 @@ int	main()
 		clear_lexer(lexer, n);
 		clear_words(words, n);
 	} */
-	builtins("pwd");
+//	builtins("echo");
+//	b_echo(&argv[1], argc);
+	b_pwd();
 	return (1);
 }

@@ -42,6 +42,8 @@ void	init_lexer(t_lexer **lexer, char **words);
 void	clear_lexer(t_lexer **lexer, int n);
 //Cmds
 t_cmds	**init_cmds(t_lexer **lexer);
-void	b_pwd();
+void	b_pwd(void);
 void	builtins(char *str);
+void	b_echo(char **array, int argc);
+int	b_cd(char *direct);
 #endif // MINISHELL_H
