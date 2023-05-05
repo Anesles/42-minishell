@@ -6,111 +6,79 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 18:03:05 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/11 11:02:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:47:07 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**ft_alloc_array(char const *s, char c, int length)
+int	wordscount(char const *s, char c)
 {
-	int		i;
-	int		count;
-	char	**array;
+	size_t	i;
+	size_t	flag;
+	int		words;
 
 	i = 0;
-	count = 0;
-	while (s[i] == c)
-		i++;
-	while (i <= length)
+	flag = 0;
+	words = 0;
+	while (s[i])
 	{
-		if ((s[i] == c && s[i - 1] != c))
-			count++;
-		else if (s[i] == 0)
-			count++;
-		i++;
-	}
-	array = (char **)malloc(sizeof(s) * (count + 1));
-	if (!array)
-	{
-		free(array);
-		return (NULL);
-	}
-	return (array);
-}
-
-static char	*ft_split_range(int start, int finish, char const *s, char **array)
-{
-	int		length;
-	int		i;
-	char	*str;
-
-	i = 0;
-	length = finish - start;
-	str = (char *)malloc(length + 1 * sizeof(*s));
-	if (!str)
-	{
-		free(array);
-		return (NULL);
-	}
-	while (start < finish)
-		str[i++] = s[start++];
-	str[i] = 0;
-	return (str);
-}
-
-void	ft_free(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-static char	**ft_split_string(char **array, char const *s, char c, int length)
-{
-	int	i;
-	int	j;
-	int	start;
-
-	i = 0;
-	j = 0;
-	while (s[i] == c)
-		i++;
-	start = i;
-	while (i < length)
-	{
-		if ((s[i] == c && s[i - 1] != c) || (s[i] != c && s[i + 1] == 0))
+		if (s[i] != c && flag == 0)
 		{
-			if (s[i + 1] == 0 && s[i] != c)
-				array[j++] = ft_split_range(start, i + 1, s, array);
-			else
-				array[j++] = ft_split_range(start, i, s, array);
-			while (s[i] == c)
-				i++;
-			start = i;
+			flag = 1;
+			words++;
 		}
+		else if (s[i] == c)
+			flag = 0;
 		i++;
 	}
-	array[j] = 0;
+	return (words);
+}
+
+int	next(char const *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != c && s[i])
+		i++;
+	return (i);
+}
+
+char	**makearray(char **array, int wordcount, char const *s, char c)
+{
+	char	*str;
+	int		i;
+	int		h;
+
+	h = 0;
+	i = 0;
+	while (wordcount > 0)
+	{
+		wordcount--;
+		while (s[i] == c)
+			i++;
+		str = ft_substr(s, i, next(&s[i], c));
+		if (!str)
+			return (NULL);
+		array[h++] = str;
+		i = i + (next(&s[i], c));
+	}
+	array[h] = 0;
 	return (array);
 }
 
 char	**ft_split(char const *s, char c)
 {
+	int		wordcount;
 	char	**array;
-	int		length;
 
 	if (!s)
 		return (NULL);
-	length = ft_strlen(s);
-	array = ft_alloc_array(s, c, length);
+	wordcount = wordscount(s, c);
+	array = malloc(sizeof(char *) * (wordcount + 1));
 	if (!array)
 		return (NULL);
-	array = ft_split_string(array, s, c, length);
-	if (!array)
-		return (NULL);
+	array = makearray(array, wordcount, s, c);
 	return (array);
 }

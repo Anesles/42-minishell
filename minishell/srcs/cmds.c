@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/21 17:41:32 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:13:00 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_cmds(t_lexer *lexer)
 {
-	int	count;
+	int		count;
 	t_lexer	*temp;
 
 	temp = lexer;
@@ -23,24 +23,24 @@ int	count_cmds(t_lexer *lexer)
 	{
 		if (temp->word[0] == '|')
 			count++;
-		temp = temp->next;	
+		temp = temp->next;
 	}
 	return (count);
 }
 
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {	
-	char **words;
-	t_lexer *temp;
-	int	i;
-	int	count;
+	char	**words;
+	t_lexer	*temp;
+	int		i;
+	int		count;
 
 	count = 0;
 	temp = lexer;
 	while (temp)
 	{
 		if (temp->word[0] == '|')
-			break;
+			break ;
 		else
 			count++;
 		temp = temp->next;
@@ -61,10 +61,10 @@ void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 {
 	int	i;
 	int	start;
-	
+
 	i = -1;
 	start = 0;
-	while(++i < n)
+	while (++i < n)
 	{
 		if (i == 0)
 			cmds[i].prev = NULL;
@@ -82,11 +82,12 @@ void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
 {
-	t_cmds *cmds;
-	int	n;
+	t_cmds	*cmds;
+	int		n;
 
 	n = count_cmds(lexer);
 	mshell->n_cmds = n;
+	mshell->current_cmd = 0;
 	cmds = malloc(sizeof(t_cmds) * n);
 	alloc_cmds(cmds, n, lexer);
 	return (cmds);
