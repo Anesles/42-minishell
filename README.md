@@ -1,4 +1,4 @@
-# **philosophers (Cursus from 42 Porto)**
+# **Minishell (Cursus from 42 Porto)**
 ## **Grade: WIP**
 ---
 ### **Summary:**
