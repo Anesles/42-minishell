@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/05 16:00:53 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:34:32 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ void	builtins(char **cmd, int count_words, t_mshell *mshell)
 			return (b_echo(&cmd[1], count_words - 1, mshell));//transormar i input nos argv[1] ate acabarem	
 		if (!ft_strncmp("cd", cmd[0], ft_strlen("cd")))
 			return((void)b_cd(cmd[1]));
+		if (!ft_strncmp("ls", cmd[0], ft_strlen("ls")))
+			return((void)b_ls(mshell));
 	}
 }

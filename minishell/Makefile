@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 14:37:51 by brumarti          #+#    #+#              #
-#    Updated: 2023/04/21 16:12:06 by brumarti         ###   ########.fr        #
+#    Updated: 2023/05/15 16:26:30 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC = main.c \
 		srcs/lexer.c \
 		srcs/cmds.c	\
 		srcs/builtins.c \
-		srcs/parser.c
+		srcs/parser.c \
+		srcs/builtins_2.c
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/

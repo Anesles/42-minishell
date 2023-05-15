@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/05 15:16:49 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:31:43 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <dirent.h>
 
 typedef struct s_lexer
 {
@@ -54,4 +55,6 @@ t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
 void	builtins(char **cmds, int words, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
+//Builtins
+void	b_ls(t_mshell *mshell);
 #endif // MINISHELL_H
