@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/15 16:34:05 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:29:32 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,9 @@ void	b_ls(t_mshell *mshell)
 			}
 		}
 	}
+}
+
+void	b_exec(char *cmd, char **words)
+{
+	execve(cmd, words, words);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/15 16:31:43 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:43:00 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 # include <stdio.h>
 # include <unistd.h>
+# include <signal.h>
 # include <dirent.h>
 # include<sys/wait.h>
 # include <sys/types.h>
@@ -48,6 +49,7 @@ typedef struct s_cmds
 //Utils
 int		count_words(char **words);
 void	clear_words(char **words, int n);
+int		find_char(char *str, char c);
 //Lexer
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
@@ -57,4 +59,6 @@ void	builtins(char **cmds, int words, t_mshell *mshell);
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
 void	b_ls(t_mshell *mshell);
+void	b_exit(int status);
+void	b_exec(char *cmd, char **words);
 #endif // MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:22:12 by brumarti          #+#    #+#             */
-/*   Updated: 2023/04/21 17:11:37 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:42:50 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,18 @@ void	clear_words(char **words, int n)
 	while (++i < n)
 		free(words[i]);
 	free(words);
+}
+
+int	find_char(char *str, char c)
+{
+	int i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			break;
+		i++;
+	}
+	return (i);
 }
