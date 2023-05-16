@@ -20,16 +20,21 @@ void	b_pwd(void)
 	printf("%s\n", str);
 }
 //echo done
+
 void	b_echo(char **array, int max, t_mshell *mshell)//argc ==  numero de words, o array sao as palabras provenietes de inputs
 {
 	int	i;
+	char *str;
+	char trim[1];
 
+	trim[0] = 34;
 	i = -1;
 	while (++i < max)
 	{
+		str = ft_strtrim(array[i], trim);
 		if (mshell->current_cmd == mshell->n_cmds - 1)
 		{
-			ft_putstr_fd(array[i], STDOUT_FILENO);
+			ft_putstr_fd(str, STDOUT_FILENO);
 			write(STDOUT_FILENO, " ", 1);
 		}
 		else
@@ -37,6 +42,7 @@ void	b_echo(char **array, int max, t_mshell *mshell)//argc ==  numero de words, 
 			ft_putstr_fd(array[i], mshell->fd[0]);
 			write(mshell->fd[0], " ", 1);
 		}
+		free(str);
 	}
 	if (mshell->current_cmd == mshell->n_cmds - 1)
 		write(STDOUT_FILENO, "\n", 1);
@@ -49,13 +55,7 @@ int	b_cd(char *direct)
 	int	error;
 
 	error = chdir((const char *)direct);
-	if (error != 0)//mudar a msg inicial para o novo diretorio
-	{
-		ft_putstr_fd("minishell:", STDERR_FILENO);
-		ft_putstr_fd(direct, STDERR_FILENO);
-		ft_putstr_fd(" ", STDERR_FILENO);
-	}
-	if (error == 0)
+	if (error != 0)
 		return (EXIT_FAILURE);
 	return (0);
 }
@@ -86,5 +86,7 @@ void	builtins(char **cmd, int count_words, t_mshell *mshell)
 			return((void)b_cd(cmd[1]));
 		if (!ft_strncmp("ls", cmd[0], ft_strlen("ls")))
 			return((void)b_ls(mshell));
+		if (!ft_strncmp("exit", cmd[0], ft_strlen("exit")))
+			return(b_exit(0));
 	}
 }

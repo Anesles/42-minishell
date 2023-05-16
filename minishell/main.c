@@ -12,6 +12,14 @@
 
 #include "includes/minishell.h"
 
+char	*chamada(void)
+{
+	char	*str;
+	char		buff[256];
+	str = getcwd(buff, sizeof(buff));
+	str = ft_strjoin(str, "$ ");
+	return (str);
+}
 int	main(void)
 {
 	char		*prompt;
@@ -23,14 +31,20 @@ int	main(void)
 	while (1)
 	{
 		mshell = malloc(sizeof(mshell));
-		prompt = readline("minishell: ");
+		prompt = chamada();
+		prompt = readline(prompt);
+		if (ft_strlen(prompt) > 0)
+			add_history(prompt);
 		words = ft_split(prompt, ' ');
-		free(prompt);
-		lexer = init_lexer(words, count_words(words));
-		cmds = init_cmds(lexer, mshell);
-		parser(cmds, mshell);
-		free(lexer);
-		free(cmds);
+		if (!(words[0] == NULL))
+		{
+			free(prompt);
+			lexer = init_lexer(words, count_words(words));
+			cmds = init_cmds(lexer, mshell);
+			parser(cmds, mshell);
+			free(lexer);
+			free(cmds);
+		}
 		clear_words(words, count_words(words));
 	}
 	return (1);

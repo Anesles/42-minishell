@@ -21,16 +21,20 @@ void	b_ls(t_mshell *mshell)
 	{
 		dir = opendir(".");
 		if (dir == NULL)
-		{
-			printf("Error: opendir");
-			return ;
-		}
-		
+			send_error("opendir");
 		entry = readdir(dir);
 		while (entry != NULL)
 		{
-			printf("%s\n", entry->d_name);
-			entry = readdir(dir);
+			if (!ft_strncmp(".", entry->d_name, ft_strlen(".")))
+				entry = readdir(dir);
+			else
+			{
+				if(mshell->current_cmd == mshell->n_cmds - 1)
+					ft_putstr_fd(ft_strjoin(entry->d_name, "\n"), STDOUT_FILENO);
+				else
+					ft_putstr_fd(ft_strjoin(entry->d_name, "\n"), mshell->fd[0]);
+				entry = readdir(dir);
+			}
 		}
 	}
 }
