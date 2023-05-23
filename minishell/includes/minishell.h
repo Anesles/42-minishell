@@ -35,6 +35,8 @@ typedef struct s_mshell
 	int	n_cmds;
 	int	current_cmd;
 	int	fd[2];
+	char **envior;
+	char *PATH;
 }	t_mshell;
 
 typedef struct s_cmds
@@ -60,5 +62,8 @@ void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
 void	b_ls(t_mshell *mshell);
 void	b_exit(int status);
-void	b_exec(char *cmd, char **words);
+char 	**arraydup(char **old);
+void	executables(char **cmd, int count_words, t_mshell *mshell);
+char	*Get_PATH(char **pwd);
+
 #endif // MINISHELL_H

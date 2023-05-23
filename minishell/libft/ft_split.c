@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbraga-b <dbraga-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 18:03:05 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/05 15:47:07 by brumarti         ###   ########.fr       */
+/*   Created: 2022/11/04 13:34:16 by dbraga-b          #+#    #+#             */
+/*   Updated: 2022/11/14 16:02:08 by dbraga-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include"libft.h"
+#include<stdlib.h>
 
 int	wordscount(char const *s, char c)
 {

@@ -36,7 +36,26 @@ void	sig_quit(int signum)
 	write(1, "\b\b  \b\b", 6	);
 }
 
-int	main(void)
+char **arraydup(char **old)
+{
+	char 	**new;
+	int		i;
+
+	i = 0;
+	while(old[i])
+		i++;
+	new = malloc(sizeof(char *) * (i + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (old[i])
+	{
+		new[i] = ft_strdup(old[i]);
+		i++;
+	}
+	return (new);
+}
+int	main(int	argc, char *argv[], char **envp)
 {
 	char		*prompt;
 	char		**words;
@@ -44,11 +63,16 @@ int	main(void)
 	t_lexer		*lexer;
 	t_cmds		*cmds;
 
+	if (argc != 1 || argv[1])
+		write(1, "cant't take inputs", 18);
 	signal(SIGINT, sig_continue);
 	signal(SIGQUIT, sig_quit);
+	mshell = malloc(sizeof(mshell));
+	mshell->envior = arraydup(envp);
+	mshell->PATH = Get_PATH(mshell->envior);
+	printf("\n%s\n", mshell->PATH);
 	while (1)
 	{
-		mshell = malloc(sizeof(mshell));
 		prompt = chamada();
 		prompt = readline(prompt);
 		if (prompt == NULL)

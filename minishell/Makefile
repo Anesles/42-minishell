@@ -22,7 +22,9 @@ SRC = main.c \
 		srcs/cmds.c	\
 		srcs/builtins.c \
 		srcs/parser.c \
-		srcs/builtins_2.c
+		srcs/executable.c \
+		srcs/env_var.c
+
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/

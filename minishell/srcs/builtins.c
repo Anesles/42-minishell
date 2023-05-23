@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+char	*new_env(char	*name, char	*variable);
 //pwd done
 void	b_pwd(void)
 {
@@ -89,39 +90,76 @@ void	b_env(void) //ver as enviarmental variables
 	}	
 }
 
-void b_export(char *variable) //adicionar environmental variables
+void b_export(char *new) //adicionar environmental variables
 {
-	int	count;
-	int	status;
-	char *name;
+	int	i;
 	char **new_environ;
+	char	**new_var;
+	int	status;
 
-	name = ft_substr(variable, 0, find_char(variable, '='));
-	count = 0;
+	new_var = ft_split(new, '=');
 	status = 0;
-	while (__environ[count] != NULL)
+	i = 0;
+	while (__environ[i] != NULL)
 	{
-		if (!ft_strncmp(__environ[count], name, ft_strlen(name)))
+		if (!ft_strncmp(__environ[i], new_var[0], ft_strlen(new_var[0])))
 			status = 1;
-		count++;
+		i++;
 	}
-	if (status == 0)
-		new_environ = (char **)malloc(sizeof(char *) * count + 2);
-	else
-		new_environ = (char **)malloc(sizeof(char *) * count + 1);
-	count = 0;
-	while (__environ[count] != NULL)
+	if ((new_var[1] != NULL))
 	{
-		if (!ft_strncmp(__environ[count], name, ft_strlen(name)))
-			new_environ[count] = ft_strdup(variable);
+		if (status == 0)
+			new_environ = malloc(sizeof(char *) * i + 2);
 		else
-			new_environ[count] = __environ[count];
-		count++;
+			new_environ = malloc(sizeof(char *) * i + 1);
+		i = -1;
+		while (__environ[++i] != NULL)
+		{
+			if (!ft_strncmp(__environ[i], new_var[0], ft_strlen(new_var[0])))
+			{
+				new_environ[i] = new_env(new_var[0], new_var[1]);
+			}
+			else
+				new_environ[i] = __environ[i];
+		}
+		if (status == 0)
+			new_environ[i] = ft_strdup(new);
+		new_environ[i + 1] = NULL;
+		__environ = new_environ;
 	}
-	if (status == 0)
-		new_environ[count] = ft_strdup(variable);
-	new_environ[count + 1] = NULL;
-	__environ = new_environ;
+}
+
+char	*new_env(char	*name, char	*variable)
+{
+	char *new;
+	int	tam_name;
+	int	tam_var;
+	int	i;
+	int j;
+
+	tam_name = 0;
+	tam_var = 0;
+	tam_name = ft_strlen(name);
+	tam_var = ft_strlen(variable);
+	new = malloc(sizeof(char) * (tam_name + tam_var + 2));
+	if (!new)
+		return (0);
+	i = -1;
+	while (++i < tam_name)
+		new[i] = name[i];
+	if (variable == NULL)
+		return (NULL);
+	new[i] = '=';
+	i++;
+	j = 0;
+	while (j < tam_var)
+	{
+		new[i] = variable[j];
+		j++;
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
 void	b_unset(char *variable)
@@ -149,6 +187,11 @@ void	b_unset(char *variable)
 	__environ = new_environ;
 }
 
+void	b_get(char *word)
+{
+	printf("%s\n", getenv(word));
+}
+
 void	builtins(char **cmd, int count_words, t_mshell *mshell)
 {
 /* 	static void	*builtins[7][2] = {
@@ -168,17 +211,19 @@ void	builtins(char **cmd, int count_words, t_mshell *mshell)
 			return (b_echo(&cmd[1], count_words - 1, mshell));//transormar i input nos argv[1] ate acabarem	
 		if (!ft_strncmp("cd", cmd[0], 2))
 			return((void)b_cd(cmd[1]));
-		if (!ft_strncmp("ls", cmd[0], 2))
-			return((void)b_ls(mshell));
+/* 		if (!ft_strncmp("ls", cmd[0], 2))
+			return((void)b_ls(mshell)); */
 		if (!ft_strncmp("exit", cmd[0], 4))
 			return(b_exit(0));
-		if (!ft_strncmp("./", cmd[0], 2))
-			return(b_exec(cmd[0], &cmd[1]));
+/* 		if (!ft_strncmp("./", cmd[0], 2))
+			return(b_exec(cmd[0], &cmd[1])); */
 		if (!ft_strncmp("env", cmd[0], 3))
 			return(b_env());
 		if (!ft_strncmp("export", cmd[0], 6))
 			return(b_export(cmd[1]));
 		if (!ft_strncmp("unset", cmd[0], 5))
 			return(b_unset(cmd[1]));
+		else 
+			executables(cmd, count_words, mshell);
 	}
 }
