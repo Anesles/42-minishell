@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/16 18:43:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:53:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <dirent.h>
+# include <fcntl.h> 
 
 typedef struct s_lexer
 {
@@ -63,7 +64,7 @@ void	parser(t_cmds *cmds, t_mshell *mshell);
 void	b_ls(t_mshell *mshell);
 void	b_exit(int status);
 char 	**arraydup(char **old);
-void	executables(char **cmd, int count_words, t_mshell *mshell);
+void	executables(char **cmd, t_mshell *mshell);
 char	*Get_PATH(char **pwd);
 
 #endif // MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/05 15:13:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:24:08 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		temp = temp->next;
 	}
 	cmds->count_words = count;
-	words = malloc(sizeof(char *) * count);
+	words = malloc(sizeof(char *) * (count + 1));
 	temp = lexer;
 	i = -1;
 	while (++i < count)
@@ -54,6 +54,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		words[i] = temp->word;
 		temp = temp->next;
 	}
+	words[i] = NULL;
 	return (words);
 }
 

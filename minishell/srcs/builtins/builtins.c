@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/16 18:53:44 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:36:47 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ void	b_echo(char **array, int max, t_mshell *mshell)//argc ==  numero de words, 
 	}
 }
 
-int	b_cd(char *direct)
+void	b_cd(char *direct)
 {
 	int	error;
 
 	error = chdir((const char *)direct);
 	if (error != 0)
-		return (EXIT_FAILURE);
-	return (0);
+		perror("cd failed");
 }
 
 void	b_exit(int status)
@@ -87,7 +86,40 @@ void	b_env(void) //ver as enviarmental variables
 	{
 		printf("%s\n", __environ[i]);
 		i++;
-	}	
+	}
+}
+
+char	*new_env(char	*name, char	*variable)
+{
+	char *new;
+	int	tam_name;
+	int	tam_var;
+	int	i;
+	int j;
+
+	tam_name = 0;
+	tam_var = 0;
+	tam_name = ft_strlen(name);
+	tam_var = ft_strlen(variable);
+	new = malloc(sizeof(char) * (tam_name + tam_var + 2));
+	if (!new)
+		return (0);
+	i = -1;
+	while (++i < tam_name)
+		new[i] = name[i];
+	if (variable == NULL)
+		return (NULL);
+	new[i] = '=';
+	i++;
+	j = 0;
+	while (j < tam_var)
+	{
+		new[i] = variable[j];
+		j++;
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
 void b_export(char *new) //adicionar environmental variables
@@ -127,39 +159,6 @@ void b_export(char *new) //adicionar environmental variables
 		new_environ[i + 1] = NULL;
 		__environ = new_environ;
 	}
-}
-
-char	*new_env(char	*name, char	*variable)
-{
-	char *new;
-	int	tam_name;
-	int	tam_var;
-	int	i;
-	int j;
-
-	tam_name = 0;
-	tam_var = 0;
-	tam_name = ft_strlen(name);
-	tam_var = ft_strlen(variable);
-	new = malloc(sizeof(char) * (tam_name + tam_var + 2));
-	if (!new)
-		return (0);
-	i = -1;
-	while (++i < tam_name)
-		new[i] = name[i];
-	if (variable == NULL)
-		return (NULL);
-	new[i] = '=';
-	i++;
-	j = 0;
-	while (j < tam_var)
-	{
-		new[i] = variable[j];
-		j++;
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
 }
 
 void	b_unset(char *variable)
@@ -206,24 +205,20 @@ void	builtins(char **cmd, int count_words, t_mshell *mshell)
 	if (cmd)
 	{
 		if (!ft_strncmp("pwd", cmd[0], 3))
-			return (b_pwd());
-		if (!ft_strncmp("echo", cmd[0], 4))
-			return (b_echo(&cmd[1], count_words - 1, mshell));//transormar i input nos argv[1] ate acabarem	
-		if (!ft_strncmp("cd", cmd[0], 2))
-			return((void)b_cd(cmd[1]));
-/* 		if (!ft_strncmp("ls", cmd[0], 2))
-			return((void)b_ls(mshell)); */
-		if (!ft_strncmp("exit", cmd[0], 4))
-			return(b_exit(0));
-/* 		if (!ft_strncmp("./", cmd[0], 2))
-			return(b_exec(cmd[0], &cmd[1])); */
-		if (!ft_strncmp("env", cmd[0], 3))
-			return(b_env());
-		if (!ft_strncmp("export", cmd[0], 6))
-			return(b_export(cmd[1]));
-		if (!ft_strncmp("unset", cmd[0], 5))
-			return(b_unset(cmd[1]));
+			b_pwd();
+		else if (!ft_strncmp("echo", cmd[0], 4))
+			b_echo(&cmd[1], count_words - 1, mshell);//transormar i input nos argv[1] ate acabarem	
+		else if (!ft_strncmp("cd", cmd[0], 2))
+			b_cd(cmd[1]);
+		else if (!ft_strncmp("exit", cmd[0], 4))
+			b_exit(0);
+		else if (!ft_strncmp("env", cmd[0], 3))
+			b_env();
+		else if (!ft_strncmp("export", cmd[0], 6))
+			b_export(cmd[1]);
+		else if (!ft_strncmp("unset", cmd[0], 5))
+			b_unset(cmd[1]);
 		else 
-			executables(cmd, count_words, mshell);
+			executables(cmd, mshell);
 	}
 }

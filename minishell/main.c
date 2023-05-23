@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/16 18:16:36 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:07:29 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,9 @@ int	main(int	argc, char *argv[], char **envp)
 		write(1, "cant't take inputs", 18);
 	signal(SIGINT, sig_continue);
 	signal(SIGQUIT, sig_quit);
-	mshell = malloc(sizeof(mshell));
+	mshell = malloc(sizeof(t_mshell));
 	mshell->envior = arraydup(envp);
 	mshell->PATH = Get_PATH(mshell->envior);
-	printf("\n%s\n", mshell->PATH);
 	while (1)
 	{
 		prompt = chamada();

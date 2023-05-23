@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_2.c                                       :+:      :+:    :+:   */
+/*   executable.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/16 16:29:32 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:29:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+char	*returnvalue(char **cmd, t_mshell *mshell);
 char	*join_split_str(char **split_str, char *new_str, int count_words);
 
-#include "minishell.h"
 
 /* void	b_ls(t_mshell *mshell)
 {
@@ -41,33 +42,33 @@ char	*join_split_str(char **split_str, char *new_str, int count_words);
 	}
 } */
 
-void	executables(char **cmd, int count_words, t_mshell *mshell)//ao tentar executar duas vezes, da core dump
+void	executables(char **cmd, t_mshell *mshell)//ao tentar executar duas vezes, da core dump
 {
 	char *bin;
-	char *path;
 
-	(void)count_words;
-	(void)mshell;
-	path = mshell->PATH;
-//	bin = test(mshell->envior, cmd[0])
-	
-//	exec = join_split_str(cmd, NULL, count_words);//o que vem do cmd? e o porque de ter 2 casas a mais
-/* 	int i;
-	i = 0;
-	printf("words:%d\n", count_words);
-	while(count_words > 0)
-	{
-		printf("%s\n", cmd[i]);
-		count_words--;
-		i++;
-	} */
-//	exec = ft_strjoin(bin, exec);
-
-	execve(bin, &cmd[1], mshell->envior);
-	printf("end\n");
-	//execve(cmd, words, env);
+	bin = returnvalue(cmd, mshell);
+	mshell->current_cmd++;
+	execve(bin , &cmd[0], mshell->envior);
 }
 
+char	*returnvalue(char **cmd, t_mshell *mshell)
+{
+	char **available;
+	char *str;
+	int i;
+
+	available = ft_split(mshell->PATH, ':');
+	i = 0;
+	while (available[i])
+	{
+		str = ft_strjoin(available[i], "/");
+		str = ft_strjoin(str, cmd[0]);
+		if (!access(str, X_OK))
+			return (str);
+		i++;
+	}
+	return (NULL);
+}
 
 
 char	*Get_PATH(char **pwd)
@@ -80,7 +81,7 @@ char	*Get_PATH(char **pwd)
 		return (NULL);
 	while (pwd[i])
 	{
-		if (ft_strcmp(pwd[i], "PATH", 4)) //adicionar condicao de que o path tem de ser 4
+		if (!ft_strncmp(pwd[i], "PATH", 4)) //adicionar condicao de que o path tem de ser 4
 			break;
 		i++;
 	}
