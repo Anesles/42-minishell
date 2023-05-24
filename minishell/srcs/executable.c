@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/23 17:29:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:19:52 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	executables(char **cmd, t_mshell *mshell)//ao tentar executar duas vezes, d
 	char *bin;
 
 	bin = returnvalue(cmd, mshell);
-	mshell->current_cmd++;
-	execve(bin , &cmd[0], mshell->envior);
+	ft_printf("%s\n", cmd[1]);
+	execve(bin, cmd, mshell->envior);
 }
 
 char	*returnvalue(char **cmd, t_mshell *mshell)

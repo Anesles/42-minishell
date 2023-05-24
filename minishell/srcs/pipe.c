@@ -6,14 +6,24 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/23 17:52:03 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:10:22 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_in(t_mshell *mshell)
+void	handle_pipe(t_mshell *mshell)
 {
-	dup2(mshell->fd[0], STDIN_FILENO);
-	dup2(mshell->fd[1], STDOUT_FILENO);	
+	if (mshell->current_cmd == mshell->n_cmds - 1)
+	{
+		dup2(mshell->fd[0], STDIN_FILENO);
+		close(mshell->fd[0]);
+		close(mshell->fd[1]);
+	}
+	else
+	{
+		dup2(mshell->fd[1], STDOUT_FILENO);
+		close(mshell->fd[0]);
+		close(mshell->fd[1]);
+	}
 }

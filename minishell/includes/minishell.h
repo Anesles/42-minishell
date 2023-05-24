@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/23 15:53:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:31:44 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ typedef struct s_mshell
 	char *PATH;
 }	t_mshell;
 
+typedef struct s_cmds t_cmds;
+
 typedef struct s_cmds
 {
 	char			**words;
 	int				count_words;
-	void			(*built)(char **, int, t_mshell *);
+	void			(*built)(t_cmds *, t_mshell *);
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }	t_cmds;
@@ -57,14 +59,17 @@ int		find_char(char *str, char c);
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
-void	builtins(char **cmds, int words, t_mshell *mshell);
+void	builtins(t_cmds *cmds, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
-void	b_ls(t_mshell *mshell);
 void	b_exit(int status);
+//Executables
 char 	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
 char	*Get_PATH(char **pwd);
+//Pipe
+void	handle_pipe(t_mshell *mshell);
+
 
 #endif // MINISHELL_H

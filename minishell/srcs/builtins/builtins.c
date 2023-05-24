@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/23 17:36:47 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:29:54 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void	b_get(char *word)
 	printf("%s\n", getenv(word));
 }
 
-void	builtins(char **cmd, int count_words, t_mshell *mshell)
+void	builtins(t_cmds *cmds, t_mshell *mshell)
 {
 /* 	static void	*builtins[7][2] = {
 	{"echo", b_echo}, DONE
@@ -202,23 +202,23 @@ void	builtins(char **cmd, int count_words, t_mshell *mshell)
 	{"env", b_env}, TODO
 	{"exit", b_exit} TODO
 	}; */
-	if (cmd)
+	if (cmds->words)
 	{
-		if (!ft_strncmp("pwd", cmd[0], 3))
+		if (!ft_strncmp("pwd", cmds->words[0], 3))
 			b_pwd();
-		else if (!ft_strncmp("echo", cmd[0], 4))
-			b_echo(&cmd[1], count_words - 1, mshell);//transormar i input nos argv[1] ate acabarem	
-		else if (!ft_strncmp("cd", cmd[0], 2))
-			b_cd(cmd[1]);
-		else if (!ft_strncmp("exit", cmd[0], 4))
+		//else if (!ft_strncmp("echo", cmds->words[0], 4))
+			//b_echo(&cmds->words[1], count_words - 1, mshell);//transormar i input nos argv[1] ate acabarem	
+		else if (!ft_strncmp("cd", cmds->words[0], 2))
+			b_cd(cmds->words[1]);
+		else if (!ft_strncmp("exit", cmds->words[0], 4))
 			b_exit(0);
-		else if (!ft_strncmp("env", cmd[0], 3))
+		else if (!ft_strncmp("env", cmds->words[0], 3))
 			b_env();
-		else if (!ft_strncmp("export", cmd[0], 6))
-			b_export(cmd[1]);
-		else if (!ft_strncmp("unset", cmd[0], 5))
-			b_unset(cmd[1]);
-		else 
-			executables(cmd, mshell);
+		else if (!ft_strncmp("export", cmds->words[0], 6))
+			b_export(cmds->words[1]);
+		else if (!ft_strncmp("unset", cmds->words[0], 5))
+			b_unset(cmds->words[1]);
+		else
+			executables(cmds->words, mshell);
 	}
 }
