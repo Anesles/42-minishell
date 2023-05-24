@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/24 16:30:02 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/24 19:14:18 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	main(int	argc, char *argv[], char **envp)
 	mshell = malloc(sizeof(t_mshell));
 	mshell->envior = arraydup(envp);
 	mshell->PATH = Get_PATH(mshell->envior);
-	pipe(mshell->fd);
 	while (1)
 	{
+		pipe(mshell->fd);
 		prompt = chamada();
 		prompt = readline(prompt);
 		if (prompt == NULL)

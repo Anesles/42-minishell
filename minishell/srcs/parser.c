@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/24 18:17:50 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/24 19:13:05 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 				cmds[i].built(&cmds[i], mshell);
 				exit(0);
 			}
-			else
-				waitpid(pid, NULL, 0);
 		}
+		close(mshell->fd[0]);
+		close(mshell->fd[1]);
+		waitpid(pid, NULL, 0);
 	}
 	else
 	{
@@ -44,7 +45,8 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 			cmds[0].built(&cmds[0], mshell);
 			exit(0);
 		}
-		else
-			waitpid(pid, NULL, 0);
+		close(mshell->fd[0]);
+		close(mshell->fd[1]);
+		waitpid(pid, NULL, 0);
 	}
 }
