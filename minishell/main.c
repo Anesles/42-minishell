@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 17:52:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:58:55 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int g_exit_status = 0;
+int	g_exit_status = 0;
 
 char	*chamada(void)
 {
@@ -36,7 +36,7 @@ void	sig_continue(int signum)
 void	sig_quit(int signum)
 {
 	(void)signum;
-	write(1, "\b\b  \b\b", 6	);
+	write(1, "\b\b  \b\b", 6);
 }
 
 char	**arraydup(char **old)

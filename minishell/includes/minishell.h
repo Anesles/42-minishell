@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 17:42:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:59:24 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ typedef struct s_lexer
 
 typedef struct s_mshell
 {
-	int	n_cmds;
-	int	current_cmd;
-	int	fd[2];
-	char **envior;
-	char *PATH;
+	int		n_cmds;
+	int		current_cmd;
+	int		fd[2];
+	char	*PATH;
+	char	**envior;
 }	t_mshell;
 
-typedef struct s_cmds t_cmds;
+typedef struct s_cmds	t_cmds;
 
 typedef struct s_cmds
 {
@@ -65,7 +65,7 @@ void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
 void	b_exit(int status);
 //Executables
-char 	**arraydup(char **old);
+char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
 char	*get_path(char **pwd);
 //Pipe
