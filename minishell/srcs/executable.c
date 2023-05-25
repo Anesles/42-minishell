@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/24 18:37:46 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 01:25:27 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ char	*join_split_str(char **split_str, char *new_str, int count_words);
 	}
 } */
 
-void	executables(char **cmd, t_mshell *mshell)//ao tentar executar duas vezes, da core dump
+void	executables(char **cmd, t_mshell *mshell)
 {
-	char *bin;
+	char	*bin;
 
 	bin = returnvalue(cmd, mshell);
 	execve(bin, cmd, mshell->envior);
@@ -52,9 +52,9 @@ void	executables(char **cmd, t_mshell *mshell)//ao tentar executar duas vezes, d
 
 char	*returnvalue(char **cmd, t_mshell *mshell)
 {
-	char **available;
-	char *str;
-	int i;
+	char	**available;
+	char	*str;
+	int		i;
 
 	available = ft_split(mshell->PATH, ':');
 	i = 0;
@@ -70,18 +70,18 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 }
 
 
-char	*Get_PATH(char **pwd)
+char	*get_path(char **pwd)
 {
-	int i;
-	char **str;
+	int		i;
+	char	**str;
 
 	i = 0;
 	if (!pwd)
 		return (NULL);
 	while (pwd[i])
 	{
-		if (!ft_strncmp(pwd[i], "PATH", 4)) //adicionar condicao de que o path tem de ser 4
-			break;
+		if (!ft_strncmp(pwd[i], "PATH", 4))
+			break ;
 		i++;
 	}
 	str = ft_split(pwd[i], '=');
@@ -118,10 +118,9 @@ char	*join_split_str(char **split_str, char *new_str, int count_words)
 	int		i;
 
 	tmp = ft_strdup(split_str[0]);
-//	printf("e os:%s: \n", split_str[1]);
-	
+
 	i = 1;
-	while (count_words > 1)//independente dos inputs, entra sempre duas vezes no loop, mesmo so com 1 input
+	while (count_words > 1)
 	{
 		printf("entrou\n");
 		new_str = tmp;

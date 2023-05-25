@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/24 19:14:18 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 01:24:56 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 char	*chamada(void)
 {
 	char	*str;
-	char		buff[256];
+	char	buff[256];
+
 	str = getcwd(buff, sizeof(buff));
 	str = ft_strjoin(str, "$ ");
 	return (str);
@@ -36,13 +37,13 @@ void	sig_quit(int signum)
 	write(1, "\b\b  \b\b", 6	);
 }
 
-char **arraydup(char **old)
+char	**arraydup(char **old)
 {
-	char 	**new;
+	char	**new;
 	int		i;
 
 	i = 0;
-	while(old[i])
+	while (old[i])
 		i++;
 	new = malloc(sizeof(char *) * (i + 1));
 	if (!new)
@@ -55,7 +56,8 @@ char **arraydup(char **old)
 	}
 	return (new);
 }
-int	main(int	argc, char *argv[], char **envp)
+
+int	main(int argc, char *argv[], char **envp)
 {
 	char		*prompt;
 	char		**words;
@@ -69,7 +71,7 @@ int	main(int	argc, char *argv[], char **envp)
 	signal(SIGQUIT, sig_quit);
 	mshell = malloc(sizeof(t_mshell));
 	mshell->envior = arraydup(envp);
-	mshell->PATH = Get_PATH(mshell->envior);
+	mshell->PATH = get_path(mshell->envior);
 	while (1)
 	{
 		pipe(mshell->fd);

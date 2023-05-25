@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/24 16:31:44 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 01:24:56 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	b_exit(int status);
 //Executables
 char 	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
-char	*Get_PATH(char **pwd);
+char	*get_path(char **pwd);
 //Pipe
 void	handle_pipe(t_mshell *mshell);
 

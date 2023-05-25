@@ -6,28 +6,27 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/24 15:29:54 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 01:27:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*new_env(char	*name, char	*variable);
-//pwd done
+
 void	b_pwd(void)
 {
 	char	str[256];//buff size pode ser qualquer um, usei este como exemplo
 	getcwd(str, sizeof(str));
 	printf("%s\n", str);
 }
-//echo done
 
-void	b_echo(char **array, int max, t_mshell *mshell)//argc ==  numero de words, o array sao as palabras provenietes de inputs
+void	b_echo(char **array, int max, t_mshell *mshell)
 {
-	int	i;
-	int status;
-	char *str;
-	char trim[1];
+	int		i;
+	int		status;
+	char	*str;
+	char	trim[1];
 
 	trim[0] = 34;
 	i = -1;
@@ -77,7 +76,7 @@ void	b_exit(int status)
 	exit(status);
 }
 
-void	b_env(void) //ver as enviarmental variables
+void	b_env(void)
 {
 	int	i;
 
@@ -91,11 +90,11 @@ void	b_env(void) //ver as enviarmental variables
 
 char	*new_env(char	*name, char	*variable)
 {
-	char *new;
-	int	tam_name;
-	int	tam_var;
-	int	i;
-	int j;
+	char	*new;
+	int		tam_name;
+	int		tam_var;
+	int		i;
+	int 	j;
 
 	tam_name = 0;
 	tam_var = 0;
@@ -122,12 +121,12 @@ char	*new_env(char	*name, char	*variable)
 	return (new);
 }
 
-void b_export(char *new) //adicionar environmental variables
+void b_export(char *new)
 {
-	int	i;
-	char **new_environ;
+	int		i;
+	char	**new_environ;
 	char	**new_var;
-	int	status;
+	int		status;
 
 	new_var = ft_split(new, '=');
 	status = 0;
@@ -163,9 +162,9 @@ void b_export(char *new) //adicionar environmental variables
 
 void	b_unset(char *variable)
 {
-	int	count;
-	int	track;
-	char **new_environ;
+	int		count;
+	int		track;
+	char	**new_environ;
 
 	count = 0;
 	while (__environ[count] != NULL)
