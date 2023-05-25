@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 01:24:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:14:22 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <readline/readline.h>
 # include <dirent.h>
 # include <fcntl.h> 
+
+int	g_exit_status;
 
 typedef struct s_lexer
 {
