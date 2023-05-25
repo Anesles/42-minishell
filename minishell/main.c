@@ -6,11 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 01:24:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:52:00 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+int g_exit_status = 0;
 
 char	*chamada(void)
 {
@@ -61,33 +63,34 @@ int	main(int argc, char *argv[], char **envp)
 {
 	char		*prompt;
 	char		**words;
-	t_mshell	*mshell;
+	t_mshell	mshell;
 	t_lexer		*lexer;
 	t_cmds		*cmds;
 
 	if (argc != 1 || argv[1])
-		write(1, "cant't take inputs", 18);
+		perror("minishell: too many arguments");
 	signal(SIGINT, sig_continue);
 	signal(SIGQUIT, sig_quit);
-	mshell = malloc(sizeof(t_mshell));
-	mshell->envior = arraydup(envp);
-	mshell->PATH = get_path(mshell->envior);
+	mshell.envior = arraydup(envp);
+	mshell.PATH = get_path(mshell.envior);
 	while (1)
 	{
-		pipe(mshell->fd);
+		pipe(mshell.fd);
 		prompt = chamada();
 		prompt = readline(prompt);
 		if (prompt == NULL)
 			b_exit(0);
 		if (ft_strlen(prompt) > 0)
 			add_history(prompt);
-		words = ft_split(prompt, ' ');
+		words = init_words(prompt, &mshell);
+		if (words == NULL)
+			continue ;
 		if (!(words[0] == NULL))
 		{
 			free(prompt);
 			lexer = init_lexer(words, count_words(words));
-			cmds = init_cmds(lexer, mshell);
-			parser(cmds, mshell);
+			cmds = init_cmds(lexer, &mshell);
+			parser(cmds, &mshell);
 			free(lexer);
 			free(cmds);
 		}

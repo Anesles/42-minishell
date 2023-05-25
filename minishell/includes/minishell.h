@@ -6,25 +6,23 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 16:14:22 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:42:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
+# include <fcntl.h> 
 # include <unistd.h>
+# include <dirent.h>
 # include <signal.h>
 # include <dirent.h>
-# include<sys/wait.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include "../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <dirent.h>
-# include <fcntl.h> 
-
-int	g_exit_status;
 
 typedef struct s_lexer
 {
@@ -72,6 +70,8 @@ void	executables(char **cmd, t_mshell *mshell);
 char	*get_path(char **pwd);
 //Pipe
 void	handle_pipe(t_mshell *mshell);
-
-
+//Words
+char	**init_words(char *str, t_mshell *mshell);
+//Expand
+char	*expand(char *str, t_mshell *mshell);
 #endif // MINISHELL_H

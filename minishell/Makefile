@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 14:37:51 by brumarti          #+#    #+#              #
-#    Updated: 2023/05/23 17:50:27 by brumarti         ###   ########.fr        #
+#    Updated: 2023/05/25 17:43:24 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRC = main.c \
 		srcs/parser.c \
 		srcs/executable.c \
 		srcs/env_var.c \
-		srcs/pipe.c
+		srcs/pipe.c \
+		srcs/words.c \
+		srcs/expand.c
 
 OBJ = $(SRC:.c=.o)
 
