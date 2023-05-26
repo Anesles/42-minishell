@@ -76,6 +76,7 @@ char	**init_words(char *str, t_mshell *mshell)
 	while (i < count)
 	{
 		words[i] = get_words(str + start, mshell);
+		ft_printf(":%s:\n", words[i]);
 		if (ft_strlen(words[i]) == 0)
 			start += find_char(str + start, ' ');
 		start += ft_strlen(words[i]) + 1;

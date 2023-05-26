@@ -20,13 +20,21 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 
 	available = ft_split(mshell->PATH, ':');
 	i = 0;
-	while (available[i])
+	if (!access(cmd[0], X_OK))
 	{
-		str = ft_strjoin(available[i], "/");
-		str = ft_strjoin(str, cmd[0]);
-		if (!access(str, X_OK))
-			return (str);
-		i++;
+		ft_printf("ero1\n");
+		execve(cmd[0], cmd, mshell->envior);
+	}
+	else
+	{
+		while (available[i])
+		{
+			str = ft_strjoin(available[i], "/");
+			str = ft_strjoin(str, cmd[0]);
+			if (!access(str, X_OK))
+				return (str);
+			i++;
+		}
 	}
 	return (NULL);
 }
@@ -36,6 +44,8 @@ void	executables(char **cmd, t_mshell *mshell)
 	char	*bin;
 
 	bin = returnvalue(cmd, mshell);
+	if (bin == NULL)
+		bin = "none";
 	execve(bin, cmd, mshell->envior);
 }
 

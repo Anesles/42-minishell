@@ -48,8 +48,8 @@ char	*expand_env(char *str, t_mshell *mshell)
 	int		i;
 	char	**words;
 
-	i = 0;
 	words = ft_split(str, ' ');
+	i = 0;
 	if (count_words(words) == 1)
 	{
 		if (ft_strchr(words[0], '$') != NULL)

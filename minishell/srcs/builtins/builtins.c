@@ -19,11 +19,21 @@ void	b_echo(char **words, int max_words)
 
 	i = 0;
 	mode = 0;
+	while (words[i])
+	{
+		ft_printf("%s\n", words[i]);
+		i++;
+	}
+	ft_printf("end\n");
+	if (!words[0])
+		printf("\n");
+	i = 0;
 	if (!ft_strncmp(words[i], "-n", 2))
 	{
 		mode = 1;
 		i++;
 	}
+	i = 0;
 	while (words[i])
 	{
 		if (i == max_words - 1)
@@ -48,16 +58,16 @@ void	b_cd(char *direct)
 		perror("cd failed");
 }
 
+void	b_exit(int	status)
+{
+	exit(status);
+}
+
 void	b_pwd(void)
 {
 	char	str[256];
 	getcwd(str, sizeof(str));
 	printf("%s\n", str);
-}
-
-void	b_exit(int status)
-{
-	exit(status);
 }
 
 void	b_env(t_mshell *mshell)

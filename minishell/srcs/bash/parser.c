@@ -40,13 +40,16 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 			if (check_commands(cmds[i].words[0]))
 				cmds[i].built(&cmds[i], mshell);
 			else
-				pid = fork();
-			if (pid == 0)
 			{
-				handle_pipe(mshell);
-				cmds[i].built(&cmds[i], mshell);
-				exit(0);
+				pid = fork();
+				if (pid == 0)
+				{
+					handle_pipe(mshell);
+					cmds[i].built(&cmds[i], mshell);
+					exit(0);
+				}
 			}
+
 		}
 		close(mshell->fd[0]);
 		close(mshell->fd[1]);
@@ -58,15 +61,17 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 		if (check_commands(cmds[0].words[0]))
 			cmds[0].built(cmds, mshell);
 		else
-			pid = fork();
-		if (pid == 0)
 		{
-			handle_pipe(mshell);
-			cmds[0].built(cmds, mshell);
-			exit(0);
+			pid = fork();
+			if (pid == 0)
+			{
+				handle_pipe(mshell);
+				cmds[0].built(cmds, mshell);
+				exit(0);
+			}
+			close(mshell->fd[0]);
+			close(mshell->fd[1]);
+			waitpid(pid, NULL, 0);
 		}
-		close(mshell->fd[0]);
-		close(mshell->fd[1]);
-		waitpid(pid, NULL, 0);
 	}
 }
