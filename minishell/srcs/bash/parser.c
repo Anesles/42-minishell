@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 15:42:41 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:17:49 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 			pid = fork();
 			if (pid == 0)
 			{
-				handle_pipe(mshell);
+				if (ft_strncmp(cmds[0].words[0], "./minishell", 8))
+					handle_pipe(mshell);
 				cmds[0].built(cmds, mshell);
 				exit(0);
 			}

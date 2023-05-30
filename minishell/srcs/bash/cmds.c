@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/24 18:40:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:50:56 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,20 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {	
 	char	**words;
 	t_lexer	*temp;
+	int		redir;
 	int		i;
 	int		count;
 
 	count = 0;
+	redir = 0;
 	temp = lexer;
 	while (temp)
 	{
+		if (is_redir(temp->word))
+		{
+			redir = 1;
+			break ;
+		}
 		if (temp->word[0] == '|')
 			break ;
 		else
@@ -55,6 +62,17 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		temp = temp->next;
 	}
 	words[i] = NULL;
+	if (redir == 1)
+	{
+		cmds->token = temp->word;
+		temp = temp->next;
+		cmds->redi = temp->word;
+	}
+	else
+	{
+		cmds->token = NULL;
+		cmds->redi = NULL;
+	}
 	return (words);
 }
 
@@ -78,6 +96,8 @@ void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 		cmds[i].built = &builtins;
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
 		start += cmds[i].count_words + 1;
+		if (cmds[i].token != NULL)
+			start += 2;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/25 16:21:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:55:47 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,47 @@ void	b_unset(char *variable, t_mshell *mshell)
 	mshell->envior = new_environ;
 }
 
+void	token_less(char *file_name)
+{
+	int	fd;
+
+	fd = open(file_name, O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
+
+void	token_more(t_cmds *cmds)
+{
+	int	fd;
+
+	fd = open(cmds->redi, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	dup2(fd, STDOUT_FILENO);
+	close(fd); 
+}
+
+void	token_more_more(t_cmds *cmds)
+{
+	int	fd;
+
+	fd = open(cmds->redi, O_CREAT | O_RDWR | O_APPEND, 0644);
+	dup2(fd, STDOUT_FILENO);
+	close(fd); 
+}
+
 void	builtins(t_cmds *cmds, t_mshell *mshell)
 {	
+	if (cmds->token != NULL)
+	{
+		if (!ft_strncmp(cmds->token, ">>", 2))
+			token_more_more(cmds);
+		else if (!ft_strncmp(cmds->token, "<<", 2))
+			token_less("heredoc");
+		else if (!ft_strncmp(cmds->token, ">", 1))
+			token_more(cmds);
+		else if (!ft_strncmp(cmds->token, "<", 1))
+			token_less(cmds->redi);	
+	}
+
 	if (cmds->words)
 	{
 		if (!ft_strncmp("pwd", cmds->words[0], 3))

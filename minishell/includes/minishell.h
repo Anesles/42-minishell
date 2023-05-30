@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 18:59:24 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:46:45 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_cmds
 	char			**words;
 	int				count_words;
 	void			(*built)(t_cmds *, t_mshell *);
+	char			*token;
+	char			*redi;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }	t_cmds;
@@ -55,6 +57,7 @@ typedef struct s_cmds
 int		count_words(char **words);
 void	clear_words(char **words, int n);
 int		find_char(char *str, char c);
+int		is_redir(char *str);
 //Lexer
 t_lexer	*init_lexer(char **words, int n);
 //Cmds

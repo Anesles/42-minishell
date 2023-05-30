@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 16:11:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:12:19 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 	available = ft_split(mshell->PATH, ':');
 	i = 0;
 	if (!access(cmd[0], X_OK))
-	{
-		ft_printf("ero1\n");
 		execve(cmd[0], cmd, mshell->envior);
-	}
 	else
 	{
 		while (available[i])

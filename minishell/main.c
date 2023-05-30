@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 18:58:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:48:27 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	main(int argc, char *argv[], char **envp)
 			free(prompt);
 			lexer = init_lexer(words, count_words(words));
 			cmds = init_cmds(lexer, &mshell);
+			ft_printf("Token: %s; Redirect: %s\n", cmds->token, cmds->redi);
 			parser(cmds, &mshell);
 			free(lexer);
 			free(cmds);
