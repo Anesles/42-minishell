@@ -14,39 +14,41 @@
 
 int	number_words(char *str)
 {
-	int	toggle;
+	bool insidequotes;
+	bool insideword;
 	int	count;
-	int	len;
 	int	i;
 
-	toggle = 0;
 	count = 0;
 	i = 0;
-	len = ft_strlen(str);
-	while (i < len)
+	insidequotes = false;
+	insideword = false;
+	while (str[i])
 	{
 		if (str[i] == '"')
 		{
-			if (toggle == 0)
-				count++;
-			toggle = !toggle;
+			insidequotes = !insidequotes;
 		}
-		else if (toggle == 0)
+		else if (str[i] != ' ' || insidequotes)
+			insideword = true;
+		else if (insideword)
 		{
-			if ((str[i] == ' ' && ft_isprint(str[i + 1])) || str[i + 1] == '\0')
-				count++;
-		}	
+			count++;
+			insideword = false;
+		}
 		i++;
 	}
+	if (insideword)
+		count++;
 	return (count);
 }
 
 char	*get_words(char *str, t_mshell *mshell)
 {
-	if (*str == '"')
+	if (*str == '"')//problema: no segundo "
 	{
 		str++;
-		return (expand(ft_substr(str, 0, find_char(str, '"')), mshell));
+		return (expand(ft_substr(str, 0, find_char(str, '"')) , mshell));
 	}
 	else if (*str == '\'')
 	{
@@ -57,7 +59,9 @@ char	*get_words(char *str, t_mshell *mshell)
 			return (ft_substr(str, 0, find_char(str, '\'')));
 	}
 	else
+	{
 		return (expand(ft_substr(str, 0, find_char(str, ' ')), mshell));
+	}
 }
 
 char	**init_words(char *str, t_mshell *mshell)
@@ -76,10 +80,10 @@ char	**init_words(char *str, t_mshell *mshell)
 	while (i < count)
 	{
 		words[i] = get_words(str + start, mshell);
-		ft_printf(":%s:\n", words[i]);
 		if (ft_strlen(words[i]) == 0)
 			start += find_char(str + start, ' ');
 		start += ft_strlen(words[i]) + 1;
+		ft_printf("word:%s:\n", words[i]);
 		i++;
 	}
 	words[i] = NULL;

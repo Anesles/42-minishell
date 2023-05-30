@@ -17,16 +17,9 @@ void	b_echo(char **words, int max_words)
 	int	i;
 	int	mode;
 
-	i = 0;
 	mode = 0;
-	while (words[i])
-	{
-		ft_printf("%s\n", words[i]);
-		i++;
-	}
-	ft_printf("end\n");
 	if (!words[0])
-		printf("\n");
+		ft_printf("\n");
 	i = 0;
 	if (!ft_strncmp(words[i], "-n", 2))
 	{
