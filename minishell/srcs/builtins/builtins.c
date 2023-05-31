@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/30 17:55:47 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:54:24 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	b_cd(char *direct)
 		perror("cd failed");
 }
 
-void	b_exit(int	status)
+void	b_exit(int status)
 {
 	exit(status);
 }
@@ -59,6 +59,7 @@ void	b_exit(int	status)
 void	b_pwd(void)
 {
 	char	str[256];
+
 	getcwd(str, sizeof(str));
 	printf("%s\n", str);
 }
@@ -138,29 +139,37 @@ void	b_unset(char *variable, t_mshell *mshell)
 	mshell->envior = new_environ;
 }
 
-void	token_less(char *file_name)
+void	token_less(t_cmds *cmds, int mode) // mode 1 = <<; mode 0 = <
 {
-	int	fd;
+	int		fd;
+	char	*line;
 
-	fd = open(file_name, O_RDONLY);
+	if (mode == 0)
+		fd = open(cmds->redi, O_RDONLY);
+	else
+	{
+		fd = open("temp", O_WRONLY | O_CREAT, 0644);
+		line = readline("> ");
+		while (ft_strncmp(line, cmds->redi, ft_strlen(cmds->redi)))
+		{
+			write(fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
+			line = readline("> ");
+		}
+		close(fd);
+		fd = open("temp", O_RDONLY);
+	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
 
-void	token_more(t_cmds *cmds)
+void	token_more(t_cmds *cmds, int mode) // mode 1 = >>; mode 0 = >
 {
 	int	fd;
 
-	fd = open(cmds->redi, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	dup2(fd, STDOUT_FILENO);
-	close(fd); 
-}
-
-void	token_more_more(t_cmds *cmds)
-{
-	int	fd;
-
-	fd = open(cmds->redi, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (mode == 1)
+		fd = open(cmds->redi, O_CREAT | O_RDWR | O_APPEND, 0644);
+	else
+		fd = open(cmds->redi, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	dup2(fd, STDOUT_FILENO);
 	close(fd); 
 }
@@ -170,15 +179,14 @@ void	builtins(t_cmds *cmds, t_mshell *mshell)
 	if (cmds->token != NULL)
 	{
 		if (!ft_strncmp(cmds->token, ">>", 2))
-			token_more_more(cmds);
+			token_more(cmds, 1);
 		else if (!ft_strncmp(cmds->token, "<<", 2))
-			token_less("heredoc");
+			token_less(cmds, 1);
 		else if (!ft_strncmp(cmds->token, ">", 1))
-			token_more(cmds);
+			token_more(cmds, 0);
 		else if (!ft_strncmp(cmds->token, "<", 1))
-			token_less(cmds->redi);	
+			token_less(cmds, 0);	
 	}
-
 	if (cmds->words)
 	{
 		if (!ft_strncmp("pwd", cmds->words[0], 3))

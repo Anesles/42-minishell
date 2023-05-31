@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:17:49 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:05:45 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 					exit(0);
 				}
 			}
-
 		}
 		close(mshell->fd[0]);
 		close(mshell->fd[1]);
@@ -57,22 +56,16 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 	}
 	else
 	{
-		mshell->current_cmd++;
-		if (check_commands(cmds[0].words[0]))
+		if (is_builtins(cmds->words[0]))
 			cmds[0].built(cmds, mshell);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
-			{
-				if (ft_strncmp(cmds[0].words[0], "./minishell", 8))
-					handle_pipe(mshell);
-				cmds[0].built(cmds, mshell);
-				exit(0);
-			}
-			close(mshell->fd[0]);
-			close(mshell->fd[1]);
-			waitpid(pid, NULL, 0);
+				cmds[0].built(&cmds[0], mshell);
+			else
+				waitpid(pid, NULL, 0);
 		}
+		mshell->current_cmd++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:22:12 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:46:23 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:01:28 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	find_char(char *str, char c)
 	return (i);
 }
 
-int is_redir(char *str)
+int	is_redir(char *str)
 {
 	if (!ft_strncmp(str, ">>", 2))
 		return (1);
@@ -55,6 +55,25 @@ int is_redir(char *str)
 	else if (!ft_strncmp(str, "<", 1))
 		return (1);
 	else if (!ft_strncmp(str, ">", 1))
+		return (1);
+	return (0);
+}
+
+int	is_builtins(char *str)
+{
+	if (ft_strncmp(str, "echo", 4) == 0)
+		return (1);
+	else if (ft_strncmp(str, "cd", 2) == 0)
+		return (1);
+	else if (ft_strncmp(str, "pwd", 3) == 0)
+		return (1);
+	else if (ft_strncmp(str, "export", 6) == 0)
+		return (1);
+	else if (ft_strncmp(str, "unset", 5) == 0)
+		return (1);
+	else if (ft_strncmp(str, "env", 3) == 0)
+		return (1);
+	else if (ft_strncmp(str, "exit", 4) == 0)
 		return (1);
 	return (0);
 }

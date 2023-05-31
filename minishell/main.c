@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:48:27 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:15:39 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	main(int argc, char *argv[], char **envp)
 	signal(SIGQUIT, sig_quit);
 	mshell.envior = arraydup(envp);
 	mshell.PATH = get_path(mshell.envior);
+	mshell.save_fd[0] = dup(0);
+	mshell.save_fd[1] = dup(1);
 	while (1)
 	{
 		pipe(mshell.fd);
@@ -90,8 +92,9 @@ int	main(int argc, char *argv[], char **envp)
 			free(prompt);
 			lexer = init_lexer(words, count_words(words));
 			cmds = init_cmds(lexer, &mshell);
-			ft_printf("Token: %s; Redirect: %s\n", cmds->token, cmds->redi);
 			parser(cmds, &mshell);
+			unlink("temp");
+			reset_pipes(&mshell);
 			free(lexer);
 			free(cmds);
 		}

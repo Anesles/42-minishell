@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:46:45 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:14:58 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_mshell
 	int		n_cmds;
 	int		current_cmd;
 	int		fd[2];
+	int		save_fd[2];
 	char	*PATH;
 	char	**envior;
 }	t_mshell;
@@ -58,6 +59,7 @@ int		count_words(char **words);
 void	clear_words(char **words, int n);
 int		find_char(char *str, char c);
 int		is_redir(char *str);
+int		is_builtins(char *str);
 //Lexer
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
@@ -73,6 +75,7 @@ void	executables(char **cmd, t_mshell *mshell);
 char	*get_path(char **pwd);
 //Pipe
 void	handle_pipe(t_mshell *mshell);
+void	reset_pipes(t_mshell *mshell);
 //Words
 char	**init_words(char *str, t_mshell *mshell);
 //Expand

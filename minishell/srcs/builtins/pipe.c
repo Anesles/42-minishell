@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:16:27 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:14:39 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,10 @@ void	handle_pipe(t_mshell *mshell)
 		close(mshell->fd[0]);
 		close(mshell->fd[1]);
 	}
+}
+
+void	reset_pipes(t_mshell *mshell)
+{
+	dup2(mshell->save_fd[0], STDIN_FILENO);
+	dup2(mshell->save_fd[1], STDOUT_FILENO);
 }

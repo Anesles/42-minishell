@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:22:48 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:27:51 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	number_words(char *str)
 
 char	*get_words(char *str, t_mshell *mshell)
 {
-	if (*str == '"')//problema: no segundo "
+	if (*str == '"')
 	{
 		str++;
 		return (expand(ft_substr(str, 0, find_char(str, '"')) , mshell));
