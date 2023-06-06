@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/25 18:54:48 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:49:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,46 @@ char	*join_words(char **words)
 char	*expand_env(char *str, t_mshell *mshell)
 {
 	int		i;
+	int		j;
+	char	*name;
+	char	*temp;
 	char	**words;
 
 	words = ft_split(str, ' ');
 	i = 0;
 	if (count_words(words) == 1)
 	{
-		if (ft_strchr(words[0], '$') != NULL)
-			words[0] = get_env(ft_strtrim(words[0], "$"), mshell->envior);
-		else
-			return (words[0]);
+		while (find_char(words[0], '$') != -1)
+		{
+			i = 0;
+			while (1)
+			{
+				name = ft_substr(words[0], find_char(words[0], '$') + 1, 1 + i);
+				temp = get_env(name, mshell->envior);
+				if (temp != NULL && find_char(temp, '=') == -1)
+					break;
+				i++;
+			}
+			words[0] = ft_replace_env(words[0], ft_strjoin("$", name), temp);
+		}
 	}
 	else
 	{
 		while (words[i])
 		{
-			if (ft_strchr(words[i], '$') != NULL)
-				words[i] = get_env(ft_strtrim(words[i], "$"), mshell->envior);
+			while (find_char(words[i], '$') != -1)
+			{
+				j = 0;
+				while (1)
+				{
+					name = ft_substr(words[i], find_char(words[i], '$') + 1, 1 + j);
+					temp = get_env(name, mshell->envior);
+					if (temp != NULL)
+						break;
+					j++;
+				}
+				words[i] = ft_replace_env(words[i], ft_strjoin("$", name), temp);
+			}
 			i++;
 		}
 	}

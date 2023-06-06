@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/06 15:41:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:32:31 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	clear_words(char **words, int n);
 int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
+char	*ft_replace_env(const char* str, const char *substr, const char *replace);
 //Lexer
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
@@ -69,6 +70,7 @@ int	builtins(t_cmds *cmds, t_mshell *mshell);
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
 void	b_exit(int status);
+int		b_export(char *new_variable, t_mshell *mshell);
 //Executables
 char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);

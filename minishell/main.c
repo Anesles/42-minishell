@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/06 15:25:11 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:32:42 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(int argc, char *argv[], char **envp)
 	mshell.PATH = get_path(mshell.envior);
 	mshell.save_fd[0] = dup(0);
 	mshell.save_fd[1] = dup(1);
+	b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), &mshell);
 	while (1)
 	{
 		pipe(mshell.fd);
@@ -97,7 +98,7 @@ int	main(int argc, char *argv[], char **envp)
 			reset_pipes(&mshell);
 			free(lexer);
 			free(cmds);
-			ft_printf("%d\n", g_exit_status);
+			b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), &mshell);
 		}
 		clear_words(words, count_words(words));
 	}

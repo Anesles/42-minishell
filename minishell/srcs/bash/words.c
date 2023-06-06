@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/31 16:27:51 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:32:35 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	number_words(char *str)
 	return (count);
 }
 
-char	*get_words(char *str, t_mshell *mshell)
+char	*get_words(char *str, int max, int current, t_mshell *mshell)
 {
 	if (*str == '"')
 	{
 		str++;
-		return (expand(ft_substr(str, 0, find_char(str, '"')) , mshell));
+		return (expand(ft_substr(str, 0, find_char(str, '"')), mshell));
 	}
 	else if (*str == '\'')
 	{
@@ -58,10 +58,10 @@ char	*get_words(char *str, t_mshell *mshell)
 		else
 			return (ft_substr(str, 0, find_char(str, '\'')));
 	}
+	else if (current == max - 1)
+		return (expand(ft_substr(str, 0, find_char(str, '\0')), mshell));
 	else
-	{
 		return (expand(ft_substr(str, 0, find_char(str, ' ')), mshell));
-	}
 }
 
 char	**init_words(char *str, t_mshell *mshell)
@@ -79,7 +79,7 @@ char	**init_words(char *str, t_mshell *mshell)
 	start = 0;
 	while (i < count)
 	{
-		words[i] = get_words(str + start, mshell);
+		words[i] = get_words(str + start, count, i, mshell);
 		if (ft_strlen(words[i]) == 0)
 			start += find_char(str + start, ' ');
 		start += ft_strlen(words[i]) + 1;
