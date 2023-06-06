@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/31 17:15:39 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:25:11 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char *argv[], char **envp)
 			reset_pipes(&mshell);
 			free(lexer);
 			free(cmds);
-			printf("%s\n", getenv("?"));
+			ft_printf("%d\n", g_exit_status);
 		}
 		clear_words(words, count_words(words));
 	}

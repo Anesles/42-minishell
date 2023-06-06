@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/30 16:12:19 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:37:54 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 	available = ft_split(mshell->PATH, ':');
 	i = 0;
 	if (!access(cmd[0], X_OK))
-		execve(cmd[0], cmd, mshell->envior);
+		return (cmd[0]);
 	else
 	{
 		while (available[i])
@@ -44,7 +44,6 @@ void	executables(char **cmd, t_mshell *mshell)
 	if (bin == NULL)
 		bin = "none";
 	execve(bin, cmd, mshell->envior);
-	error_cmd_not_found(cmd[0]);
 }
 
 char	*get_path(char **pwd)

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/05/31 17:14:58 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:41:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_cmds
 {
 	char			**words;
 	int				count_words;
-	void			(*built)(t_cmds *, t_mshell *);
+	int				(*built)(t_cmds *, t_mshell *);
 	char			*token;
 	char			*redi;
 	struct s_cmds	*next;
@@ -64,7 +64,7 @@ int		is_builtins(char *str);
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
-void	builtins(t_cmds *cmds, t_mshell *mshell);
+int	builtins(t_cmds *cmds, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
@@ -81,6 +81,6 @@ char	**init_words(char *str, t_mshell *mshell);
 //Expand
 char	*expand(char *str, t_mshell *mshell);
 //Errors
-void    error_cmd_not_found(char *cmd);
+void	error_cmd_not_found(char *cmd);
 
 #endif // MINISHELL_H

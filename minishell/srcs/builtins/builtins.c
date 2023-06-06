@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/31 16:54:24 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:45:08 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	b_echo(char **words, int max_words)
+int	b_echo(char **words, int max_words)
 {
 	int	i;
 	int	mode;
@@ -41,15 +41,17 @@ void	b_echo(char **words, int max_words)
 			printf("%s ", words[i]);
 		i++;
 	}
+	return (0);
 }
 
-void	b_cd(char *direct)
+int	b_cd(char *direct)
 {
 	int	error;
 
 	error = chdir((const char *)direct);
 	if (error != 0)
 		perror("cd failed");
+	return(0);
 }
 
 void	b_exit(int status)
@@ -57,15 +59,16 @@ void	b_exit(int status)
 	exit(status);
 }
 
-void	b_pwd(void)
+int	b_pwd(void)
 {
 	char	str[256];
 
 	getcwd(str, sizeof(str));
 	printf("%s\n", str);
+	return(0);
 }
 
-void	b_env(t_mshell *mshell)
+int	b_env(t_mshell *mshell)
 {
 	int	i;
 
@@ -75,9 +78,10 @@ void	b_env(t_mshell *mshell)
 		printf("%s\n", mshell->envior[i]);
 		i++;
 	}
+	return(0);
 }
 
-void b_export(char *new_variable, t_mshell *mshell)
+int	b_export(char *new_variable, t_mshell *mshell)
 {
 	int		count;
 	int		i;
@@ -113,9 +117,10 @@ void b_export(char *new_variable, t_mshell *mshell)
 		new_env[i] = NULL;
 	free(mshell->envior);
 	mshell->envior = new_env;
+	return (0);
 }
 
-void	b_unset(char *variable, t_mshell *mshell)
+int	b_unset(char *variable, t_mshell *mshell)
 {
 	int		count;
 	int		track;
@@ -138,6 +143,7 @@ void	b_unset(char *variable, t_mshell *mshell)
 	}
 	new_environ[track] = NULL;
 	mshell->envior = new_environ;
+	return (0);
 }
 
 void	token_less(t_cmds *cmds, int mode) // mode 1 = <<; mode 0 = <
@@ -175,7 +181,7 @@ void	token_more(t_cmds *cmds, int mode) // mode 1 = >>; mode 0 = >
 	close(fd); 
 }
 
-void	builtins(t_cmds *cmds, t_mshell *mshell)
+int	builtins(t_cmds *cmds, t_mshell *mshell)
 {	
 	if (cmds->token != NULL)
 	{
@@ -191,20 +197,22 @@ void	builtins(t_cmds *cmds, t_mshell *mshell)
 	if (cmds->words)
 	{
 		if (!ft_strncmp("pwd", cmds->words[0], 3))
-			b_pwd();
+			return (b_pwd());
 		else if (!ft_strncmp("echo", cmds->words[0], 4))
-			b_echo(&cmds->words[1], cmds->count_words - 1);
+			return (b_echo(&cmds->words[1], cmds->count_words - 1));
 		else if (!ft_strncmp("cd", cmds->words[0], 2))
-			b_cd(cmds->words[1]);
+			return(b_cd(cmds->words[1]));
 		else if (!ft_strncmp("exit", cmds->words[0], 4))
 			b_exit(0);
 		else if (!ft_strncmp("env", cmds->words[0], 3))
-			b_env(mshell);
+			return(b_env(mshell));
 		else if (!ft_strncmp("export", cmds->words[0], 6))
-			b_export(cmds->words[1], mshell);
+			return(b_export(cmds->words[1], mshell));
 		else if (!ft_strncmp("unset", cmds->words[0], 5))
-			b_unset(cmds->words[1], mshell);
+			return(b_unset(cmds->words[1], mshell));
 		else
 			executables(cmds->words, mshell);
 	}
+	error_cmd_not_found(cmds->words[0]);
+	return(EXIT_FAILURE);
 }
