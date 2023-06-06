@@ -25,7 +25,8 @@ SRC = main.c \
 		srcs/bash/expand.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/builtins.c \
-		srcs/builtins/executable.c 
+		srcs/builtins/executable.c \
+		srcs/bash/errors.c 
 
 OBJ = $(SRC:.c=.o)
 

@@ -97,6 +97,7 @@ int	main(int argc, char *argv[], char **envp)
 			reset_pipes(&mshell);
 			free(lexer);
 			free(cmds);
+			printf("%s\n", getenv("?"));
 		}
 		clear_words(words, count_words(words));
 	}

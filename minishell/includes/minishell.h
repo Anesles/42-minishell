@@ -80,4 +80,7 @@ void	reset_pipes(t_mshell *mshell);
 char	**init_words(char *str, t_mshell *mshell);
 //Expand
 char	*expand(char *str, t_mshell *mshell);
+//Errors
+void    error_cmd_not_found(char *cmd);
+
 #endif // MINISHELL_H

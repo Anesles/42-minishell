@@ -26,7 +26,8 @@ void	b_echo(char **words, int max_words)
 		mode = 1;
 		i++;
 	}
-	i = 0;
+	else
+		i = 0;
 	while (words[i])
 	{
 		if (i == max_words - 1)

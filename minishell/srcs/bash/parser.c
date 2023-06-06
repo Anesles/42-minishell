@@ -62,7 +62,10 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 		{
 			pid = fork();
 			if (pid == 0)
+			{
 				cmds[0].built(&cmds[0], mshell);
+				exit(0);
+			}
 			else
 				waitpid(pid, NULL, 0);
 		}

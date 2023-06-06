@@ -44,6 +44,7 @@ void	executables(char **cmd, t_mshell *mshell)
 	if (bin == NULL)
 		bin = "none";
 	execve(bin, cmd, mshell->envior);
+	error_cmd_not_found(cmd[0]);
 }
 
 char	*get_path(char **pwd)
