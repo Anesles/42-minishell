@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/06 17:32:35 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:59:24 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ char	**init_words(char *str, t_mshell *mshell)
 	while (i < count)
 	{
 		words[i] = get_words(str + start, count, i, mshell);
-		if (ft_strlen(words[i]) == 0)
-			start += find_char(str + start, ' ');
-		start += ft_strlen(words[i]) + 1;
+		if (i == count - 1)
+			start += find_char(str + start, '\0');
+		else
+			start += find_char(str + start, ' ') + 1;
 		if (((*(str + start) == '"') || (*(str + start) == 39)) && (*(str + start + 1) == ' '))
 			start += 2;
 		i++;
