@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 12:28:10 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:00:15 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ char	**init_words(char *str, t_mshell *mshell);
 char	*expand(char *str, t_mshell *mshell);
 //Errors
 void	error_cmd_not_found(char *cmd);
+int    error_cd(char *cmd);
 
 #endif // MINISHELL_H

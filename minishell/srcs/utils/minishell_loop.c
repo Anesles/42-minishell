@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 11:36:40 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 12:27:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:57:51 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	clear_mem(t_mshell *mshell, t_lexer *lexer, t_cmds *cmds)
 	reset_pipes(mshell);
 	free(lexer);
 	free(cmds);
-	b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
 }
 
 void	minishell_loop(t_mshell *mshell)
@@ -66,6 +65,7 @@ void	minishell_loop(t_mshell *mshell)
 			lexer = init_lexer(words, count_words(words));
 			cmds = init_cmds(lexer, mshell);
 			parser(cmds, mshell);
+			b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
 			clear_mem(mshell, lexer, cmds);
 		}
 		clear_words(words, count_words(words));

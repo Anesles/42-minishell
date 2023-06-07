@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/06/07 11:42:35 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:14:45 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	b_cd(char *direct)
 
 	error = chdir((const char *)direct);
 	if (error != 0)
-		perror("cd failed");
+		return(error_cd(direct));
 	return(0);
 }
 
@@ -150,7 +150,7 @@ int	b_unset(char *variable, t_mshell *mshell)
 }
 
 int	builtins(t_cmds *cmds, t_mshell *mshell)
-{	
+{
 	if (cmds->token != NULL)
 	{
 		if (!ft_strncmp(cmds->token, ">>", 2))

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 11:44:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:19:44 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	number_words(char *str)
 {
-	bool	insidequotes;
-	bool	insideword;
-	int		count;
-	int		i;
+	bool insidequotes;
+	bool insideword;
+	int	count;
+	int	i;
 
 	count = 0;
 	i = 0;
@@ -26,7 +26,9 @@ int	number_words(char *str)
 	while (str[i])
 	{
 		if (str[i] == '"')
+		{
 			insidequotes = !insidequotes;
+		}
 		else if (str[i] != ' ' || insidequotes)
 			insideword = true;
 		else if (insideword)
@@ -77,13 +79,14 @@ char	**init_words(char *str, t_mshell *mshell)
 	start = 0;
 	while (i < count)
 	{
+		while (*(str + start) >= 1 && *(str + start) <= 32)
+			start++;
 		words[i] = get_words(str + start, count, i, mshell);
 		if (i == count - 1)
 			start += find_char(str + start, '\0');
 		else
 			start += find_char(str + start, ' ') + 1;
-		if (((*(str + start) == '"') || (*(str + start) == 39)) 
-			&& (*(str + start + 1) == ' '))
+		if (((*(str + start) == '"') || (*(str + start) == 39)) && (*(str + start + 1) == ' '))
 			start += 2;
 		i++;
 	}

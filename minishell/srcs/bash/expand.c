@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 11:32:16 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:54:17 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,36 @@ char	*join_words(char **words)
 	return (str);
 }
 
-char	*expand_env(char *str, t_mshell *mshell)
+char	*get_name(char *str)
 {
 	int		i;
 	int		j;
+	int		count;
+	char	*name;
+
+	count = 0;
+	i = find_char(str, '$') + 1;
+	if (str[i] == '?')
+		count = 1;
+	else
+	{
+		while(ft_isalnum(str[i++]))
+			count++;
+	}
+	name = malloc(sizeof (char) * count + 1);
+	if (!name)
+		return (NULL);
+	i = find_char(str, '$') + 1;
+	j = 0;
+	while (j < count)
+		name[j++] = str[i++];
+	name[j] = 0;
+	return (name);
+}
+
+char	*expand_env(char *str, t_mshell *mshell)
+{
+	int		i;
 	char	*name;
 	char	*temp;
 	char	**words;
@@ -57,15 +83,10 @@ char	*expand_env(char *str, t_mshell *mshell)
 	{
 		while (find_char(words[0], '$') != -1)
 		{
-			i = 0;
-			while (1)
-			{
-				name = ft_substr(words[0], find_char(words[0], '$') + 1, 1 + i);
-				temp = get_env(name, mshell->envior);
-				if (temp != NULL && find_char(temp, '=') == -1)
-					break ;
-				i++;
-			}
+			name = get_name(words[0]);
+			temp = get_env(name, mshell->envior);
+			if (temp == NULL)
+				break ;
 			words[0] = ft_replace_env(words[0], ft_strjoin("$", name), temp);
 		}
 	}
@@ -75,14 +96,12 @@ char	*expand_env(char *str, t_mshell *mshell)
 		{
 			while (find_char(words[i], '$') != -1)
 			{
-				j = 0;
 				while (1)
 				{
-					name = ft_substr(words[i], find_char(words[i], '$') + 1, 1 + j);
+					name = get_name(words[i]);
 					temp = get_env(name, mshell->envior);
-					if (temp != NULL && find_char(temp, '=') == -1)
+					if (temp == NULL)
 						break;
-					j++;
 				}
 				words[i] = ft_replace_env(words[i], ft_strjoin("$", name), temp);
 			}
