@@ -19,7 +19,10 @@ int	b_echo(char **words, int max_words)
 
 	mode = 0;
 	if (!words[0])
+	{
 		ft_printf("\n");
+		return (0);
+	}
 	i = 0;
 	if (!ft_strncmp(words[i], "-n", 2))
 	{

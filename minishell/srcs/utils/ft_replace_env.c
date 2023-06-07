@@ -64,29 +64,42 @@ int	ft_get_start(char *str, char *substr)
 		return (-1);
 }
 
-char	*ft_replace_env(char *str, char *substr, char *replace)
+char	*get_done(char *output, char *str, char *replace, char *substr)
 {
 	int		i;
 	size_t	j;
 	int		start;
-	char	*output;
 
-	output = malloc(sizeof(char) * ft_get_size(str, substr, replace));
+	i = -1;
+	j = 0;
 	start = ft_get_start(str, substr);
 	if (start != -1)
 	{
-		i = -1;
 		while (++i < start)
 			output[i] = str[i];
-		j = -1;
-		while (++j < ft_strlen(replace))
-			output[i++] = replace[j];
-		j = start + ft_strlen(substr) - 1;
-		while (++j < ft_strlen(str))
-			output[++i] = str[j];
+		while (j < ft_strlen(replace))
+			output[i++] = replace[j++];
+		j = start + ft_strlen(substr);
+		while (str[j])
+			output[i++] = str[j++];
 		output[i] = '\0';
 	}
 	else
+	{
+		free(output);
 		return (NULL);
+	}
 	return (output);
+}
+
+char	*ft_replace_env(char *str, char *substr, char *replace)
+{
+	char	*output;
+
+	output = malloc(sizeof(char) * (ft_get_size(str, substr, replace) + 1));
+	output = get_done(output, str, replace, substr);
+	if (!output)
+		return (NULL);
+	else
+		return (output);
 }
