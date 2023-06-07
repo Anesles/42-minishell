@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:33:06 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/10 14:39:09 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 	t1 = (char *)s1;
 	t2 = (char *)s2;
 	if (n == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (*t1 && *t2 && (*t1 == *t2) && i < n - 1)
 	{
 		t1++;

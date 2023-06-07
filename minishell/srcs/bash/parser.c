@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/06 15:59:45 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:51:28 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ extern int	g_exit_status;
 int	check_commands(char *cmd)
 {
 	if (!ft_strncmp(cmd, "export", 6))
-		return (1);
+		return (EXIT_FAILURE);
 	else if (!ft_strncmp(cmd, "unset", 5))
-		return (1);
+		return (EXIT_FAILURE);
 	else if (!ft_strncmp(cmd, "cd", 2))
-		return (1);
+		return (EXIT_FAILURE);
 	else if (!ft_strncmp(cmd, "exit", 4))
-		return (1);
+		return (EXIT_FAILURE);
 	else
-		return (0);
+		return (EXIT_SUCCESS);
 }
 
 void	parser(t_cmds *cmds, t_mshell *mshell)
@@ -34,7 +34,7 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 	pid_t	pid;
 	int		status;
 
-	status = 1000;
+	status = 0;
 	if (mshell->n_cmds > 1)
 	{
 		i = -1;
@@ -62,7 +62,7 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 	else
 	{
 		if (is_builtins(cmds->words[0]))
-			g_exit_status = cmds[0].built(cmds, mshell);
+			g_exit_status = cmds->built(cmds, mshell);
 		else
 		{
 			pid = fork();

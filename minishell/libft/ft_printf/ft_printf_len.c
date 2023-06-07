@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 18:02:50 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/24 18:17:18 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:20 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	len_hex(unsigned int p)
 	int	len;
 
 	if (p == 0)
-		return (1);
+		return (EXIT_FAILURE);
 	len = 0;
 	while (p != 0)
 	{

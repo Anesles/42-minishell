@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 14:37:51 by brumarti          #+#    #+#              #
-#    Updated: 2023/06/07 11:53:36 by brumarti         ###   ########.fr        #
+#    Updated: 2023/06/07 18:49:08 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,12 @@ SRC = main.c \
 		srcs/utils/utils.c \
 		srcs/bash/parser.c \
 		srcs/bash/expand.c \
+		srcs/utils/get_env.c \
 		srcs/builtins/pipe.c \
+		srcs/builtins/b_cd.c \
+		srcs/builtins/b_echo.c \
+		srcs/builtins/b_unset.c \
+		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \

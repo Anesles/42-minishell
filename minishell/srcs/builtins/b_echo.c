@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   b_echo.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 14:13:36 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/06/07 18:43:16 by brumarti         ###   ########.fr       */
+/*   Created: 2023/06/07 18:29:12 by brumarti          #+#    #+#             */
+/*   Updated: 2023/06/07 18:29:26 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int  g_exit_status;
-
-void	error_cmd_not_found(char *cmd)
+int	b_echo(char **words, int max_words)
 {
-	ft_putstr_fd("Command '", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd("' not found\n", STDERR_FILENO);
-	b_exit(127);
-}
+	int	i;
+	int	mode;
 
-int	error_cd(char *cmd)
-{
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	return (EXIT_FAILURE);
+	mode = 0;
+	if (!words[0])
+	{
+		ft_printf("\n");
+		return (EXIT_SUCCESS);
+	}
+	i = -1;
+	if (!ft_strncmp(words[i + 1], "-n", 2))
+		mode = 1;
+	while (words[++i])
+	{
+		if (i == max_words - 1)
+		{
+			if (mode == 0)
+				printf("%s\n", words[i]);
+			else
+				printf("%s", words[i]);
+		}
+		else
+			printf("%s ", words[i]);
+	}
+	return (EXIT_SUCCESS);
 }

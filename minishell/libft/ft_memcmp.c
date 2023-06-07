@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:23:13 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/03 22:06:53 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	t1 = (unsigned char *)s1;
 	t2 = (unsigned char *)s2;
 	if (n == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	while ((*t1 == *t2) && i < n - 1)
 	{
 		t1++;

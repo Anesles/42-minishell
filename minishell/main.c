@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 16:07:18 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:20 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ int	main(int argc, char *argv[], char **envp)
 	mshell.save_fd[1] = dup(1);
 	b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), &mshell);
 	minishell_loop(&mshell);
-	return (1);
+	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:44:53 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/02 15:52:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:20 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

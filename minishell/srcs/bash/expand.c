@@ -6,25 +6,11 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 14:54:17 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:48:39 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_env(char *str, char **envir)
-{
-	int		i;
-
-	i = 0;
-	while (envir[i])
-	{
-		if (ft_strncmp(str, envir[i], ft_strlen(str)) == 0)
-			return (envir[i] + ft_strlen(str) + 1);
-		i++;
-	}
-	return (NULL);
-}
 
 char	*join_words(char **words)
 {
@@ -56,7 +42,7 @@ char	*get_name(char *str)
 		count = 1;
 	else
 	{
-		while(ft_isalnum(str[i++]))
+		while (ft_isalnum(str[i++]))
 			count++;
 	}
 	name = malloc(sizeof (char) * count + 1);
@@ -70,41 +56,36 @@ char	*get_name(char *str)
 	return (name);
 }
 
+char	*change_word(char *word, t_mshell *mshell)
+{
+	char	*name;
+	char	*temp;
+
+	while (find_char(word, '$') != -1)
+	{
+		name = get_name(word);
+		temp = get_env(name, mshell->envior);
+		if (temp == NULL)
+			break ;
+		word = ft_replace_env(word, ft_strjoin("$", name), temp);
+	}
+	return (word);
+}
+
 char	*expand_env(char *str, t_mshell *mshell)
 {
 	int		i;
-	char	*name;
-	char	*temp;
 	char	**words;
 
 	words = ft_split(str, ' ');
 	i = 0;
 	if (count_words(words) == 1)
-	{
-		while (find_char(words[0], '$') != -1)
-		{
-			name = get_name(words[0]);
-			temp = get_env(name, mshell->envior);
-			if (temp == NULL)
-				break ;
-			words[0] = ft_replace_env(words[0], ft_strjoin("$", name), temp);
-		}
-	}
+		words[0] = change_word(words[0], mshell);
 	else
 	{
 		while (words[i])
 		{
-			while (find_char(words[i], '$') != -1)
-			{
-				while (1)
-				{
-					name = get_name(words[i]);
-					temp = get_env(name, mshell->envior);
-					if (temp == NULL)
-						break;
-				}
-				words[i] = ft_replace_env(words[i], ft_strjoin("$", name), temp);
-			}
+			words[i] = change_word(words[i], mshell);
 			i++;
 		}
 	}

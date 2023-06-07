@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 22:27:42 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/08 00:06:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	ret = (void *) malloc(nmemb * size);
 	if (!ret)
-		return (0);
+		return (EXIT_SUCCESS);
 	ft_memset(ret, 0, (nmemb * size));
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:07:27 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/08 18:39:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:20 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static int	ft_char_in_set(char c, char const *set)
 	while (set[i])
 	{
 		if (c == set[i])
-			return (1);
+			return (EXIT_FAILURE);
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)

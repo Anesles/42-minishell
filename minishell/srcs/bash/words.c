@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 15:38:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:51:48 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	number_words(char *str)
 {
-	bool insidequotes;
-	bool insideword;
-	int	count;
-	int	i;
+	bool	insidequotes;
+	bool	insideword;
+	int		count;
+	int		i;
 
 	count = 0;
 	i = 0;

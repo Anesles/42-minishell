@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 14:13:36 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/06/07 18:43:16 by brumarti         ###   ########.fr       */
+/*   Created: 2023/06/07 18:44:28 by brumarti          #+#    #+#             */
+/*   Updated: 2023/06/07 18:44:38 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int  g_exit_status;
-
-void	error_cmd_not_found(char *cmd)
+char	*get_env(char *str, char **envir)
 {
-	ft_putstr_fd("Command '", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd("' not found\n", STDERR_FILENO);
-	b_exit(127);
-}
+	int		i;
 
-int	error_cd(char *cmd)
-{
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	return (EXIT_FAILURE);
+	i = 0;
+	while (envir[i])
+	{
+		if (ft_strncmp(str, envir[i], ft_strlen(str)) == 0)
+			return (envir[i] + ft_strlen(str) + 1);
+		i++;
+	}
+	return (NULL);
 }

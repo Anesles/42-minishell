@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 22:30:13 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/24 18:17:09 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:20 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_char(va_list args)
 
 	c = va_arg(args, int);
 	write(1, &c, 1);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 int	print_string(va_list args)

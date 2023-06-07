@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 15:00:15 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:45:00 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,14 @@ int		builtins(t_cmds *cmds, t_mshell *mshell);
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
 void	b_exit(int status);
-int		b_export(char *new_variable, t_mshell *mshell);
+//B_unset
+int		b_unset(char *variable, t_mshell *mshell);
+//B_export
+int		b_export(char *n_var, t_mshell *mshell);
+//B_echo
+int		b_echo(char **words, int max_words);
+//B_cd
+int		b_cd(char *direct, t_mshell *mshell);
 //Executables
 char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
@@ -87,8 +94,10 @@ void	token_more(t_cmds *cmds, int mode);
 char	**init_words(char *str, t_mshell *mshell);
 //Expand
 char	*expand(char *str, t_mshell *mshell);
+//Get_env
+char	*get_env(char *str, char **envir);
 //Errors
 void	error_cmd_not_found(char *cmd);
-int    error_cd(char *cmd);
+int		error_cd(char *cmd);
 
 #endif // MINISHELL_H

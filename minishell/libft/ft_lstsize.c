@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brumarti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:01:46 by brumarti          #+#    #+#             */
-/*   Updated: 2022/11/09 17:47:05 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_lstsize(t_list *lst)
 	t_list	*temp;
 
 	if (!lst)
-		return (0);
+		return (EXIT_SUCCESS);
 	temp = lst;
 	i = 0;
 	while (temp->next != NULL)

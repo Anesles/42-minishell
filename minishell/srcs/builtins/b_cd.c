@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   b_cd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 14:13:36 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/06/07 18:43:16 by brumarti         ###   ########.fr       */
+/*   Created: 2023/06/07 18:30:32 by brumarti          #+#    #+#             */
+/*   Updated: 2023/06/07 18:30:44 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int  g_exit_status;
-
-void	error_cmd_not_found(char *cmd)
+int	b_cd(char *direct, t_mshell *mshell)
 {
-	ft_putstr_fd("Command '", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd("' not found\n", STDERR_FILENO);
-	b_exit(127);
-}
+	int		error;
+	char	str[256];
 
-int	error_cd(char *cmd)
-{
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	return (EXIT_FAILURE);
+	if (direct == NULL)
+		direct = ft_strdup(get_env("HOME", mshell->envior));
+	error = chdir((const char *)direct);
+	b_export(ft_strjoin("OLDPWD=", get_env("PWD", mshell->envior)), mshell);
+	getcwd(str, sizeof(str));
+	b_export(ft_strjoin("PWD=", str), mshell);
+	if (error != 0)
+		return (error_cd(direct));
+	return (EXIT_SUCCESS);
 }
