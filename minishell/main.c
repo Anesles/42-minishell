@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 12:27:17 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:07:18 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ void	sig_continue(int signum)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-}
-
-void	sig_quit(int signum)
-{
-	(void)signum;
-	write(1, "\b\b  \b\b", 6);
 }
 
 char	**arraydup(char **old)
@@ -55,8 +49,7 @@ int	main(int argc, char *argv[], char **envp)
 
 	if (argc != 1 || argv[1])
 		perror("minishell: too many arguments");
-	signal(SIGINT, sig_continue);
-	signal(SIGQUIT, sig_quit);
+	signal(SIGINT, &sig_continue);
 	mshell.envior = arraydup(envp);
 	mshell.path = get_path(mshell.envior);
 	mshell.save_fd[0] = dup(0);

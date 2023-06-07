@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 15:19:44 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:38:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ char	**init_words(char *str, t_mshell *mshell)
 	int		count;
 	char	**words;
 
-	if (ft_isprint(str[0]) == 0)
-		return (NULL);
-	count = number_words(str);
+	start = 0;
+	while (*(str + start) >= 1 && *(str + start) <= 32)
+		start++;
+	count = number_words(str + start);
 	words = (char **)malloc(sizeof(char *) * (count + 1));
 	i = 0;
-	start = 0;
 	while (i < count)
 	{
 		while (*(str + start) >= 1 && *(str + start) <= 32)

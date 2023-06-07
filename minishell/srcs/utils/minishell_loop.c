@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 11:36:40 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 14:57:51 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:08:43 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ char	*prompt_read(void)
 	prompt = chamada();
 	prompt = readline(prompt);
 	if (prompt == NULL)
-		b_exit(0);
+	{
+		write (1, "exit\n", 5);
+		b_exit(1);
+	}
 	if (ft_strlen(prompt) > 0)
 		add_history(prompt);
 	return (prompt);
