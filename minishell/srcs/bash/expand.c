@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/06 17:53:59 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:32:16 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*expand_env(char *str, t_mshell *mshell)
 				name = ft_substr(words[0], find_char(words[0], '$') + 1, 1 + i);
 				temp = get_env(name, mshell->envior);
 				if (temp != NULL && find_char(temp, '=') == -1)
-					break;
+					break ;
 				i++;
 			}
 			words[0] = ft_replace_env(words[0], ft_strjoin("$", name), temp);

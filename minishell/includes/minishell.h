@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/06 17:32:31 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:28:10 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
+
 typedef struct s_lexer
 {
 	char			*word;
@@ -37,7 +38,7 @@ typedef struct s_mshell
 	int		current_cmd;
 	int		fd[2];
 	int		save_fd[2];
-	char	*PATH;
+	char	*path;
 	char	**envior;
 }	t_mshell;
 
@@ -60,12 +61,14 @@ void	clear_words(char **words, int n);
 int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
-char	*ft_replace_env(const char* str, const char *substr, const char *replace);
+char	*ft_replace_env(char *str, char *substr, char *replace);
+//Minishell_loop
+void	minishell_loop(t_mshell *mshell);
 //Lexer
 t_lexer	*init_lexer(char **words, int n);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
-int	builtins(t_cmds *cmds, t_mshell *mshell);
+int		builtins(t_cmds *cmds, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
@@ -78,6 +81,8 @@ char	*get_path(char **pwd);
 //Pipe
 void	handle_pipe(t_mshell *mshell);
 void	reset_pipes(t_mshell *mshell);
+void	token_less(t_cmds *cmds, int mode);
+void	token_more(t_cmds *cmds, int mode);
 //Words
 char	**init_words(char *str, t_mshell *mshell);
 //Expand

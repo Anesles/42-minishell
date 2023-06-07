@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 14:37:51 by brumarti          #+#    #+#              #
-#    Updated: 2023/05/25 19:03:13 by brumarti         ###   ########.fr        #
+#    Updated: 2023/06/07 11:53:36 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,16 +17,18 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -I ./includes -g
 
 SRC = main.c \
-		srcs/utils.c \
-		srcs/bash/cmds.c	\
+		srcs/bash/cmds.c \
 		srcs/bash/words.c \
 		srcs/bash/lexer.c \
+		srcs/bash/errors.c \
+		srcs/utils/utils.c \
 		srcs/bash/parser.c \
 		srcs/bash/expand.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/builtins.c \
 		srcs/builtins/executable.c \
-		srcs/bash/errors.c 
+		srcs/utils/ft_replace_env.c \
+		srcs/utils/minishell_loop.c
 
 OBJ = $(SRC:.c=.o)
 
