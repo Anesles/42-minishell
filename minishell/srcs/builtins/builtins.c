@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/06/07 18:34:25 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:10:41 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,5 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		else
 			executables(cmds->words, mshell);
 	}
-	error_cmd_not_found(cmds->words[0]);
-	return (EXIT_FAILURE);
+	return (error_cmd_not_found(cmds->words[0]));
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 17:23:41 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:11:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
-char *ft_remc(char *str, char c);
+char	*ft_remc(char *str, char c);
 
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
@@ -100,8 +100,7 @@ char	*expand(char *str, t_mshell *mshell);
 //Get_env
 char	*get_env(char *str, char **envir);
 //Errors
-void	error_cmd_not_found(char *cmd);
+int		error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
-int find_char_echo(char *str, char c);
 
 #endif // MINISHELL_H

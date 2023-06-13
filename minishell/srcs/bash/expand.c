@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 17:10:59 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:12:21 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*change_word(char *word, t_mshell *mshell)
 	char	*temp;
 
 	name = get_name(word);
-	ft_printf("name:%s\n", name);
 	temp = get_env(name, mshell->envior);
 	if (temp == NULL)
 		return (ft_strjoin(ft_substr(word, 0, find_char(word, '$')),

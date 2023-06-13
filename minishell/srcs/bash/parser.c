@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 20:02:38 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:16:02 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_commands(char *cmd)
 
 void	wait_fork(int *status, int pid, t_mshell *mshell, char *cmd)
 {
-	if (!ft_strncmp(cmd, "grep", 4))
+	if (!is_builtins(cmd))
 	{
 		close(mshell->fd[0]);
 		close(mshell->fd[1]);
@@ -57,7 +57,8 @@ void	parser_aux(t_cmds *cmds, t_mshell *mshell)
 			if (pid == 0)
 			{
 				handle_pipe(mshell);
-				cmds[i].built(&cmds[i], mshell);
+				g_exit_status = cmds[i].built(&cmds[i], mshell);
+				exit(g_exit_status);
 			}
 			else
 				wait_fork(&status, pid, mshell, cmds[i].words[0]);
@@ -68,11 +69,25 @@ void	parser_aux(t_cmds *cmds, t_mshell *mshell)
 
 void	parser(t_cmds *cmds, t_mshell *mshell)
 {
+	int	pid;
+	int	status;
+
+	status = 0;
 	if (mshell->n_cmds > 1)
 		parser_aux(cmds, mshell);
 	else
 	{
 		mshell->current_cmd++;
-		cmds[0].built(&cmds[0], mshell);
+		if (is_builtins(cmds[0].words[0]))
+			g_exit_status = cmds[0].built(&cmds[0], mshell);
+		else
+		{
+			pid = fork();
+			if (pid == 0)
+				cmds[0].built(&cmds[0], mshell);
+			else
+				wait_fork(&status, pid, mshell, cmds[0].words[0]);
+			g_exit_status = WEXITSTATUS(status);
+		}
 	}
 }
