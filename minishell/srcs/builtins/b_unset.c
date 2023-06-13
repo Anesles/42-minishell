@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:32:51 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 18:32:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:26:10 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	b_unset(char *variable, t_mshell *mshell)
 	int		track;
 	char	**new_environ;
 
+	if (!variable)
+		return (EXIT_SUCCESS);
 	count = 0;
 	while (mshell->envior[count] != NULL)
 		count++;
