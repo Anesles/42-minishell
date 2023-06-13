@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 11:36:40 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 16:08:43 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:59:45 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	minishell_loop(t_mshell *mshell)
 		if (!(words[0] == NULL))
 		{
 			free(prompt);
-			lexer = init_lexer(words, count_words(words));
+			lexer = init_lexer(words, count_words(words), mshell);
 			cmds = init_cmds(lexer, mshell);
 			parser(cmds, mshell);
 			b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);

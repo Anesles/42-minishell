@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 18:48:39 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:05:14 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,25 @@ char	*change_word(char *word, t_mshell *mshell)
 char	*expand_env(char *str, t_mshell *mshell)
 {
 	int		i;
+	bool	inside_single;
 	char	**words;
 
-	words = ft_split(str, ' ');
+	words = ft_split(str, ' '); //$ola'eu' sou o Bruno
 	i = 0;
+	inside_single = false;
 	if (count_words(words) == 1)
 		words[0] = change_word(words[0], mshell);
 	else
 	{
 		while (words[i])
 		{
+			if (find_char(words[i], '\'') != -1 || find_char(words[i] + find_char(words[i], '\'') + 1, '\''))
+				inside_single = !inside_single;
+			if (inside_single == true)
+			{
+				i++;
+				continue ;
+			}
 			words[i] = change_word(words[i], mshell);
 			i++;
 		}

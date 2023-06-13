@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 18:45:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:59:13 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_replace_env(char *str, char *substr, char *replace);
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
 //Lexer
-t_lexer	*init_lexer(char **words, int n);
+t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
 int		builtins(t_cmds *cmds, t_mshell *mshell);
