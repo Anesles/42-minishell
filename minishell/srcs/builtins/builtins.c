@@ -17,12 +17,13 @@ void	b_exit(int status)
 	exit(status);
 }
 
+//dava erro sem o "[0]"
 int	b_pwd(void)
 {
 	char	str[256];
 
 	getcwd(str, sizeof(str));
-	if (str == NULL)
+	if (!str[0])
 		return (EXIT_FAILURE);
 	printf("%s\n", str);
 	return (EXIT_SUCCESS);

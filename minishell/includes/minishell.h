@@ -99,5 +99,6 @@ char	*get_env(char *str, char **envir);
 //Errors
 void	error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
+int find_char_echo(char *str, char c);
 
 #endif // MINISHELL_H

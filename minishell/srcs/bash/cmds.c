@@ -53,6 +53,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		temp = temp->next;
 	}
 	cmds->count_words = count;
+	ft_printf("words:%d\n", count);
 	words = malloc(sizeof(char *) * (count + 1));
 	temp = lexer;
 	i = -1;
