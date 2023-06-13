@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 21:23:54 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:32:00 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_mshell
 	int		n_cmds;
 	int		current_cmd;
 	int		fd[2];
-	int		prev_fd[2];
 	int		save_fd[2];
 	char	*path;
 	char	**envior;
