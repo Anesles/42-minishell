@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 20:16:02 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:08:52 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,18 @@ int	check_commands(char *cmd)
 		return (EXIT_SUCCESS);
 }
 
-void	wait_fork(int *status, int pid, t_mshell *mshell, char *cmd)
+void	wait_forks(t_mshell *mshell, pid_t pid, int *status)
 {
-	if (!is_builtins(cmd))
-	{
-		close(mshell->fd[0]);
-		close(mshell->fd[1]);
-	}
+	close(mshell->fd[0]);
+	close(mshell->fd[1]);
 	waitpid(pid, status, 0);
 }
 
-void	parser_aux(t_cmds *cmds, t_mshell *mshell)
+void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 {
-	int	i;
-	int	pid;
-	int	status;
+	int		i;
+	pid_t	pid;
+	int		status;
 
 	i = -1;
 	status = 0;
@@ -57,37 +54,39 @@ void	parser_aux(t_cmds *cmds, t_mshell *mshell)
 			if (pid == 0)
 			{
 				handle_pipe(mshell);
-				g_exit_status = cmds[i].built(&cmds[i], mshell);
-				exit(g_exit_status);
+				cmds[i].built(&cmds[i], mshell);
+				exit(0);
 			}
-			else
-				wait_fork(&status, pid, mshell, cmds[i].words[0]);
-			g_exit_status = WEXITSTATUS(status);
 		}
 	}
+	wait_forks(mshell, pid, &status);
+	g_exit_status = WEXITSTATUS(status);
 }
 
 void	parser(t_cmds *cmds, t_mshell *mshell)
 {
-	int	pid;
-	int	status;
+	pid_t	pid;
+	int		status;
 
 	status = 0;
 	if (mshell->n_cmds > 1)
-		parser_aux(cmds, mshell);
+		multiple_cmds(mshell, cmds);
 	else
 	{
-		mshell->current_cmd++;
-		if (is_builtins(cmds[0].words[0]))
-			g_exit_status = cmds[0].built(&cmds[0], mshell);
+		if (is_builtins(cmds->words[0]))
+			g_exit_status = cmds->built(cmds, mshell);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
+			{
 				cmds[0].built(&cmds[0], mshell);
+				exit(0);
+			}
 			else
-				wait_fork(&status, pid, mshell, cmds[0].words[0]);
+				waitpid(pid, &status, 0);
 			g_exit_status = WEXITSTATUS(status);
 		}
+		mshell->current_cmd++;
 	}
 }
