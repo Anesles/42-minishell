@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:55:39 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 16:11:14 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:12:42 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 	while (i < n)
 	{
 		lexer[i].word = expand(lexer[i].word, mshell);
-		lexer[i].word = 
+		lexer[i].word = ft_strtrim(lexer[i].word, "\'\"");
 		i++;
 	}
 }
