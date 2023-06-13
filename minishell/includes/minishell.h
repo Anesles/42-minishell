@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 15:59:13 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:28:50 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
+char *ft_remc(char *str, char c);
+
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
 //Lexer

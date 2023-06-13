@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 18:42:19 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:19:07 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	count_cmds(t_lexer *lexer)
 	count = 1;
 	while (temp)
 	{
-		if (temp->word[0] == '|')
+		if (temp->word[0] == '|' && temp->next != NULL)
 			count++;
 		temp = temp->next;
 	}
@@ -41,19 +41,18 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 	temp = lexer;
 	while (temp)
 	{
+		if (temp->word[0] == '|')
+			break ;
+		else
+			count++;
 		if (is_redir(temp->word))
 		{
 			redir = 1;
 			break ;
 		}
-		if (temp->word[0] == '|')
-			break ;
-		else
-			count++;
 		temp = temp->next;
 	}
 	cmds->count_words = count;
-	ft_printf("words:%d\n", count);
 	words = malloc(sizeof(char *) * (count + 1));
 	temp = lexer;
 	i = -1;

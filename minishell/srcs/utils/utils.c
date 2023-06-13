@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:22:12 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 18:27:20 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:38:15 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ void	clear_words(char **words, int n)
 int find_char_echo(char *str, char c)
 {
 	int i;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (str[i])
 	{
 		if (str[i] == c)
-			return i;
+			count++;
 		i++;
 	}
-	return i;	
+	return (count);	
 }
 
 int	find_char(char *str, char c)
@@ -93,4 +95,34 @@ int	is_builtins(char *str)
 	else if (ft_strncmp(str, "exit", 4) == 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+char *ft_remc(char *str, char c)
+{
+	int	size;
+	int	i;
+	int	j;
+	char *temp;
+	int	count;
+
+	count = find_char_echo(str, c);
+	size = ft_strlen(str) - count + 1;
+	temp = malloc(sizeof(char) * size);
+	if (!temp)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (i < size)
+	{
+		if (str[j] == c)
+		{
+			j++;
+			continue ;
+		}
+		temp[i] = str[j];
+		j++;
+		i++;
+	}
+	temp[i] = '\0';
+	return (temp);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 15:37:31 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:21:31 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	**init_words_aux(char *str, char **words, int start)
 
 char	**init_words(char *str, t_mshell *mshell)
 {
-	int		i;
 	int		start;
 	int		count;
 	char	**words;
@@ -86,7 +85,6 @@ char	**init_words(char *str, t_mshell *mshell)
 		start++;
 	count = number_words(str + start);
 	words = (char **)malloc(sizeof(char *) * (count + 1));
-	i = -1;
 	words = init_words_aux(str, words, start);
 	return (words);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:39:56 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 16:05:14 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:10:59 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ char	*change_word(char *word, t_mshell *mshell)
 	char	*name;
 	char	*temp;
 
-	while (find_char(word, '$') != -1)
-	{
-		name = get_name(word);
-		temp = get_env(name, mshell->envior);
-		if (temp == NULL)
-			break ;
-		word = ft_replace_env(word, ft_strjoin("$", name), temp);
-	}
+	name = get_name(word);
+	ft_printf("name:%s\n", name);
+	temp = get_env(name, mshell->envior);
+	if (temp == NULL)
+		return (ft_strjoin(ft_substr(word, 0, find_char(word, '$')),
+			ft_substr(word, find_char(word, '$') + ft_strlen(name) + 1, ft_strlen(word))));
+	word = ft_replace_env(word, ft_strjoin("$", name), temp);
 	return (word);
 }
 
@@ -78,25 +77,20 @@ char	*expand_env(char *str, t_mshell *mshell)
 	bool	inside_single;
 	char	**words;
 
-	words = ft_split(str, ' '); //$ola'eu' sou o Bruno
+	words = ft_split(str, ' ');
 	i = 0;
 	inside_single = false;
-	if (count_words(words) == 1)
-		words[0] = change_word(words[0], mshell);
-	else
+	while (words[i])
 	{
-		while (words[i])
+		if (find_char(words[i], '\'') != -1 && find_char(words[i] + find_char(words[i], '\'') + 1, '\'') != -1)
+			inside_single = !inside_single;
+		if (inside_single == true)
 		{
-			if (find_char(words[i], '\'') != -1 || find_char(words[i] + find_char(words[i], '\'') + 1, '\''))
-				inside_single = !inside_single;
-			if (inside_single == true)
-			{
-				i++;
-				continue ;
-			}
-			words[i] = change_word(words[i], mshell);
 			i++;
+			continue ;
 		}
+		words[i] = change_word(words[i], mshell);
+		i++;
 	}
 	return (join_words(words));
 }
