@@ -6,11 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:56:44 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 17:19:07 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:31:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 int	count_cmds(t_lexer *lexer)
 {
@@ -28,55 +30,20 @@ int	count_cmds(t_lexer *lexer)
 	return (count);
 }
 
-char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
-{	
-	char	**words;
-	t_lexer	*temp;
-	int		redir;
-	int		i;
-	int		count;
-
-	count = 0;
-	redir = 0;
-	temp = lexer;
-	while (temp)
+int	check_validcmd(t_cmds cmds)
+{
+	if (cmds.redi == NULL)
+		return (0);
+	if (cmds.redi[0] == '|' || cmds.redi[0] == '<' || cmds.redi[0] == '>')
 	{
-		if (temp->word[0] == '|')
-			break ;
-		else
-			count++;
-		if (is_redir(temp->word))
-		{
-			redir = 1;
-			break ;
-		}
-		temp = temp->next;
+		g_exit_status = 2;
+		ft_printf("syntax error near unexpected token '%s'\n", cmds.redi);
+		return (1);
 	}
-	cmds->count_words = count;
-	words = malloc(sizeof(char *) * (count + 1));
-	temp = lexer;
-	i = -1;
-	while (++i < count)
-	{
-		words[i] = temp->word;
-		temp = temp->next;
-	}
-	words[i] = NULL;
-	if (redir == 1)
-	{
-		cmds->token = temp->word;
-		temp = temp->next;
-		cmds->redi = temp->word;
-	}
-	else
-	{
-		cmds->token = NULL;
-		cmds->redi = NULL;
-	}
-	return (words);
+	return (0);
 }
 
-void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
+int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 {
 	int	i;
 	int	start;
@@ -95,10 +62,13 @@ void	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 			cmds[i].next = &cmds[i + 1];
 		cmds[i].built = &builtins;
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
+		if (check_validcmd(cmds[i]))
+			return (-1);
 		start += cmds[i].count_words + 1;
 		if (cmds[i].token != NULL)
 			start += 2;
 	}
+	return (0);
 }
 
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
@@ -110,6 +80,7 @@ t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
 	mshell->n_cmds = n;
 	mshell->current_cmd = -1;
 	cmds = malloc(sizeof(t_cmds) * n);
-	alloc_cmds(cmds, n, lexer);
+	if (alloc_cmds(cmds, n, lexer) == -1)
+		return (NULL);
 	return (cmds);
 }

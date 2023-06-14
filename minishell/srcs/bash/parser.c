@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:18:16 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 21:30:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:10:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	wait_forks(t_mshell *mshell, pid_t pid, int *status)
 {
 	close(mshell->fd[0]);
 	close(mshell->fd[1]);
+	close(mshell->prev_fd[0]);
+	close(mshell->prev_fd[1]);
 	waitpid(pid, status, 0);
 }
 

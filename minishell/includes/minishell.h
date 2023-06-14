@@ -6,24 +6,24 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 21:32:00 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:06:57 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
-# include <fcntl.h> 
+# include <fcntl.h>
 # include <unistd.h>
 # include <dirent.h>
 # include <signal.h>
 # include <dirent.h>
+# include <stdbool.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include "../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdbool.h>
 
 typedef struct s_lexer
 {
@@ -37,6 +37,7 @@ typedef struct s_mshell
 	int		n_cmds;
 	int		current_cmd;
 	int		fd[2];
+	int		prev_fd[2];
 	int		save_fd[2];
 	char	*path;
 	char	**envior;
@@ -63,7 +64,6 @@ int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
 char	*ft_remc(char *str, char c);
-
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
 //Lexer
@@ -102,5 +102,7 @@ char	*get_env(char *str, char **envir);
 //Errors
 int		error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
+//Alloc_words
+char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
 
 #endif // MINISHELL_H

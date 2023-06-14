@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:55:39 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 16:43:12 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:31:56 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ t_lexer	*init_lexer(char **words, int n, t_mshell *mshell)
 
 	lexer = (t_lexer *)malloc(sizeof(t_lexer) * n);
 	create_lexer(lexer, words, n);
-	expand_lexer(lexer, mshell,n);
+	expand_lexer(lexer, mshell, n);
 	return (lexer);
 }

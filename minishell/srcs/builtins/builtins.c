@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/06/13 20:10:41 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:42:39 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	b_exit(int status)
 	exit(status);
 }
 
-//dava erro sem o "[0]"
 int	b_pwd(void)
 {
 	char	str[256];

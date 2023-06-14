@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:49:34 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 21:31:50 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:32:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,30 @@ void	token_more(t_cmds *cmds, int mode)
 
 void	handle_pipe(t_mshell *mshell)
 {
-	if (mshell->current_cmd == mshell->n_cmds - 1)
+	if (mshell->current_cmd == 0)
 	{
-		dup2(mshell->fd[0], STDIN_FILENO);
 		close(mshell->fd[0]);
-		close(mshell->fd[1]);
-	}
-	else
-	{
 		dup2(mshell->fd[1], STDOUT_FILENO);
-		close(mshell->fd[0]);
+	}
+	else if (mshell->current_cmd % 2 != 0)
+	{
 		close(mshell->fd[1]);
+		dup2(mshell->fd[0], STDIN_FILENO);
+		if (mshell->current_cmd != mshell->n_cmds - 1)
+		{
+			close(mshell->prev_fd[0]);
+			dup2(mshell->prev_fd[1], STDOUT_FILENO);
+		}
+	}
+	else if (mshell->current_cmd % 2 == 0)
+	{
+		close(mshell->prev_fd[1]);
+		dup2(mshell->prev_fd[0], STDIN_FILENO);
+		if (mshell->current_cmd != mshell->n_cmds - 1)
+		{
+			close(mshell->fd[0]);
+			dup2(mshell->fd[1], STDOUT_FILENO);
+		}
 	}
 }
 

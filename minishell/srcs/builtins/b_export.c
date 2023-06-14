@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:31:31 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 17:49:10 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:29:52 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,13 @@ int	valid_nvar(char *nvar)
 	return (EXIT_SUCCESS);
 }
 
-int	b_export(char *n_var, t_mshell *mshell)
+char	**b_export_aux(t_mshell *mshell, char *n_var, t_vars vars)
 {
-	t_vars	vars;
 	int		i;
 	char	**new_env;
 
-	if (!n_var)
-		return(b_env(mshell));
-	if (valid_nvar(n_var))
-		return(EXIT_FAILURE);
-	if (*(n_var + find_char(n_var, '=') + 1) <= 32)
-		n_var = ft_substr(n_var, 0, find_char(n_var, '=') + 1);
-	vars = get_vars(n_var, mshell);
-	new_env = (char **)malloc(sizeof(char *) * (vars.count + 2));
 	i = 0;
+	new_env = (char **)malloc(sizeof(char *) * (vars.count + 2));
 	while (mshell->envior[i])
 	{
 		if (!ft_strncmp(n_var, mshell->envior[i], find_char(n_var, '=')))
@@ -76,6 +68,20 @@ int	b_export(char *n_var, t_mshell *mshell)
 	else
 		new_env[i] = NULL;
 	free(mshell->envior);
-	mshell->envior = new_env;
+	return (new_env);
+}
+
+int	b_export(char *n_var, t_mshell *mshell)
+{
+	t_vars	vars;
+
+	if (!n_var)
+		return (b_env(mshell));
+	if (valid_nvar(n_var))
+		return (EXIT_FAILURE);
+	if (*(n_var + find_char(n_var, '=') + 1) <= 32)
+		n_var = ft_substr(n_var, 0, find_char(n_var, '=') + 1);
+	vars = get_vars(n_var, mshell);
+	mshell->envior = b_export_aux(mshell, n_var, vars);
 	return (EXIT_SUCCESS);
 }

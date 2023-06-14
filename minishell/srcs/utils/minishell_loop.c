@@ -6,13 +6,13 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 11:36:40 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 21:08:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:04:50 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern	int g_exit_status;
+extern int	g_exit_status;
 
 char	*chamada(void)
 {
@@ -48,29 +48,43 @@ void	clear_mem(t_mshell *mshell, t_lexer *lexer, t_cmds *cmds)
 	free(cmds);
 }
 
+int	minishell_loopit(char **words, t_mshell *mshell)
+{
+	t_cmds		*cmds;
+	t_lexer		*lexer;
+
+	lexer = init_lexer(words, count_words(words), mshell);
+	cmds = init_cmds(lexer, mshell);
+	if (cmds == NULL)
+	{
+		b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
+		return (1);
+	}
+	parser(cmds, mshell);
+	b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
+	clear_mem(mshell, lexer, cmds);
+	return (0);
+}
+
 void	minishell_loop(t_mshell *mshell)
 {
 	char		*prompt;
 	char		**words;
-	t_lexer		*lexer;
-	t_cmds		*cmds;
 
 	while (1)
 	{
 		pipe(mshell->fd);
+		pipe(mshell->prev_fd);
 		prompt = prompt_read();
 		words = init_words(prompt, mshell);
 		if (words == NULL)
 			continue ;
 		if (!(words[0] == NULL))
 		{
-			free(prompt);
-			lexer = init_lexer(words, count_words(words), mshell);
-			cmds = init_cmds(lexer, mshell);
-			parser(cmds, mshell);
-			b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
-			clear_mem(mshell, lexer, cmds);
-		}
+			if (minishell_loopit(words, mshell))
+				continue ;
+		}	
+		free(prompt);
 		clear_words(words, count_words(words));
 	}
 }

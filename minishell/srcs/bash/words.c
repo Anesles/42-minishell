@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:02:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/13 16:21:31 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:31:51 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	number_words(char *str)
 			insideword = true;
 		else if (insideword)
 		{
-			count++;	
+			count++;
 			insideword = false;
 		}
 		i++;
