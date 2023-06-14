@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:36:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/14 16:52:48 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:58:31 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	**arraydup(char **old)
 		new[i] = ft_strdup(old[i]);
 		i++;
 	}
+	new[i] = '\0';
 	return (new);
 }
 
@@ -54,7 +55,8 @@ int	main(int argc, char *argv[], char **envp)
 	mshell.path = get_path(mshell.envior);
 	mshell.save_fd[0] = dup(0);
 	mshell.save_fd[1] = dup(1);
-	b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), &mshell);
+	b_export("?=0", &mshell);
 	minishell_loop(&mshell);
+
 	return (EXIT_FAILURE);
 }

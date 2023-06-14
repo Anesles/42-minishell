@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:31:31 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/14 16:29:52 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:56:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ char	**b_export_aux(t_mshell *mshell, char *n_var, t_vars vars)
 	}
 	else
 		new_env[i] = NULL;
+	i = -1;
+	while (mshell->envior[++i])
+		free(mshell->envior[i]);
 	free(mshell->envior);
 	return (new_env);
 }

@@ -6,14 +6,21 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 11:42:32 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/06/14 14:42:39 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:43:56 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	b_exit(int status)
+void	b_exit(int status, t_mshell *mshell)
 {
+	int	i;
+
+	i = -1;
+	while (mshell->envior[++i])
+		free(mshell->envior[i]);
+	free(mshell->envior);
+	free(mshell->path);
 	exit(status);
 }
 
@@ -68,7 +75,7 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		else if (!ft_strncmp("cd", cmds->words[0], 2))
 			return (b_cd(cmds->words[1], mshell));
 		else if (!ft_strncmp("exit", cmds->words[0], 4))
-			b_exit(0);
+			b_exit(0, mshell);
 		else if (!ft_strncmp("env", cmds->words[0], 3))
 			return (b_env(mshell));
 		else if (!ft_strncmp("export", cmds->words[0], 6))

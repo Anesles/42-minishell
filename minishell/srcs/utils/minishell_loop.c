@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 11:36:40 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/14 16:04:50 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:12:36 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,37 @@ char	*chamada(void)
 	return (str);
 }
 
-char	*prompt_read(void)
+char	*prompt_read(t_mshell *mshell)
 {
 	char	*prompt;
+	char	*line;
 
 	prompt = chamada();
-	prompt = readline(prompt);
-	if (prompt == NULL)
+	line = readline(prompt);
+	free(prompt);
+	if (line == NULL)
 	{
+		free(line);
 		write (1, "exit\n", 5);
-		b_exit(1);
+		b_exit(1, mshell);
 	}
-	if (ft_strlen(prompt) > 0)
-		add_history(prompt);
-	return (prompt);
+	if (ft_strlen(line) > 0)
+		add_history(line);
+	return (line);
 }
 
 void	clear_mem(t_mshell *mshell, t_lexer *lexer, t_cmds *cmds)
 {
+	int	i;
+
+	i = 0;
+	while (lexer[i].next != NULL)
+	{
+		free(lexer[i].word);
+		i++;
+	}
 	unlink("temp");
 	reset_pipes(mshell);
-	free(lexer);
 	free(cmds);
 }
 
@@ -75,8 +85,9 @@ void	minishell_loop(t_mshell *mshell)
 	{
 		pipe(mshell->fd);
 		pipe(mshell->prev_fd);
-		prompt = prompt_read();
+		prompt = prompt_read(mshell);
 		words = init_words(prompt, mshell);
+		free(prompt);
 		if (words == NULL)
 			continue ;
 		if (!(words[0] == NULL))
@@ -84,7 +95,6 @@ void	minishell_loop(t_mshell *mshell)
 			if (minishell_loopit(words, mshell))
 				continue ;
 		}	
-		free(prompt);
 		clear_words(words, count_words(words));
 	}
 }

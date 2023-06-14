@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 22:35:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 18:27:03 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:39:51 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s)
 
 	ret = (char *)malloc(ft_strlen(s) + 1);
 	if (!ret)
-		return (EXIT_SUCCESS);
+		return (NULL);
 	ft_memcpy(ret, s, (ft_strlen(s) + 1));
 	return (ret);
 }

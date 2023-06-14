@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:38:19 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/14 16:06:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:08:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		builtins(t_cmds *cmds, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
-void	b_exit(int status);
+void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
 //B_unset
 int		b_unset(char *variable, t_mshell *mshell);

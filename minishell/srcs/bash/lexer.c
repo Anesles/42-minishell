@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:55:39 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/14 16:31:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:08:32 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 
 void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < n)

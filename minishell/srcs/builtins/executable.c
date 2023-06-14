@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:21:24 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/07 15:54:05 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:47:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,15 @@ void	executables(char **cmd, t_mshell *mshell)
 char	*get_path(char **pwd)
 {
 	int		i;
-	char	**str;
 
 	i = 0;
 	if (!pwd)
 		return (NULL);
 	while (pwd[i])
 	{
-		if (!ft_strncmp(pwd[i], "PATH", 4))
+		if (!ft_strncmp(pwd[i], "PATH=", 5))
 			break ;
 		i++;
 	}
-	str = ft_split(pwd[i], '=');
-	return (str[1]);
+	return (ft_substr(pwd[i], 5, ft_strlen(pwd[i]) - 5));
 }
