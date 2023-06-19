@@ -43,6 +43,19 @@ char	*prompt_read(t_mshell *mshell)
 	return (line);
 }
 
+void	clear_cmds(t_cmds *cmds, int n_cmds)
+{
+	int	i;
+
+	i = 0;
+	while (i < n_cmds)
+	{
+		free(cmds[i].words);
+		i++;
+	}
+	free(cmds);
+}
+
 void	clear_mem(t_mshell *mshell, t_lexer *lexer, t_cmds *cmds)
 {
 	int	i;
@@ -53,9 +66,11 @@ void	clear_mem(t_mshell *mshell, t_lexer *lexer, t_cmds *cmds)
 		free(lexer[i].word);
 		i++;
 	}
+	free (lexer);
+	clear_cmds(cmds, mshell->n_cmds);
 	unlink("temp");
 	reset_pipes(mshell);
-	free(cmds);
+
 }
 
 int	minishell_loopit(char **words, t_mshell *mshell)

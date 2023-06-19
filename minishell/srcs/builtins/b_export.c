@@ -70,6 +70,7 @@ char	**b_export_aux(t_mshell *mshell, char *n_var, t_vars vars)
 	i = -1;
 	while (mshell->envior[++i])
 		free(mshell->envior[i]);
+	free(mshell->envior[i]);
 	free(mshell->envior);
 	return (new_env);
 }

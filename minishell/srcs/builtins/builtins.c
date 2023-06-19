@@ -19,6 +19,7 @@ void	b_exit(int status, t_mshell *mshell)
 	i = -1;
 	while (mshell->envior[++i])
 		free(mshell->envior[i]);
+	free(mshell->envior[i]);
 	free(mshell->envior);
 	free(mshell->path);
 	exit(status);
