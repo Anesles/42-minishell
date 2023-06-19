@@ -55,12 +55,26 @@ char	*ft_remc(char *str, char c)
 	int		size;
 	char	*temp;
 	int		count;
+	int i;
+	int j;
 
 	count = count_chars(str, c);
-	size = ft_strlen(str) - count + 1;
+	size = ft_strlen(str) - count;
 	temp = malloc(sizeof(char) * (size + 1));
 	if (!temp)
 		return (NULL);
-	temp = loop(str, c, temp, size);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != c)
+		{
+			temp[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	temp[j] = '\0';
+	free (str);
 	return (temp);
 }

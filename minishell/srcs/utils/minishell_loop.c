@@ -56,17 +56,23 @@ void	clear_cmds(t_cmds *cmds, int n_cmds)
 	free(cmds);
 }
 
-void	clear_mem(t_mshell *mshell, t_lexer *lexer, t_cmds *cmds)
+void	free_lexer(t_lexer *lexer)
 {
-	int	i;
-
-	i = 0;
-	while (lexer[i].next != NULL)
+	t_lexer	*current;
+	t_lexer *next;
+		
+	current = lexer;
+	next = NULL;
+	while (current != NULL)
 	{
-		free(lexer[i].word);
-		i++;
+		next = current->next;
+		free(current->word);
+		current = next;
 	}
-	free (lexer);
+}
+
+void	clear_mem(t_mshell *mshell, t_cmds *cmds)
+{
 	clear_cmds(cmds, mshell->n_cmds);
 	unlink("temp");
 	reset_pipes(mshell);
@@ -77,17 +83,30 @@ int	minishell_loopit(char **words, t_mshell *mshell)
 {
 	t_cmds		*cmds;
 	t_lexer		*lexer;
+	char 		*status;
+	char 		*str;
 
 	lexer = init_lexer(words, count_words(words), mshell);
 	cmds = init_cmds(lexer, mshell);
 	if (cmds == NULL)
 	{
-		b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
+		status =  ft_itoa(g_exit_status);
+		str = ft_strjoin("?=", status);
+		b_export(str, mshell);
+		clear_mem(mshell, cmds);
+		free_lexer(lexer);
+		free (status);
+		free (str);
 		return (1);
 	}
 	parser(cmds, mshell);
-	b_export(ft_strjoin("?=", ft_itoa(g_exit_status)), mshell);
-	clear_mem(mshell, lexer, cmds);
+	status =  ft_itoa(g_exit_status);
+	str = ft_strjoin("?=", status);
+	b_export(str, mshell);
+	free_lexer(lexer);
+	clear_mem(mshell, cmds);
+	free(status);
+	free(str);
 	return (0);
 }
 

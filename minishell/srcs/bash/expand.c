@@ -60,14 +60,22 @@ char	*change_word(char *word, t_mshell *mshell)
 {
 	char	*name;
 	char	*temp;
+	char 	*str;
 
+	str = NULL;
 	name = get_name(word);
 	temp = get_env(name, mshell->envior);
 	if (temp == NULL)
+	{
+		free(name);
 		return (ft_strjoin(ft_substr(word, 0, find_char(word, '$')),
 				ft_substr(word, find_char(word, '$')
 					+ ft_strlen(name) + 1, ft_strlen(word))));
-	word = ft_replace_env(word, ft_strjoin("$", name), temp);
+	}
+	str = ft_strjoin("$", name);
+	free(name);
+	word = ft_replace_env(word, str, temp);
+	free(str);
 	return (word);
 }
 

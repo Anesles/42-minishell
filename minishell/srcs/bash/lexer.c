@@ -37,13 +37,16 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 {
 	int		i;
+	char 	*str;
 
 	i = 0;
 	while (i < n)
 	{
-		lexer[i].word = expand(lexer[i].word, mshell);
-		lexer[i].word = ft_remc(lexer[i].word, '\'');
-		lexer[i].word = ft_remc(lexer[i].word, '"');
+		str = expand(lexer[i].word, mshell);
+		str = ft_remc(str, '\'');
+		str = ft_remc(str, '"');
+		lexer[i].word = ft_strdup(str);
+		free(str);
 		i++;
 	}
 }
