@@ -49,18 +49,22 @@ char	*get_words(char *str, int max, int current)
 		return (ft_substr(str, 0, find_char(str, ' ')));
 }
 
-char	**init_words_aux(char *str, char **words, int start)
+char	**init_words_aux(char *str, int start)
 {
 	int	i;
 	int	count;
+	char **temp_words;
 
 	count = number_words(str + start);
 	i = -1;
+	temp_words = malloc(sizeof(char *) * (count + 1));
+	if (!temp_words)
+		return (NULL);
 	while (++i < count)
 	{
 		while (*(str + start) >= 1 && *(str + start) <= 32)
 			start++;
-		words[i] = get_words(str + start, count, i);
+		temp_words[i] = get_words(str + start, count, i);
 		if (i == count - 1)
 			start += find_char(str + start, '\0');
 		else
@@ -69,22 +73,24 @@ char	**init_words_aux(char *str, char **words, int start)
 			&& (*(str + start + 1) == ' '))
 			start += 2;
 	}
-	words[i] = NULL;
-	return (words);
+	temp_words[i] = '\0';
+	return (temp_words);
 }
 
 char	**init_words(char *str, t_mshell *mshell)
 {
 	int		start;
-	int		count;
 	char	**words;
 
 	(void) mshell;
 	start = 0;
 	while (*(str + start) >= 1 && *(str + start) <= 32)
 		start++;
-	count = number_words(str + start);
-	words = (char **)malloc(sizeof(char *) * (count + 1));
-	words = init_words_aux(str, words, start);
+	words = init_words_aux(str, start);
+	if (words == NULL)
+	{
+		free(words);
+		return (NULL);
+	}
 	return (words);
 }

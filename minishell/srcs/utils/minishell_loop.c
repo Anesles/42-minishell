@@ -69,6 +69,7 @@ void	free_lexer(t_lexer *lexer)
 		free(current->word);
 		current = next;
 	}
+	free(lexer);
 }
 
 void	clear_mem(t_mshell *mshell, t_cmds *cmds)
@@ -85,16 +86,19 @@ int	minishell_loopit(char **words, t_mshell *mshell)
 	t_lexer		*lexer;
 	char 		*status;
 	char 		*str;
+	size_t			count;
 
-	lexer = init_lexer(words, count_words(words), mshell);
+	count = count_words(words);
+	ft_printf("count:%d\n", count);
+	lexer = init_lexer(words, count, mshell);
 	cmds = init_cmds(lexer, mshell);
 	if (cmds == NULL)
 	{
 		status =  ft_itoa(g_exit_status);
 		str = ft_strjoin("?=", status);
+		free_lexer(lexer);
 		b_export(str, mshell);
 		clear_mem(mshell, cmds);
-		free_lexer(lexer);
 		free (status);
 		free (str);
 		return (1);
@@ -114,7 +118,6 @@ void	minishell_loop(t_mshell *mshell)
 {
 	char		*prompt;
 	char		**words;
-
 	while (1)
 	{
 		pipe(mshell->fd);
@@ -128,7 +131,7 @@ void	minishell_loop(t_mshell *mshell)
 		{
 			if (minishell_loopit(words, mshell))
 				continue ;
-		}	
-		clear_words(words, count_words(words));
+		}
+		
 	}
 }

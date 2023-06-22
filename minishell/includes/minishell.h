@@ -57,7 +57,7 @@ typedef struct s_cmds
 }	t_cmds;
 
 //Utils
-int		count_words(char **words);
+size_t	count_words(char **words);
 void	clear_words(char **words, int n);
 int		find_char(char *str, char c);
 int		is_redir(char *str);

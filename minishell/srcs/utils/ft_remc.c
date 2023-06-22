@@ -75,6 +75,6 @@ char	*ft_remc(char *str, char c)
 		i++;
 	}
 	temp[j] = '\0';
-	free (str);
+	free(str);
 	return (temp);
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	count_words(char **words)
+size_t	count_words(char **words)
 {
 	int	count;
 
@@ -27,8 +27,13 @@ void	clear_words(char **words, int n)
 	int	i;
 
 	i = -1;
+	if (words == NULL)
+		return ;
 	while (++i < n)
+	{
 		free(words[i]);
+		words[i] = NULL;
+	}
 	free(words);
 }
 
