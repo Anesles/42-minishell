@@ -73,7 +73,7 @@ char	**init_words_aux(char *str, int start)
 			&& (*(str + start + 1) == ' '))
 			start += 2;
 	}
-	temp_words[i] = '\0';
+	temp_words[i] = NULL;
 	return (temp_words);
 }
 

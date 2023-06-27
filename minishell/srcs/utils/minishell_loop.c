@@ -60,13 +60,21 @@ void	free_lexer(t_lexer *lexer)
 {
 	t_lexer	*current;
 	t_lexer *next;
-		
+/*	int i;
+
+ 	i = 0;
+	while (i < count)
+	{
+		free(lexer[i].word);
+		i++;
+	} */
 	current = lexer;
 	next = NULL;
 	while (current != NULL)
 	{
 		next = current->next;
 		free(current->word);
+		current->word = NULL;
 		current = next;
 	}
 	free(lexer);
@@ -89,7 +97,6 @@ int	minishell_loopit(char **words, t_mshell *mshell)
 	size_t			count;
 
 	count = count_words(words);
-	ft_printf("count:%d\n", count);
 	lexer = init_lexer(words, count, mshell);
 	cmds = init_cmds(lexer, mshell);
 	if (cmds == NULL)

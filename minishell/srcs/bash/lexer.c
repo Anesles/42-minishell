@@ -47,6 +47,7 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 		str = ft_remc(str, '"');
 		lexer[i].word = ft_strdup(str);
 		free(str);
+		str = NULL;
 		i++;
 	}
 }

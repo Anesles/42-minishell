@@ -40,7 +40,7 @@ char	**arraydup(char **old)
 		new[i] = ft_strdup(old[i]);
 		i++;
 	}
-	new[i] = '\0';
+	new[i] = NULL;
 	return (new);
 }
 
