@@ -20,6 +20,7 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 	while (i < n)
 	{
 		lexer[i].word = ft_strdup(words[i]);//TODO, NAO PODEMOS ACEDECER ASSIM, TEMOS DE FAZER UM STRDUP
+		free(words[i]);
 		if (lexer[i].word == NULL)
 			lexer[i].word = " ";
 		if (i != 0)
@@ -32,6 +33,8 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 			lexer[i].next = NULL;
 		i++;
 	}
+//	free(words[i]);
+	free(words);
 }
 
 void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
@@ -47,7 +50,6 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 		str = ft_remc(str, '"');
 		lexer[i].word = ft_strdup(str);
 		free(str);
-		str = NULL;
 		i++;
 	}
 }
@@ -55,14 +57,10 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 t_lexer	*init_lexer(char **words, int n, t_mshell *mshell)
 {
 	t_lexer	*lexer;
-	int		i;
 
 	lexer = (t_lexer *)malloc(sizeof(t_lexer) * n);
+	ft_printf("n: %d\n", n);
 	create_lexer(lexer, words, n);
 	expand_lexer(lexer, mshell, n);
-	i = -1;
-	while(++i < n)
-			free(words[i]);
-	free(words);
 	return (lexer);
 }

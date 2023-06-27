@@ -15,17 +15,24 @@
 char	*join_words(char **words)
 {
 	char	*str;
+	char	*temp;
 	int		i;
 
 	i = 0;
-	str = ft_strdup("");
+	temp = ft_strdup("");
 	while (words[i])
 	{
-		str = ft_strjoin(str, words[i]);
+		if (i == 0)
+			str = ft_strjoin(temp, words[i]);
+		else
+			str = ft_strjoin(str, words[i]);
+		free(words[i]);
 		if (words[i + 1])
 			str = ft_strjoin(str, " ");
 		i++;
 	}
+	free(words);
+	free(temp);
 	return (str);
 }
 
@@ -83,9 +90,11 @@ char	*expand_env(char *str, t_mshell *mshell)
 {
 	int		i;
 	bool	inside_single;
+	char	*ret;
 	char	**words;
 
 	words = ft_split(str, ' ');
+	free(str);
 	i = 0;
 	inside_single = false;
 	while (words[i])
@@ -101,7 +110,8 @@ char	*expand_env(char *str, t_mshell *mshell)
 		words[i] = change_word(words[i], mshell);
 		i++;
 	}
-	return (join_words(words));
+	ret = join_words(words);
+	return (ret);
 }
 
 char	*expand(char *str, t_mshell *mshell)

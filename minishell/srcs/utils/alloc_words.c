@@ -19,15 +19,15 @@ char	**alloc_words_aux(t_lexer *temp, char **words, t_cmds *cmds, int redir)
 	i = -1;
 	while (++i < cmds->count_words)
 	{
-		words[i] = temp->word;
+		words[i] = ft_strdup(temp->word);
 		temp = temp->next;
 	}
 	words[i] = NULL;
 	if (redir == 1)
 	{
-		cmds->token = temp->word;
+		cmds->token = ft_strdup(temp->word);
 		temp = temp->next;
-		cmds->redi = temp->word;
+		cmds->redi = ft_strdup(temp->word);
 	}
 	else
 	{

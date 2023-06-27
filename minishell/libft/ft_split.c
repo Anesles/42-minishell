@@ -62,7 +62,8 @@ char	**makearray(char **array, int wordcount, char const *s, char c)
 		str = ft_substr(s, i, next(&s[i], c));
 		if (!str)
 			return (NULL);
-		array[h++] = str;
+		array[h++] = ft_strdup(str);
+		free(str);
 		i = i + (next(&s[i], c));
 	}
 	array[h] = 0;
