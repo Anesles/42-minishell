@@ -39,7 +39,6 @@ typedef struct s_mshell
 	int		fd[2];
 	int		prev_fd[2];
 	int		save_fd[2];
-	char	*path;
 	char	**envior;
 }	t_mshell;
 

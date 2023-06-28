@@ -100,18 +100,18 @@ char	*expand_env(char *str, t_mshell *mshell)
 	inside_single = false;
 	while (words[i])
 	{
-		if (find_char(words[i], '\'') != -1
-			&& find_char(words[i] + find_char(words[i], '\'') + 1, '\'') != -1)
-			inside_single = !inside_single;
-		if (inside_single == true)
+		while (ft_strchr(words[i], '$') != NULL)
 		{
-			i++;
-			continue ;
+			if (find_char(words[i], '\'') != -1
+				&& find_char(words[i] + find_char(words[i], '\'') + 1, '\'') != -1)
+				inside_single = !inside_single;
+			if (inside_single == true)
+				break;
+			temp = change_word(words[i], mshell);
+			free(words[i]);
+			words[i] = ft_strdup(temp);
+			free(temp);
 		}
-		temp = change_word(words[i], mshell);
-		free(words[i]);
-		words[i] = ft_strdup(temp);
-		free(temp);
 		i++;
 	}
 	ret = join_words(words);

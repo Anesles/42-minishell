@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I ./includes -g -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -I ./includes -g
 
 SRC = main.c \
 		srcs/bash/cmds.c \

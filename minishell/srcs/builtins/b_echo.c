@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-void	b_echo_aux(int mode, char **words, int max_words)
+void	b_echo_aux(int i, char **words, int max_words)
 {
-	int	i;
+	int	mode;
 
-	i = -1;
-	if (mode == 1)
-		i++;
-	while (words[++i])
+	mode = 0;
+	if (i > 0)
+		mode = 1;
+	while (words[i])
 	{
 		if (i == max_words - 1)
 		{
@@ -30,21 +30,22 @@ void	b_echo_aux(int mode, char **words, int max_words)
 		}
 		else
 			printf("%s ", words[i]);
+		i++;
 	}
 }
 
 int	b_echo(char **words, int max_words)
 {
-	int	mode;
+	int	i;
 
-	mode = 0;
 	if (!words[0])
 	{
 		ft_printf("\n");
 		return (EXIT_SUCCESS);
 	}
-	if (!ft_strncmp(words[0], "-n", 2))
-		mode = 1;
-	b_echo_aux(mode, words, max_words);
+	i = 0;
+	while (!ft_strncmp(words[i], "-n", 2))
+		i++;
+	b_echo_aux(i, words, max_words);
 	return (EXIT_SUCCESS);
 }

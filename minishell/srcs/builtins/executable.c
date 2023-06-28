@@ -21,7 +21,9 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 	int		i;
 
 	temp = ft_strtrim(cmd[0], " \t");
-	available = ft_split(mshell->path, ':');
+	available = ft_split(get_path(mshell->envior), ':');
+	if (available == NULL)
+		return (NULL);
 	i = 0;
 	if (!access(temp, X_OK))
 		return (temp);
@@ -70,8 +72,8 @@ char	*get_path(char **pwd)
 	while (pwd[i])
 	{
 		if (!ft_strncmp(pwd[i], "PATH=", 5))
-			break ;
+			return (ft_substr(pwd[i], 5, ft_strlen(pwd[i]) - 5));
 		i++;
 	}
-	return (ft_substr(pwd[i], 5, ft_strlen(pwd[i]) - 5));
+	return (NULL);
 }

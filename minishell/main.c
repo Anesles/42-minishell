@@ -54,7 +54,6 @@ int	main(int argc, char *argv[], char **envp)
 		perror("minishell: too many arguments");
 	signal(SIGINT, &sig_continue);
 	mshell.envior = arraydup(envp);
-	mshell.path = get_path(mshell.envior);
 	mshell.save_fd[0] = dup(0);
 	mshell.save_fd[1] = dup(1);
 	b_export("?=0", &mshell);

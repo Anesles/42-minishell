@@ -21,7 +21,6 @@ void	b_exit(int status, t_mshell *mshell)
 		free(mshell->envior[i]);
 	free(mshell->envior[i]);
 	free(mshell->envior);
-	free(mshell->path);
 	exit(status);
 }
 
@@ -125,7 +124,7 @@ int b_env(t_mshell *mshell)
 	i = 0;
 	while (mshell->envior[i])
 	{
-		ft_printf(mshell->envior[i]);
+		ft_printf("%s\n", mshell->envior[i]);
 		i++;
 	}
 		return (EXIT_SUCCESS);
