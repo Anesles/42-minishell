@@ -12,30 +12,6 @@
 
 #include "minishell.h"
 
-char	*join_words(char **words)
-{
-	char	*str;
-	char	*temp;
-	int		i;
-
-	i = 0;
-	temp = ft_strdup("");
-	while (words[i])
-	{
-		if (i == 0)
-			str = ft_strjoin(temp, words[i]);
-		else
-			str = ft_strjoin(str, words[i]);
-		free(words[i]);
-		if (words[i + 1])
-			str = ft_strjoin(str, " ");
-		i++;
-	}
-	free(words);
-	free(temp);
-	return (str);
-}
-
 char	*get_name(char *str)
 {
 	int		i;
@@ -63,58 +39,83 @@ char	*get_name(char *str)
 	return (name);
 }
 
-char	*change_word(char *word, t_mshell *mshell)
+int	get_nsize(char *str, t_mshell *mshell)
 {
-	char	*name;
-	char	*temp;
-	char 	*str;
+	int		count;
+	int		i;
 
-	str = NULL;
-	name = get_name(word);
-	temp = get_env(name, mshell->envior);
-	if (temp == NULL)
+	i = 0;
+	count = 0;
+	while (str[i])
 	{
-		free(name);
-		return (ft_strjoin(ft_substr(word, 0, find_char(word, '$')),
-				ft_substr(word, find_char(word, '$')
-					+ ft_strlen(name) + 1, ft_strlen(word))));
+		if (str[i] == '\'' && find_char(&str[i + 1], '\'') != -1)
+		{
+			i++;
+			count++;
+			while(str[i] != '\'')
+			{
+				count++;
+				i++;
+			}
+		}
+		if (str[i] == '$')
+		{
+			count += ft_strlen(get_env(get_name(str + i), mshell->envior));
+			i++;
+			while (ft_isalnum(str[i]) || str[i] == '?')
+				i++;
+		}
+		else
+		{
+			count++;
+			i++;
+		}
 	}
-	str = ft_strjoin("$", name);
-	free(name);
-	word = ft_replace_env(word, str, temp);
-	free(str);
-	return (word);
+	return (count);
 }
 
 char	*expand_env(char *str, t_mshell *mshell)
 {
-	int		i;
-	bool	inside_single;
-	char	*temp;
 	char	*ret;
-	char	**words;
+	int		j;
+	int		i;
 
-	words = ft_split(str, ' ');
-	free(str);
+	ret = malloc(sizeof(char) * get_nsize(str, mshell) + 1);
+	ft_printf("size: %d\n", get_nsize(str, mshell));
 	i = 0;
-	inside_single = false;
-	while (words[i])
+	j = 0;
+	while (str[i])
 	{
-		while (ft_strchr(words[i], '$') != NULL)
+		if (str[i] == '\'' && find_char(&str[i + 1], '\'') != -1)
 		{
-			if (find_char(words[i], '\'') != -1
-				&& find_char(words[i] + find_char(words[i], '\'') + 1, '\'') != -1)
-				inside_single = !inside_single;
-			if (inside_single == true)
-				break;
-			temp = change_word(words[i], mshell);
-			free(words[i]);
-			words[i] = ft_strdup(temp);
-			free(temp);
+			ret[j] = str[i];
+			j++;
+			i++;
+			while (str[i] != '\'')
+			{
+				ret[j] = str[i];
+				j++;
+				i++;
+			}
+			ret[j] = str[i];
+			j++;
+			i++;
 		}
-		i++;
+		else if (str[i] == '$')
+		{
+			j += (int) ft_strlcat(ret, get_env(get_name(str + i), mshell->envior), get_nsize(str, mshell) + 1);
+			i++;
+			while (ft_isalnum(str[i]) || str[i] == '?')
+				i++;
+		}
+		else
+		{
+			ret[j] = str[i];
+			j++;
+			i++;
+		}
 	}
-	ret = join_words(words);
+	ret[get_nsize(str, mshell)] = 0;
 	return (ret);
 }
 

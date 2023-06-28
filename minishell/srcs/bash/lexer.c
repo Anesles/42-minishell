@@ -33,7 +33,6 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 			lexer[i].next = NULL;
 		i++;
 	}
-//	free(words[i]);
 	free(words);
 }
 

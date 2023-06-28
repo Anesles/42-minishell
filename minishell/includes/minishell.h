@@ -79,7 +79,7 @@ int		b_env(t_mshell *mshell);
 int		b_unset(char *variable, t_mshell *mshell);
 //B_export
 int		b_export(char *n_var, t_mshell *mshell);
-int	b_declare(t_mshell *mshell);
+int		b_declare(t_mshell *mshell);
 //B_echo
 int		b_echo(char **words, int max_words);
 //B_cd
