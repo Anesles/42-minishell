@@ -56,6 +56,8 @@ char	**init_words_aux(char *str, int start)
 	char **temp_words;
 
 	count = number_words(str + start);
+	if (count == 0)
+		return (NULL);
 	i = -1;
 	temp_words = malloc(sizeof(char *) * (count + 1));
 	if (!temp_words)

@@ -17,7 +17,7 @@ int	error_cmd_not_found(char *cmd)
 	ft_putstr_fd("Command '", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putstr_fd("' not found\n", STDERR_FILENO);
-	return (127);
+	exit (127);
 }
 
 int	error_cd(char *cmd)

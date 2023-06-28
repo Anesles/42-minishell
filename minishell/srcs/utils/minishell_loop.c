@@ -100,7 +100,7 @@ void	clear_mem(t_mshell *mshell, t_cmds *cmds)
 
 }
 
-int	minishell_loopit(char **words, t_mshell *mshell)
+void	minishell_loopit(char **words, t_mshell *mshell)
 {
 	t_cmds		*cmds;
 	t_lexer		*lexer;
@@ -120,7 +120,6 @@ int	minishell_loopit(char **words, t_mshell *mshell)
 		clear_mem(mshell, cmds);
 		free (status);
 		free (str);
-		return (1);
 	}
 	parser(cmds, mshell);
 	status =  ft_itoa(g_exit_status);
@@ -129,7 +128,6 @@ int	minishell_loopit(char **words, t_mshell *mshell)
 	clear_mem(mshell, cmds);
 	free(status);
 	free(str);
-	return (0);
 }
 
 void	minishell_loop(t_mshell *mshell)
@@ -144,12 +142,11 @@ void	minishell_loop(t_mshell *mshell)
 		words = init_words(prompt, mshell);
 		free(prompt);
 		if (words == NULL)
-			continue ;
-		if (!(words[0] == NULL))
 		{
-			if (minishell_loopit(words, mshell))
-				continue ;
+			free(words);
+			continue ;
 		}
-		
+		if (!(words[0] == NULL))
+			minishell_loopit(words, mshell);
 	}
 }

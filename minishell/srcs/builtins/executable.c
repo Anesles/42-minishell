@@ -15,25 +15,38 @@
 char	*returnvalue(char **cmd, t_mshell *mshell)
 {
 	char	**available;
+	char	*fin;
+	char	*temp;
 	char	*str;
 	int		i;
 
-	cmd[0] = ft_strtrim(cmd[0], " \t");
+	temp = ft_strtrim(cmd[0], " \t");
 	available = ft_split(mshell->path, ':');
 	i = 0;
-	if (!access(cmd[0], X_OK))
-		return (cmd[0]);
+	if (!access(temp, X_OK))
+		return (temp);
 	else
 	{
 		while (available[i])
 		{
 			str = ft_strjoin(available[i], "/");
-			str = ft_strjoin(str, cmd[0]);
-			if (!access(str, X_OK))
-				return (str);
+			free(available[i]);
+			fin = ft_strjoin(str, temp);
+			free(str);
+			if (!access(fin, X_OK))
+			{
+				while (available[++i])
+					free(available[i]);
+				free(available);
+				free(temp);
+				return (fin);
+			}
+			free(fin);
 			i++;
 		}
 	}
+	free(temp);
+	free(available);
 	return (NULL);
 }
 
@@ -43,7 +56,7 @@ void	executables(char **cmd, t_mshell *mshell)
 
 	bin = returnvalue(cmd, mshell);
 	if (bin == NULL)
-		bin = "none";
+		return ;
 	execve(bin, cmd, mshell->envior);
 }
 

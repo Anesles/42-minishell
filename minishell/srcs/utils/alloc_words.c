@@ -12,11 +12,15 @@
 
 #include "minishell.h"
 
-char	**alloc_words_aux(t_lexer *temp, char **words, t_cmds *cmds, int redir)
+char	**alloc_words_aux(t_lexer *temp, t_cmds *cmds, int redir)
 {
 	int	i;
+	char **words;
 
 	i = -1;
+	words = malloc(sizeof(char *) * (cmds->count_words + 1));
+	if (!words)
+		return (NULL);
 	while (++i < cmds->count_words)
 	{
 		words[i] = ft_strdup(temp->word);
@@ -58,8 +62,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		cmds->count_words++;
 		temp = temp->next;
 	}
-	words = malloc(sizeof(char *) * (cmds->count_words + 1));
-	temp = lexer;
-	words = alloc_words_aux(temp, words, cmds, redir);
+//	temp = lexer;
+	words = alloc_words_aux(lexer, cmds, redir);
 	return (words);
 }

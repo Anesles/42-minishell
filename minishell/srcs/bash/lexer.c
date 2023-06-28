@@ -59,7 +59,6 @@ t_lexer	*init_lexer(char **words, int n, t_mshell *mshell)
 	t_lexer	*lexer;
 
 	lexer = (t_lexer *)malloc(sizeof(t_lexer) * n);
-	ft_printf("n: %d\n", n);
 	create_lexer(lexer, words, n);
 	expand_lexer(lexer, mshell, n);
 	return (lexer);

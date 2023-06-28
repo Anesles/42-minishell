@@ -90,6 +90,7 @@ char	*expand_env(char *str, t_mshell *mshell)
 {
 	int		i;
 	bool	inside_single;
+	char	*temp;
 	char	*ret;
 	char	**words;
 
@@ -107,7 +108,10 @@ char	*expand_env(char *str, t_mshell *mshell)
 			i++;
 			continue ;
 		}
-		words[i] = change_word(words[i], mshell);
+		temp = change_word(words[i], mshell);
+		free(words[i]);
+		words[i] = ft_strdup(temp);
+		free(temp);
 		i++;
 	}
 	ret = join_words(words);
