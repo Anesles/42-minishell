@@ -80,7 +80,7 @@ int	b_export(char *n_var, t_mshell *mshell)
 	t_vars	vars;
 
 	if (!n_var)
-		return (b_env(mshell));
+		return (b_declare(mshell));
 	if (valid_nvar(n_var))
 		return (EXIT_FAILURE);
 	if (*(n_var + find_char(n_var, '=') + 1) <= 32)

@@ -36,17 +36,99 @@ int	b_pwd(void)
 	return (EXIT_SUCCESS);
 }
 
-int	b_env(t_mshell *mshell)
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	unsigned int	i;
+	char			*t1;
+	char			*t2;
+
+	i = 0;
+	t1 = (char *)s1;
+	t2 = (char *)s2;
+	while (*t1 && *t2 && (*t1 == *t2))
+	{
+		t1++;
+		t2++;
+	}
+	return ((int)(unsigned char)(*t1) - (int)(unsigned char)(*t2));
+}
+
+void	order_array(char **str)
+{
+	int 	i;
+	int		j;
+	char 	*temp;
+	int		size;
+
+	i = 0;
+	j = 0;
+	size = 0;
+	while (str[size])
+		size++;
+	while(j < size - 1)
+	{
+		i = 0;
+		while (i < size - j - 1)
+		{
+			if (ft_strcmp(str[i], str[i + 1]) > 0)
+			{
+				temp = str[i];
+				str[i] = str[i + 1];
+				str[i + 1] = temp;
+			}
+			i++;
+		}
+		j++;
+	}
+}
+
+int	next_one(char *s, char c)
 {
 	int	i;
 
 	i = 0;
-	while (mshell->envior[i])
+	while (s[i] != c && s[i])
+		i++;
+	return (i);
+}
+
+int	b_declare(t_mshell *mshell)
+{
+	int	i;
+	char **array;
+	char *str;
+	int 	j;
+
+	array = arraydup(mshell->envior);
+	order_array(array);
+	i = 0;
+	while (array[i])
 	{
-		printf("%s\n", mshell->envior[i]);
+		j = 0;
+		ft_printf("declare -x ");
+		str = ft_substr(array[i], j, next_one(array[i], '='));
+		ft_printf("%s=", str);
+		free(str);
+		j = j + next_one(array[i], '=') + 1;
+		str = ft_substr(array[i], j, ft_strlen(array[i]));
+		ft_printf("\"%s\"\n", str);
+		free(str);
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int b_env(t_mshell *mshell)
+{
+	int i;
+
+	i = 0;
+	while (mshell->envior[i])
+	{
+		ft_printf(mshell->envior[i]);
+		i++;
+	}
+		return (EXIT_SUCCESS);
 }
 
 void	check_redirect(t_cmds *cmds)
