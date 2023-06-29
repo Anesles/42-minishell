@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern int g_exit_status;
+
 size_t	count_words(char **words)
 {
 	int	count;
@@ -22,19 +24,16 @@ size_t	count_words(char **words)
 	return (count);
 }
 
-void	clear_words(char **words, int n)
+void	change_exit_st(t_mshell *mshell)
 {
-	int	i;
+	char	*status;
+	char	*str;
 
-	i = -1;
-	if (words == NULL)
-		return ;
-	while (++i < n)
-	{
-		free(words[i]);
-		words[i] = NULL;
-	}
-	free(words);
+	status = ft_itoa(g_exit_status);
+	str = ft_strjoin("?=", status);
+	b_export(str, mshell);
+	free(status);
+	free(str);
 }
 
 int	find_char(char *str, char c)

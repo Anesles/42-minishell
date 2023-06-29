@@ -28,6 +28,7 @@ SRC = main.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
 		srcs/utils/ft_remc.c \
+		srcs/utils/clear_mem.c \
 		srcs/builtins/b_echo.c \
 		srcs/builtins/b_unset.c \
 		srcs/builtins/b_export.c \

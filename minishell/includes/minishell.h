@@ -57,7 +57,7 @@ typedef struct s_cmds
 
 //Utils
 size_t	count_words(char **words);
-void	clear_words(char **words, int n);
+void	change_exit_st(t_mshell *mshell);
 int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
@@ -103,5 +103,8 @@ int		error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
 //Alloc_words
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
+//Clear_mem
+void	clear_mem(t_mshell *mshell, t_cmds *cmds);
+void	free_lexer(t_lexer *lexer, int count);
 
 #endif // MINISHELL_H

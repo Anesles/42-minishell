@@ -21,6 +21,13 @@ void	sig_continue(int signum)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	g_exit_status = 130;
+}
+
+void	sig_abrt(int signum)
+{
+	(void)signum;
+	g_exit_status = 131;
 }
 
 char	**arraydup(char **old)
@@ -53,6 +60,7 @@ int	main(int argc, char *argv[], char **envp)
 	if (argc != 1 || argv[1])
 		perror("minishell: too many arguments");
 	signal(SIGINT, &sig_continue);
+	signal(SIGABRT, &sig_abrt);
 	mshell.envior = arraydup(envp);
 	mshell.save_fd[0] = dup(0);
 	mshell.save_fd[1] = dup(1);

@@ -43,70 +43,37 @@ char	*prompt_read(t_mshell *mshell)
 	return (line);
 }
 
-void	clear_cmds(t_cmds *cmds, int n_cmds)
+int	valid_words(char **words)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (i < n_cmds)
+	if (words[0] == NULL)
+		return (0);
+	else if (words[0][0] == '|')
+		return (0);
+	else if (words[0][0] == ';')
+		return (0);
+	else if (words[0][0] == '<')
+		return (0);
+	else if (words[0][0] == '>')
+		return (0);
+	else if (words[0][0] == '&')
+		return (0);
+	while (words[i])
 	{
-		j = 0;
-		while (cmds[i].words[j])
-		{
-			free(cmds[i].words[j]);
-			j++;
-		}
-		free(cmds[i].words);
-		if (cmds[i].redi != NULL)
-		{
-			free(cmds[i].redi);
-			free(cmds[i].token);
-		}
+		if (words[i + 1] && (is_redir(words[i]) && is_redir(words[i + 1])))
+			return (0);
 		i++;
 	}
-	free(cmds);
-}
-
-void	free_lexer(t_lexer *lexer, int count)
-{
-	int i;
-
- 	i = 0;
-	while (i < count)
-	{
-		free(lexer[i].word);
-		i++;
-	}
-	/*
-	current = lexer;
-	next = NULL;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current->word);
-		current->word = NULL;
-		current = next;
-	}
-	*/
-	free(lexer);
-}
-
-void	clear_mem(t_mshell *mshell, t_cmds *cmds)
-{
-	clear_cmds(cmds, mshell->n_cmds);
-	unlink("temp");
-	reset_pipes(mshell);
-
+	return (1);
 }
 
 void	minishell_loopit(char **words, t_mshell *mshell)
 {
 	t_cmds		*cmds;
 	t_lexer		*lexer;
-	char 		*status;
-	char 		*str;
-	size_t			count;
+	size_t		count;
 
 	count = count_words(words);
 	lexer = init_lexer(words, count, mshell);
@@ -114,31 +81,25 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 	free_lexer(lexer, count);
 	if (cmds == NULL)
 	{
-		status =  ft_itoa(g_exit_status);
-		str = ft_strjoin("?=", status);
-		b_export(str, mshell);
+		change_exit_st(mshell);
 		clear_mem(mshell, cmds);
-		free (status);
-		free (str);
 	}
 	parser(cmds, mshell);
-	status =  ft_itoa(g_exit_status);
-	str = ft_strjoin("?=", status);
-	b_export(str, mshell);
+	change_exit_st(mshell);
 	clear_mem(mshell, cmds);
-	free(status);
-	free(str);
 }
 
 void	minishell_loop(t_mshell *mshell)
 {
 	char		*prompt;
 	char		**words;
+
 	while (1)
 	{
 		pipe(mshell->fd);
 		pipe(mshell->prev_fd);
 		prompt = prompt_read(mshell);
+		change_exit_st(mshell);
 		words = init_words(prompt, mshell);
 		free(prompt);
 		if (words == NULL)
@@ -147,6 +108,14 @@ void	minishell_loop(t_mshell *mshell)
 			continue ;
 		}
 		if (!(words[0] == NULL))
-			minishell_loopit(words, mshell);
+		{
+			if (valid_words(words))
+				minishell_loopit(words, mshell);
+			else
+			{
+				ft_printf("minishell: syntax error\n");
+				b_export("?=2", mshell);
+			}
+		}
 	}
 }

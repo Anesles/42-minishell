@@ -23,7 +23,7 @@ void	token_less(t_cmds *cmds, int mode)
 	{
 		fd = open("temp", O_WRONLY | O_CREAT, 0644);
 		line = readline("> ");
-		while (ft_strncmp(line, cmds->redi, ft_strlen(cmds->redi)))
+		while (ft_strncmp(line, cmds->redi, ft_strlen(line)))
 		{
 			write(fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
 			line = readline("> ");

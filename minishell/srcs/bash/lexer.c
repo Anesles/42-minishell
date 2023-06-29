@@ -39,12 +39,15 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 {
 	int		i;
-	char 	*str;
+	char	*str;
 
 	i = 0;
 	while (i < n)
 	{
-		str = expand(lexer[i].word, mshell);
+		if (i == 0 || !is_redir(lexer[i - 1].word))
+			str = expand(lexer[i].word, mshell);
+		else
+			str = ft_strdup(lexer[i].word);
 		if (ft_strncmp(str, lexer[i].word, ft_strlen(lexer[i].word)) != 0)
 		{
 			free(lexer[i].word);
