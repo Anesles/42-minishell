@@ -12,18 +12,40 @@
 
 #include "minishell.h"
 
+char	*get_path(char **pwd)
+{
+	int		i;
+
+	i = 0;
+	if (!pwd)
+		return (NULL);
+	while (pwd[i])
+	{
+		if (!ft_strncmp(pwd[i], "PATH=", 5))
+			return (ft_substr(pwd[i], 5, ft_strlen(pwd[i]) - 5));
+		i++;
+	}
+	return (NULL);
+}
+
 char	*returnvalue(char **cmd, t_mshell *mshell)
 {
 	char	**available;
+	char	*path;
 	char	*fin;
 	char	*temp;
 	char	*str;
 	int		i;
 
 	temp = ft_strtrim(cmd[0], " \t");
-	available = ft_split(get_path(mshell->envior), ':');
+	path = get_path(mshell->envior);
+	available = ft_split(path, ':');
+	free(path);
 	if (available == NULL)
+	{
+		free(temp);
 		return (NULL);
+	}
 	i = 0;
 	if (!access(temp, X_OK))
 		return (temp);
@@ -62,18 +84,3 @@ void	executables(char **cmd, t_mshell *mshell)
 	execve(bin, cmd, mshell->envior);
 }
 
-char	*get_path(char **pwd)
-{
-	int		i;
-
-	i = 0;
-	if (!pwd)
-		return (NULL);
-	while (pwd[i])
-	{
-		if (!ft_strncmp(pwd[i], "PATH=", 5))
-			return (ft_substr(pwd[i], 5, ft_strlen(pwd[i]) - 5));
-		i++;
-	}
-	return (NULL);
-}

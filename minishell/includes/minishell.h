@@ -87,7 +87,6 @@ int		b_cd(char *direct, t_mshell *mshell);
 //Executables
 char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
-char	*get_path(char **pwd);
 //Pipe
 void	handle_pipe(t_mshell *mshell);
 void	reset_pipes(t_mshell *mshell);

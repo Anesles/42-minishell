@@ -41,35 +41,56 @@ char	*get_name(char *str)
 
 int	get_nsize(char *str, t_mshell *mshell)
 {
+	bool	sing;
+	char	*name;
 	int		count;
 	int		i;
 
 	i = 0;
 	count = 0;
-	while (str[i])
+	sing = false;
+	while(str[i])
 	{
-		if (str[i] == '\'' && find_char(&str[i + 1], '\'') != -1)
+		if (str[i] == '\'')
+		{
+			sing = !sing;
+			i++;
+			continue;
+		}
+		if (str[i] == '\"' && sing == false)
 		{
 			i++;
-			count++;
-			while(str[i] != '\'')
+			while (str[i] != '\"' && str[i] != 0)
 			{
+				if (str[i] == '$')
+				{
+					name = get_name(str + i);
+					count += ft_strlen(get_env(name, mshell->envior));
+					free(name);
+					i++;
+					while (ft_isalnum(str[i]))
+						i++;
+					continue;
+				}
 				count++;
 				i++;
 			}
-		}
-		if (str[i] == '$')
-		{
-			count += ft_strlen(get_env(get_name(str + i), mshell->envior));
-			i++;
-			while (ft_isalnum(str[i]) || str[i] == '?')
+			if (str[i] == '\"')
 				i++;
+			continue;
 		}
-		else
+		else if (str[i] == '$' && sing == false)
 		{
-			count++;
+			name = get_name(str + i);
+			count += ft_strlen(get_env(name, mshell->envior));
+			free(name);
 			i++;
+			while (ft_isalnum(str[i]))
+				i++;
+			continue;
 		}
+		count++;
+		i++;
 	}
 	return (count);
 }
@@ -77,45 +98,65 @@ int	get_nsize(char *str, t_mshell *mshell)
 char	*expand_env(char *str, t_mshell *mshell)
 {
 	char	*ret;
+	char 	*env;
+	char	*name;
+	bool	sing;
+	int		size;
 	int		j;
 	int		i;
 
-	ret = malloc(sizeof(char) * get_nsize(str, mshell) + 1);
-	ft_printf("size: %d\n", get_nsize(str, mshell));
+	size = get_nsize(str, mshell),
+	sing = false;
+	ret = (char *) malloc(sizeof(char) * (size + 1));
+	ret[size] = 0;
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && find_char(&str[i + 1], '\'') != -1)
+		if(str[i] == '\'')
 		{
-			ret[j] = str[i];
-			j++;
+			sing = !sing;
 			i++;
-			while (str[i] != '\'')
+			continue;
+		}
+		if(str[i] == '\"' && sing == false)
+		{
+			i++;
+			while (str[i] != '\"' && str[i] != 0)
 			{
-				ret[j] = str[i];
-				j++;
-				i++;
+				if (str[i] == '$')
+				{
+					name = get_name(str + i);
+					env = get_env(name, mshell->envior);
+					while(*env)
+						ret[j++] = *(env++);
+					free(name);
+					i++;
+					while (ft_isalnum(str[i]))
+						i++;
+					continue;
+				}
+				ret[j++] = str[i++];
 			}
-			ret[j] = str[i];
-			j++;
-			i++;
-		}
-		else if (str[i] == '$')
-		{
-			j += (int) ft_strlcat(ret, get_env(get_name(str + i), mshell->envior), get_nsize(str, mshell) + 1);
-			i++;
-			while (ft_isalnum(str[i]) || str[i] == '?')
+			if (str[i] == '\"')
 				i++;
+			continue;
 		}
-		else
+		else if (str[i] == '$' && sing == false)
 		{
-			ret[j] = str[i];
-			j++;
+			name = get_name(str + i);
+			env = get_env(name, mshell->envior);
+			while(*env)
+				ret[j++] = *(env++);
+			j += ft_strlen(env);
+			free(name);
 			i++;
+			while (ft_isalnum(str[i]))
+				i++;
+			continue;
 		}
+		ret[j++] = str[i++];
 	}
-	ret[get_nsize(str, mshell)] = 0;
 	return (ret);
 }
 
@@ -124,5 +165,5 @@ char	*expand(char *str, t_mshell *mshell)
 	if (ft_strchr(str, '$') != NULL)
 		return (expand_env(str, mshell));
 	else
-		return (str);
+		return (ft_strdup(str));
 }

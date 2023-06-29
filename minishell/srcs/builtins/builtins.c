@@ -37,11 +37,9 @@ int	b_pwd(void)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	unsigned int	i;
 	char			*t1;
 	char			*t2;
 
-	i = 0;
 	t1 = (char *)s1;
 	t2 = (char *)s2;
 	while (*t1 && *t2 && (*t1 == *t2))

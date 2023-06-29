@@ -25,7 +25,7 @@ int	number_words(char *str)
 	insideword = false;
 	while (str[i])
 	{
-		if (str[i] == '"')
+		if (str[i] == '"' || str[i] == '\'')
 			insidequotes = !insidequotes;
 		else if (str[i] != ' ' || insidequotes)
 			insideword = true;
