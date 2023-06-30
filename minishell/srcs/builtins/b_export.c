@@ -74,6 +74,12 @@ int	b_export(char **n_var, t_mshell *mshell)
 		return (EXIT_FAILURE);
 	while (n_var[i])
 	{
+		if (find_char(n_var[i], '=') == -1)
+		{
+			handle_neq(n_var[i], mshell);
+			i++;
+			continue ;
+		}
 		if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 32)
 			n_var[i] = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
 		vars = get_vars(n_var[i], mshell);
@@ -91,6 +97,11 @@ int	b_export_one(char *n_var, t_mshell *mshell)
 		return (b_declare(mshell));
 	if (valid_nvar_one(n_var))
 		return (EXIT_FAILURE);
+	if (find_char(n_var, '=') == -1)
+	{
+		handle_neq(n_var, mshell);
+		return (EXIT_SUCCESS);
+	}
 	if (*(n_var + find_char(n_var, '=') + 1) <= 32)
 		n_var = ft_substr(n_var, 0, find_char(n_var, '=') + 1);
 	vars = get_vars(n_var, mshell);

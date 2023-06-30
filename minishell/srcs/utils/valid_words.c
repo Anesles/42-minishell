@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbraga-b <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:57:18 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/06/30 13:57:19 by dbraga-b         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:33:38 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,22 @@ int	valid_words(char **words)
 int	valid_nvar(char **nvar)
 {
 	int	i;
+	int	j;
 
 	i = 1;
 	while (nvar[i])
 	{
-		if (!(ft_isalpha(nvar[i][0]) || nvar[i][0] == '_' || nvar[i][0] == '?'))
+		if (nvar[i][0] == '?')
+			return (EXIT_SUCCESS);
+		if (!ft_isalpha(nvar[i][0]) || nvar[i][0] == '_')
 			return (EXIT_FAILURE);
-		if (find_char(nvar[i], '=') == -1)
-			return (EXIT_FAILURE);
+		j = 1;
+		while (nvar[i][j] != '=' && nvar[i][j] != '\0')
+		{
+			if (!(ft_isalnum(nvar[i][j])))
+				return (EXIT_FAILURE);
+			j++;
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -56,9 +64,18 @@ int	valid_nvar(char **nvar)
 
 int	valid_nvar_one(char *nvar)
 {
-	if (!(ft_isalpha(nvar[0]) || nvar[0] == '_' || nvar[0] == '?'))
+	int	i;
+
+	if (nvar[0] == '?')
+		return (EXIT_SUCCESS);
+	if (!ft_isalpha(nvar[0]) || nvar[0] == '_')
 		return (EXIT_FAILURE);
-	if (find_char(nvar, '=') == -1)
-		return (EXIT_FAILURE);
+	i = 1;
+	while (nvar[i] != '=' && nvar[i] != '\0')
+	{
+		if (!ft_isalnum(nvar[i]))
+			return (EXIT_FAILURE);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }

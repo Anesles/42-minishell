@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtinc_aux.c                                     :+:      :+:    :+:   */
+/*   builtins_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbraga-b <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:13:20 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/06/30 14:13:21 by dbraga-b         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:05:15 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ int	next_one(char *s, char c)
 	return (i);
 }
 
+void	b_declare_aux(char *array, int j)
+{
+	char	*str;
+
+	str = ft_substr(array, j, next_one(array, '='));
+	if (find_char(array, '=') == -1)
+		ft_printf("declare -x %s\n", array);
+	else
+		ft_printf("declare -x %s=", str);
+	free(str);
+}
+
 int	b_declare(t_mshell *mshell)
 {
 	int		i;
@@ -79,12 +91,11 @@ int	b_declare(t_mshell *mshell)
 	while (array[i])
 	{
 		j = 0;
-		str = ft_substr(array[i], j, next_one(array[i], '='));
-		ft_printf("declare -x %s=", str);
-		free(str);
+		b_declare_aux(array[i], j);
 		j = j + next_one(array[i], '=') + 1;
 		str = ft_substr(array[i], j, ft_strlen(array[i]));
-		ft_printf("\"%s\"\n", str);
+		if (find_char(array[i], '=') != -1)
+			ft_printf("\"%s\"\n", str);
 		free(array[i]);
 		free(str);
 		i++;

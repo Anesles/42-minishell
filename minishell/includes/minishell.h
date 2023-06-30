@@ -85,6 +85,7 @@ int		next_one(char *s, char c);
 //B_unset
 int		b_unset(char *variable, t_mshell *mshell);
 //B_export
+void	handle_neq(char *n_var, t_mshell *mshell);
 int		b_export(char **n_var, t_mshell *mshell);
 int		b_declare(t_mshell *mshell);
 int		b_export_one(char *n_var, t_mshell *mshell);

@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+int	var_exists(char *var, t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	while (mshell->envior[i] != NULL)
+	{
+		if (ft_strncmp(var, mshell->envior[i], ft_strlen(var)) == 0)
+			return (EXIT_SUCCESS);
+		i++;
+	}
+	return (EXIT_FAILURE);
+}
+
 int	b_unset(char *variable, t_mshell *mshell)
 {
 	int		count;
@@ -19,6 +33,8 @@ int	b_unset(char *variable, t_mshell *mshell)
 	char	**new_environ;
 
 	if (!variable)
+		return (EXIT_SUCCESS);
+	if (!var_exists(variable, mshell) == 0)
 		return (EXIT_SUCCESS);
 	count = 0;
 	while (mshell->envior[count] != NULL)
@@ -36,6 +52,7 @@ int	b_unset(char *variable, t_mshell *mshell)
 		count++;
 	}
 	new_environ[track] = NULL;
+	free_envior(mshell);
 	mshell->envior = new_environ;
 	return (EXIT_SUCCESS);
 }

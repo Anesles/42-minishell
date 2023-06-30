@@ -63,8 +63,34 @@ void	check_redirect(t_cmds *cmds)
 	}
 }
 
+int	valid_exit(char	**str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i >= 1)
+			exit(1);
+		if (str[i][0] == '-' || str[i][0] == '+')
+			j = 1;
+		else
+			j = 0;
+		while (str[i][j])
+		{
+			if (!ft_isdigit(str[i][j]))
+				return (EXIT_FAILURE);
+			j++;
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	builtins(t_cmds *cmds, t_mshell *mshell)
 {
+	int	var;
 	check_redirect(cmds);
 	if (cmds->words)
 	{
@@ -73,9 +99,18 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		else if (!ft_strncmp("echo", cmds->words[0], 4))
 			return (b_echo(&cmds->words[1], cmds->count_words - 1));
 		else if (!ft_strncmp("cd", cmds->words[0], 2))
+		{
+			if (cmds->words[2] != NULL)
+				return (EXIT_FAILURE);
 			return (b_cd(cmds->words[1], mshell));
+		}
 		else if (!ft_strncmp("exit", cmds->words[0], 4))
-			b_exit(0, mshell);
+		{
+			if (valid_exit(&cmds->words[1]))
+				return (2);
+			var = ft_atoi(cmds->words[1]);
+			b_exit(var, mshell);
+		}
 		else if (!ft_strncmp("env", cmds->words[0], 3))
 			return (b_env(mshell));
 		else if (!ft_strncmp("export", cmds->words[0], 6))

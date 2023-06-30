@@ -40,6 +40,7 @@ SRC = main.c \
 		srcs/utils/minishell_loop.c \
 		srcs/builtins/builtins_aux.c \
 		srcs/bash/expand/get_nsize.c \
+		srcs/builtins/b_export_neq.c \
 		srcs/bash/expand/expand_env.c
 OBJ = $(SRC:.c=.o)
 
