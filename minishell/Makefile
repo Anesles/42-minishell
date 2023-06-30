@@ -23,7 +23,6 @@ SRC = main.c \
 		srcs/bash/errors.c \
 		srcs/utils/utils.c \
 		srcs/bash/parser.c \
-		srcs/bash/expand.c \
 		srcs/utils/get_env.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
@@ -35,10 +34,13 @@ SRC = main.c \
 		srcs/builtins/builtins.c \
 		srcs/utils/alloc_words.c \
 		srcs/utils/valid_words.c \
+		srcs/bash/expand/expand.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
+		srcs/utils/minishell_loop.c \
 		srcs/builtins/builtins_aux.c \
-		srcs/utils/minishell_loop.c
+		srcs/bash/expand/get_nsize.c \
+		srcs/bash/expand/expand_env.c
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/

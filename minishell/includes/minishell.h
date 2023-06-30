@@ -82,7 +82,6 @@ void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
 void	order_array(char **str);
 int		next_one(char *s, char c);
-
 //B_unset
 int		b_unset(char *variable, t_mshell *mshell);
 //B_export
@@ -104,7 +103,12 @@ void	token_more(t_cmds *cmds, int mode);
 //Words
 char	**init_words(char *str, t_mshell *mshell);
 //Expand
+char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);
+//Expand_env
+char	*expand_env(char *str, t_mshell *mshell);
+//Get_nsize
+int		get_nsize(char *str, t_mshell *mshell);
 //Get_env
 char	*get_env(char *str, char **envir);
 //Errors
