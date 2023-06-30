@@ -15,12 +15,18 @@
 char	*get_env(char *str, char **envir)
 {
 	int		i;
+	char	*temp;
 
 	i = 0;
 	while (envir[i])
 	{
-		if (ft_strncmp(str, envir[i], ft_strlen(str)) == 0)
+		temp = ft_strjoin(str, "=");
+		if (ft_strncmp(temp, envir[i], ft_strlen(str) + 1) == 0)
+		{
+			free(temp);
 			return (envir[i] + ft_strlen(str) + 1);
+		}
+		free(temp);
 		i++;
 	}
 	return (NULL);

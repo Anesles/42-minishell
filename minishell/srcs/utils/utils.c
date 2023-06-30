@@ -55,13 +55,13 @@ int	find_char(char *str, char c)
 
 int	is_redir(char *str)
 {
-	if (!ft_strncmp(str, ">>", 2))
+	if (!ft_strncmp(str, ">>", 2) && ft_strlen(str) == 2)
 		return (EXIT_FAILURE);
-	else if (!ft_strncmp(str, "<<", 2))
+	else if (!ft_strncmp(str, "<<", 2) && ft_strlen(str) == 2)
 		return (EXIT_FAILURE);
-	else if (!ft_strncmp(str, "<", 1))
+	else if (!ft_strncmp(str, "<", 1) && ft_strlen(str) == 1)
 		return (EXIT_FAILURE);
-	else if (!ft_strncmp(str, ">", 1))
+	else if (!ft_strncmp(str, ">", 1) && ft_strlen(str) == 1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
