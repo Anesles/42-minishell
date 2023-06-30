@@ -44,24 +44,13 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 	i = -1;
 	while (++i < n)
 	{
-		if (i == 0 || !is_redir(lexer[i - 1].word))
-			str = expand(lexer[i].word, mshell);
+		if (i != 0 && !is_redir(lexer[i - 1].word))
+			str = expand_env(lexer[i].word, mshell);
 		else
 			str = ft_strdup(lexer[i].word);
-		if (ft_strncmp(str, lexer[i].word, ft_strlen(lexer[i].word)) != 0)
-		{
-			free(lexer[i].word);
-			lexer[i].word = ft_strdup(str);
-			free(str);
-		}
-		else
-		{
-			free(str);
-			str = ft_remc(lexer[i].word, '\'');
-			str = ft_remc(str, '\"');
-			lexer[i].word = ft_strdup(str);
-			free(str);
-		}
+		free(lexer[i].word);
+		lexer[i].word = ft_strdup(str);
+		free(str);
 	}
 }
 

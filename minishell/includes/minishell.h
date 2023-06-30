@@ -64,7 +64,7 @@ int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
-char	*ft_remc(char *str, char c);
+char	*ft_remc(char *str);
 int		valid_nvar(char **nvar);
 int		valid_nvar_one(char *nvar);
 //Minishell_loop
