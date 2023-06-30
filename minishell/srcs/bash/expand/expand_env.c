@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:45:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/30 16:31:21 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/06/30 20:04:23 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef struct s_env
 
 void	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
 {
-	if (str[env->i] == '$')
+	if (str[env->i] == '$' && str[env->i + 1] 
+		&& (ft_isalnum(str[env->i + 1]) || str[env->i + 1] == '?'))
 	{
 		env->name = get_name(str + env->i);
 		env->value = get_env(env->name, mshell->envior);

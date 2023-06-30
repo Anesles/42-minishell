@@ -33,7 +33,7 @@ char	*read_buffer(int fd)
 }
 
 char	*expand_buf(char *buf, int fd)
-{	
+{
 	size_t	new_len;
 	char	*new_buf;
 	char	*aux;	

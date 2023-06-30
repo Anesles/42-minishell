@@ -86,9 +86,7 @@ int	b_export(char **n_var, t_mshell *mshell)
 int	b_export_one(char *n_var, t_mshell *mshell)
 {
 	t_vars	vars;
-	int		i;
 
-	i = 1;
 	if (!n_var)
 		return (b_declare(mshell));
 	if (valid_nvar_one(n_var))
