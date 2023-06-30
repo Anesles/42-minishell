@@ -95,7 +95,103 @@ int	get_nsize(char *str, t_mshell *mshell)
 	return (count);
 }
 
+void	handle_single_quotes(char *str, t_mshell *mshell)
+{
+	bool	sing;
+
+	sing = true;
+	mshell->i++;
+	while (str[mshell->i] && str[mshell->i] != '\'' && sing)
+		mshell->i++;
+	if (str[mshell->i] == '\'')
+		mshell->i++;
+}
+
+void	double_q(char *str, t_mshell *mshell, char *ret)
+{
+	char	*name;
+	char	*env;
+
+    mshell->i++;
+    while (str[mshell->i] && str[mshell->i] != '\"')
+    {
+        if (str[mshell->i] == '$')
+        {
+            name = get_name(str + (mshell->i));
+            env = get_env(name, mshell->envior);
+            while (*env)
+                ret[(mshell->j)++] = *(env++);
+            free(name);
+            mshell->i++;
+            while (ft_isalnum(str[mshell->i]))
+                (mshell->i)++;
+            continue;
+        }
+        ret[mshell->j++] = str[mshell->i++];
+    }
+    if (str[mshell->i] == '\"')
+        mshell->i++;
+}
+
+void handle_env_variable(char *str, t_mshell *mshell, char *ret)
+{
+	char	*name;
+	char	*env;
+
+	name = get_name(str + mshell->i);
+	env = get_env(name, mshell->envior);
+	while (*env)
+		ret[mshell->j++] = *(env++);
+	mshell->j += ft_strlen(env);
+	free(name);
+	mshell->i++;
+	while (ft_isalnum(str[mshell->i]))
+		mshell->i++;
+}
+
+bool is_in_single_quotes(char *str, int pos)
+{
+	int	count;
+	int	i;
+
+	i = 0;
+	count = 0;
+	while (i < pos)
+	{
+		if (str[i] == '\'')
+	        count++;
+		i++;
+	}
+	return (count % 2 == 1);
+}
+
 char	*expand_env(char *str, t_mshell *mshell)
+{
+	int		size;
+	char	*ret;
+
+
+	size = get_nsize(str, mshell);
+	ft_printf("size:%d\n", size);
+	ret = (char *)malloc(sizeof(char) * (size + 1));
+	ret[size] = 0;
+	mshell->i = 0;
+	mshell->j = 0;
+	while (str[mshell->i])
+	{
+		if (str[mshell->i] == '\'')
+			handle_single_quotes(str, mshell);
+		else if (str[mshell->i] == '\'' && !is_in_single_quotes(str, mshell->i))
+			double_q(str, mshell, ret);
+		else if (str[mshell->i] == '$' && !is_in_single_quotes(str, mshell->i))
+			handle_env_variable(str, mshell, ret);
+		else
+			ret[mshell->j++] = str[mshell->i++];
+	}
+	return (ret);
+}
+
+/* char	*expand_env(char *str, t_mshell *mshell)
 {
 	char	*ret;
 	char 	*env;
@@ -105,7 +201,7 @@ char	*expand_env(char *str, t_mshell *mshell)
 	int		j;
 	int		i;
 
-	size = get_nsize(str, mshell),
+	size = get_nsize(str, mshell);
 	sing = false;
 	ret = (char *) malloc(sizeof(char) * (size + 1));
 	ret[size] = 0;
@@ -158,7 +254,7 @@ char	*expand_env(char *str, t_mshell *mshell)
 		ret[j++] = str[i++];
 	}
 	return (ret);
-}
+} */
 
 char	*expand(char *str, t_mshell *mshell)
 {

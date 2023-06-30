@@ -43,32 +43,6 @@ char	*prompt_read(t_mshell *mshell)
 	return (line);
 }
 
-int	valid_words(char **words)
-{
-	int	i;
-
-	i = 0;
-	if (words[0] == NULL)
-		return (0);
-	else if (words[0][0] == '|')
-		return (0);
-	else if (words[0][0] == ';')
-		return (0);
-	else if (words[0][0] == '<')
-		return (0);
-	else if (words[0][0] == '>')
-		return (0);
-	else if (words[0][0] == '&')
-		return (0);
-	while (words[i])
-	{
-		if (words[i + 1] && (is_redir(words[i]) && is_redir(words[i + 1])))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	minishell_loopit(char **words, t_mshell *mshell)
 {
 	t_cmds		*cmds;
@@ -89,19 +63,27 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 	clear_mem(mshell, cmds);
 }
 
-void	minishell_loop(t_mshell *mshell)
+char	**start_loop(t_mshell *mshell)
 {
 	char		*prompt;
+	char		**words;
+
+	prompt = prompt_read(mshell);
+	change_exit_st(mshell);
+	words = init_words(prompt, mshell);
+	free(prompt);
+	return (words);
+}
+
+void	minishell_loop(t_mshell *mshell)
+{
 	char		**words;
 
 	while (1)
 	{
 		pipe(mshell->fd);
 		pipe(mshell->prev_fd);
-		prompt = prompt_read(mshell);
-		change_exit_st(mshell);
-		words = init_words(prompt, mshell);
-		free(prompt);
+		words = start_loop(mshell);
 		if (words == NULL)
 		{
 			free(words);
@@ -114,7 +96,7 @@ void	minishell_loop(t_mshell *mshell)
 			else
 			{
 				ft_printf("minishell: syntax error\n");
-				b_export("?=2", mshell);
+				b_export_one("?=2", mshell);
 			}
 		}
 	}

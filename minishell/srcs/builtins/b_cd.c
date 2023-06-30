@@ -20,9 +20,9 @@ int	b_cd(char *direct, t_mshell *mshell)
 	if (direct == NULL)
 		direct = ft_strdup(get_env("HOME", mshell->envior));
 	error = chdir((const char *)direct);
-	b_export(ft_strjoin("OLDPWD=", get_env("PWD", mshell->envior)), mshell);
+	b_export_one(ft_strjoin("OLDPWD=", get_env("PWD", mshell->envior)), mshell);
 	getcwd(str, sizeof(str));
-	b_export(ft_strjoin("PWD=", str), mshell);
+	b_export_one(ft_strjoin("PWD=", str), mshell);
 	if (error != 0)
 		return (error_cd(direct));
 	return (EXIT_SUCCESS);

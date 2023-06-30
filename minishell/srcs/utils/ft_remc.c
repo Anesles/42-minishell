@@ -55,8 +55,8 @@ char	*ft_remc(char *str, char c)
 	int		size;
 	char	*temp;
 	int		count;
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	count = count_chars(str, c);
 	size = ft_strlen(str) - count;
@@ -77,4 +77,15 @@ char	*ft_remc(char *str, char c)
 	temp[j] = '\0';
 	free(str);
 	return (temp);
+}
+
+void	free_envior(t_mshell *mshell)
+{
+	int	i;
+
+	i = -1;
+	while (mshell->envior[++i])
+		free(mshell->envior[i]);
+	free(mshell->envior[i]);
+	free(mshell->envior);
 }

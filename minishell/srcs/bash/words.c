@@ -49,13 +49,11 @@ char	*get_words(char *str, int max, int current)
 		return (ft_substr(str, 0, find_char(str, ' ')));
 }
 
-char	**init_words_aux(char *str, int start)
+char	**init_words_aux(char *str, int start, int count)
 {
-	int	i;
-	int	count;
-	char **temp_words;
+	int		i;
+	char	**temp_words;
 
-	count = number_words(str + start);
 	if (count == 0)
 		return (NULL);
 	i = -1;
@@ -83,12 +81,15 @@ char	**init_words(char *str, t_mshell *mshell)
 {
 	int		start;
 	char	**words;
+	int		count;
 
 	(void) mshell;
+	count = 0;
 	start = 0;
 	while (*(str + start) >= 1 && *(str + start) <= 32)
 		start++;
-	words = init_words_aux(str, start);
+	count = number_words(str + start);
+	words = init_words_aux(str, start, count);
 	if (words == NULL)
 	{
 		free(words);

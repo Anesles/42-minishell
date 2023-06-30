@@ -51,8 +51,6 @@ char	**arraydup(char **old)
 	return (new);
 }
 
-
-
 int	main(int argc, char *argv[], char **envp)
 {
 	t_mshell	mshell;
@@ -64,8 +62,7 @@ int	main(int argc, char *argv[], char **envp)
 	mshell.envior = arraydup(envp);
 	mshell.save_fd[0] = dup(0);
 	mshell.save_fd[1] = dup(1);
-	b_export("?=0", &mshell);
+	b_export_one("?=0", &mshell);
 	minishell_loop(&mshell);
-
 	return (EXIT_FAILURE);
 }

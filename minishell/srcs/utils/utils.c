@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 size_t	count_words(char **words)
 {
@@ -31,7 +31,7 @@ void	change_exit_st(t_mshell *mshell)
 
 	status = ft_itoa(g_exit_status);
 	str = ft_strjoin("?=", status);
-	b_export(str, mshell);
+	b_export_one(str, mshell);
 	free(status);
 	free(str);
 }

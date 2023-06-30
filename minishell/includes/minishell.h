@@ -40,6 +40,8 @@ typedef struct s_mshell
 	int		prev_fd[2];
 	int		save_fd[2];
 	char	**envior;
+	int		i;
+	int		j;
 }	t_mshell;
 
 typedef struct s_cmds	t_cmds;
@@ -63,8 +65,11 @@ int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
 char	*ft_remc(char *str, char c);
+int		valid_nvar(char **nvar);
+int		valid_nvar_one(char *nvar);
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
+int		valid_words(char **words);
 //Lexer
 t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
@@ -75,11 +80,15 @@ void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
 void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
+void	order_array(char **str);
+int		next_one(char *s, char c);
+
 //B_unset
 int		b_unset(char *variable, t_mshell *mshell);
 //B_export
-int		b_export(char *n_var, t_mshell *mshell);
+int		b_export(char **n_var, t_mshell *mshell);
 int		b_declare(t_mshell *mshell);
+int		b_export_one(char *n_var, t_mshell *mshell);
 //B_echo
 int		b_echo(char **words, int max_words);
 //B_cd
@@ -106,5 +115,6 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
 //Clear_mem
 void	clear_mem(t_mshell *mshell, t_cmds *cmds);
 void	free_lexer(t_lexer *lexer, int count);
+void	free_envior(t_mshell *mshell);
 
 #endif // MINISHELL_H

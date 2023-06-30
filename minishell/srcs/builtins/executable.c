@@ -28,46 +28,64 @@ char	*get_path(char **pwd)
 	return (NULL);
 }
 
-char	*returnvalue(char **cmd, t_mshell *mshell)
+char	**available_path(t_mshell *mshell)
 {
 	char	**available;
 	char	*path;
-	char	*fin;
-	char	*temp;
-	char	*str;
-	int		i;
 
-	temp = ft_strtrim(cmd[0], " \t");
 	path = get_path(mshell->envior);
 	available = ft_split(path, ':');
 	free(path);
+	return (available);
+}
+
+char	*returnvalue_aux(char **available, char *temp)
+{
+	int		i;
+	char	*fin;
+	char	*str;
+
+	i = 0;
+	while (available[i])
+	{
+		str = ft_strjoin(available[i], "/");
+		free(available[i]);
+		fin = ft_strjoin(str, temp);
+		free(str);
+		if (!access(fin, X_OK))
+		{
+			while (available[++i])
+				free(available[i]);
+			free(available);
+			free(temp);
+			return (fin);
+		}
+		free(fin);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*returnvalue(char **cmd, t_mshell *mshell)
+{
+	char	**available;
+	char	*temp;
+	char	*fin;
+
+	temp = ft_strtrim(cmd[0], " \t");
+	available = available_path(mshell);
 	if (available == NULL)
 	{
 		free(temp);
 		return (NULL);
 	}
-	i = 0;
 	if (!access(temp, X_OK))
 		return (temp);
 	else
 	{
-		while (available[i])
-		{
-			str = ft_strjoin(available[i], "/");
-			free(available[i]);
-			fin = ft_strjoin(str, temp);
-			free(str);
-			if (!access(fin, X_OK))
-			{
-				while (available[++i])
-					free(available[i]);
-				free(available);
-				free(temp);
-				return (fin);
-			}
-			free(fin);
-			i++;
-		}
+		fin = returnvalue_aux(available, temp);
+		if (fin != NULL)
+			return (fin);
 	}
 	free(temp);
 	free(available);
@@ -83,4 +101,3 @@ void	executables(char **cmd, t_mshell *mshell)
 		return ;
 	execve(bin, cmd, mshell->envior);
 }
-

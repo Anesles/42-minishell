@@ -41,8 +41,8 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 	int		i;
 	char	*str;
 
-	i = 0;
-	while (i < n)
+	i = -1;
+	while (++i < n)
 	{
 		if (i == 0 || !is_redir(lexer[i - 1].word))
 			str = expand(lexer[i].word, mshell);
@@ -62,7 +62,6 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 			lexer[i].word = ft_strdup(str);
 			free(str);
 		}
-		i++;
 	}
 }
 

@@ -55,5 +55,4 @@ void	clear_mem(t_mshell *mshell, t_cmds *cmds)
 	clear_cmds(cmds, mshell->n_cmds);
 	unlink("temp");
 	reset_pipes(mshell);
-
 }

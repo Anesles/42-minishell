@@ -34,10 +34,11 @@ SRC = main.c \
 		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
 		srcs/utils/alloc_words.c \
+		srcs/utils/valid_words.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
+		srcs/builtins/builtins_aux.c \
 		srcs/utils/minishell_loop.c
-
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/

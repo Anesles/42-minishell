@@ -14,8 +14,8 @@
 
 char	**alloc_words_aux(t_lexer *temp, t_cmds *cmds, int redir)
 {
-	int	i;
-	char **words;
+	int		i;
+	char	**words;
 
 	i = -1;
 	words = malloc(sizeof(char *) * (cmds->count_words + 1));
@@ -42,7 +42,7 @@ char	**alloc_words_aux(t_lexer *temp, t_cmds *cmds, int redir)
 }
 
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
-{	
+{
 	char	**words;
 	t_lexer	*temp;
 	int		redir;
@@ -62,7 +62,6 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		cmds->count_words++;
 		temp = temp->next;
 	}
-//	temp = lexer;
 	words = alloc_words_aux(lexer, cmds, redir);
 	return (words);
 }
