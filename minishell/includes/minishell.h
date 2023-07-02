@@ -36,9 +36,6 @@ typedef struct s_mshell
 {
 	int		n_cmds;
 	int		current_cmd;
-	int		fd[2];
-	int		prev_fd[2];
-	int		save_fd[2];
 	char	**envior;
 	int		i;
 	int		j;
@@ -64,7 +61,6 @@ int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
-char	*ft_remc(char *str);
 int		valid_nvar(char **nvar);
 int		valid_nvar_one(char *nvar);
 //Minishell_loop
@@ -82,6 +78,8 @@ void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
 void	order_array(char **str);
 int		next_one(char *s, char c);
+//Exc_mul
+void	multiple_cmds(t_mshell *mshell, t_cmds *cmds);
 //B_unset
 int		b_unset(char *variable, t_mshell *mshell);
 //B_export
@@ -97,8 +95,6 @@ int		b_cd(char *direct, t_mshell *mshell);
 char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
 //Pipe
-void	handle_pipe(t_mshell *mshell);
-void	reset_pipes(t_mshell *mshell);
 void	token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
 //Words

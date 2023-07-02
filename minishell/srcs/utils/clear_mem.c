@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/29 23:25:44 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/02 18:14:07 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,4 @@ void	clear_mem(t_mshell *mshell, t_cmds *cmds)
 {
 	clear_cmds(cmds, mshell->n_cmds);
 	unlink("temp");
-	reset_pipes(mshell);
 }

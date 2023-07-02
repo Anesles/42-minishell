@@ -28,43 +28,6 @@ int	check_commands(char *cmd)
 		return (EXIT_SUCCESS);
 }
 
-void	wait_forks(t_mshell *mshell, pid_t pid, int *status)
-{
-	close(mshell->fd[0]);
-	close(mshell->fd[1]);
-	close(mshell->prev_fd[0]);
-	close(mshell->prev_fd[1]);
-	waitpid(pid, status, 0);
-}
-
-void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
-{
-	int		i;
-	pid_t	pid;
-	int		status;
-
-	i = -1;
-	status = 0;
-	while (++i < mshell->n_cmds)
-	{
-		mshell->current_cmd++;
-		if (check_commands(cmds[i].words[0]))
-			g_exit_status = cmds[i].built(&cmds[i], mshell);
-		else
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				handle_pipe(mshell);
-				cmds[i].built(&cmds[i], mshell);
-				exit(0);
-			}
-		}
-	}
-	wait_forks(mshell, pid, &status);
-	g_exit_status = WEXITSTATUS(status);
-}
-
 void	parser(t_cmds *cmds, t_mshell *mshell)
 {
 	pid_t	pid;

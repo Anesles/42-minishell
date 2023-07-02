@@ -35,7 +35,7 @@ char	*prompt_read(t_mshell *mshell)
 	if (line == NULL)
 	{
 		free(line);
-		write (1, "exit\n", 5);
+		write (1, "readline failed. exiting\n", 5);
 		b_exit(1, mshell);
 	}
 	if (ft_strlen(line) > 0)
@@ -81,8 +81,6 @@ void	minishell_loop(t_mshell *mshell)
 
 	while (1)
 	{
-		pipe(mshell->fd);
-		pipe(mshell->prev_fd);
 		words = start_loop(mshell);
 		if (words == NULL)
 		{

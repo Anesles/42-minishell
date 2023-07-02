@@ -63,12 +63,15 @@ char	*returnvalue_aux(char **available, char *temp)
 		free(fin);
 		i++;
 	}
+	free(available);
+	free(temp);
 	return (NULL);
 }
 
 char	*returnvalue(char **cmd, t_mshell *mshell)
 {
 	char	**available;
+	int		i;
 	char	*temp;
 	char	*fin;
 
@@ -80,15 +83,19 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 		return (NULL);
 	}
 	if (!access(temp, X_OK))
+	{
+		i = -1;
+		while (available[++i])
+			free(available[i]);
+		free(available);
 		return (temp);
+	}
 	else
 	{
 		fin = returnvalue_aux(available, temp);
 		if (fin != NULL)
 			return (fin);
 	}
-	free(temp);
-	free(available);
 	return (NULL);
 }
 

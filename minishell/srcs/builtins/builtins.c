@@ -91,6 +91,7 @@ int	valid_exit(char	**str)
 int	builtins(t_cmds *cmds, t_mshell *mshell)
 {
 	int	var;
+	
 	check_redirect(cmds);
 	if (cmds->words)
 	{
@@ -108,6 +109,8 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		{
 			if (valid_exit(&cmds->words[1]))
 				return (2);
+			if (cmds->words[1] == NULL)
+				b_exit(0, mshell);
 			var = ft_atoi(cmds->words[1]);
 			b_exit(var, mshell);
 		}

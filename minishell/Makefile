@@ -30,6 +30,7 @@ SRC = main.c \
 		srcs/utils/clear_mem.c \
 		srcs/builtins/b_echo.c \
 		srcs/builtins/b_unset.c \
+		srcs/builtins/exec_mul.c \
 		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
 		srcs/utils/alloc_words.c \

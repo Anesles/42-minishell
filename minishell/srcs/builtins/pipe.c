@@ -46,38 +46,3 @@ void	token_more(t_cmds *cmds, int mode)
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
-
-void	handle_pipe(t_mshell *mshell)
-{
-	if (mshell->current_cmd == 0)
-	{
-		close(mshell->fd[0]);
-		dup2(mshell->fd[1], STDOUT_FILENO);
-	}
-	else if (mshell->current_cmd % 2 != 0)
-	{
-		close(mshell->fd[1]);
-		dup2(mshell->fd[0], STDIN_FILENO);
-		if (mshell->current_cmd != mshell->n_cmds - 1)
-		{
-			close(mshell->prev_fd[0]);
-			dup2(mshell->prev_fd[1], STDOUT_FILENO);
-		}
-	}
-	else if (mshell->current_cmd % 2 == 0)
-	{
-		close(mshell->prev_fd[1]);
-		dup2(mshell->prev_fd[0], STDIN_FILENO);
-		if (mshell->current_cmd != mshell->n_cmds - 1)
-		{
-			close(mshell->fd[0]);
-			dup2(mshell->fd[1], STDOUT_FILENO);
-		}
-	}
-}
-
-void	reset_pipes(t_mshell *mshell)
-{
-	dup2(mshell->save_fd[0], STDIN_FILENO);
-	dup2(mshell->save_fd[1], STDOUT_FILENO);
-}
