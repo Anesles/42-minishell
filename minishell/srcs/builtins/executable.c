@@ -106,5 +106,6 @@ void	executables(char **cmd, t_mshell *mshell)
 	bin = returnvalue(cmd, mshell);
 	if (bin == NULL)
 		return ;
+	ft_printf("Executing: %s\nWith bin = %s\n", cmd[0], bin);
 	execve(bin, cmd, mshell->envior);
 }
