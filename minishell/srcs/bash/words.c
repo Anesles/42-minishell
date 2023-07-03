@@ -57,6 +57,12 @@ char	**init_words(char	*str)
 	int		count;
 	char	**words;
 
+	if (str[0] == '\0')
+		return (NULL);
+	while (*str == ' ' || *str == '\t')
+		str++;
+	if (*str == '\0')
+		return (NULL);
 	count = nalloc_words(str);
 	words = malloc(sizeof(char *) * (count + 1));
 	j = 0;
