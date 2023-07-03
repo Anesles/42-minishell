@@ -101,7 +101,7 @@ void	executables(char **cmd, t_mshell *mshell);
 void	token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
 //Words
-char	**init_words(char *str, t_mshell *mshell);
+char	**init_words(char *str);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);

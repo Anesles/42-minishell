@@ -78,7 +78,7 @@ char	**start_loop(t_mshell *mshell)
 
 	prompt = prompt_read(mshell);
 	change_exit_st(mshell);
-	words = init_words(prompt, mshell);
+	words = init_words(prompt);
 	free(prompt);
 	return (words);
 }

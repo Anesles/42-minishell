@@ -12,88 +12,89 @@
 
 #include "minishell.h"
 
-int	number_words(char *str)
+int	nalloc_words(char *str)
 {
-	bool	insidequotes;
-	bool	insideword;
-	int		count;
 	int		i;
+	char	c;
+	int		count;
 
-	count = 0;
 	i = 0;
-	insidequotes = false;
-	insideword = false;
+	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
-			insidequotes = !insidequotes;
-		else if (str[i] != ' ' || insidequotes)
-			insideword = true;
-		else if (insideword)
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			c = str[i];
+			i++;
+			while (str[i] && str[i] != c)
+				i++;
+		}
+		if ((str[i] == ' ' || str[i] == '\t'))
 		{
 			count++;
-			insideword = false;
+			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+				i++;
+			i--;
+		}
+		else if ((str[i] == '<' || str[i] == '>'
+				|| str[i] == '|') && str[i + 1] != ' ')
+		{
+			count++;
+			i++;
+			if ((str[i] == '<' || str[i] == '>') && str[i] == str[i - 1])
+				i++;
 		}
 		i++;
 	}
-	if (insideword)
-		count++;
-	return (count);
+	return (count + 1);
 }
 
-char	*get_words(char *str, int max, int current)
-{
-	if (current == max - 1)
-		return (ft_substr(str, 0, find_char(str, '\0')));
-	else
-		return (ft_substr(str, 0, find_char(str, ' ')));
-}
-
-char	**init_words_aux(char *str, int start, int count)
+char	**init_words(char	*str)
 {
 	int		i;
-	char	**temp_words;
-
-	if (count == 0)
-		return (NULL);
-	i = -1;
-	temp_words = malloc(sizeof(char *) * (count + 1));
-	if (!temp_words)
-		return (NULL);
-	while (++i < count)
-	{
-		while (*(str + start) >= 1 && *(str + start) <= 32)
-			start++;
-		temp_words[i] = get_words(str + start, count, i);
-		if (i == count - 1)
-			start += find_char(str + start, '\0');
-		else
-			start += find_char(str + start, ' ') + 1;
-		if (((*(str + start) == '"') || (*(str + start) == 39))
-			&& (*(str + start + 1) == ' '))
-			start += 2;
-	}
-	temp_words[i] = NULL;
-	return (temp_words);
-}
-
-char	**init_words(char *str, t_mshell *mshell)
-{
+	int		j;
 	int		start;
-	char	**words;
 	int		count;
+	char	**words;
 
-	(void) mshell;
-	count = 0;
-	start = 0;
-	while (*(str + start) >= 1 && *(str + start) <= 32)
-		start++;
-	count = number_words(str + start);
-	words = init_words_aux(str, start, count);
-	if (words == NULL)
+	count = nalloc_words(str);
+	words = malloc(sizeof(char *) * (count + 1));
+	j = 0;
+	i = 0;
+	while (j < count)
 	{
-		free(words);
-		return (NULL);
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			start = i;
+			i++;
+			while (str[i] && str[i] != str[start])
+				i++;
+			words[j] = ft_substr(str, start, i - start);
+			j++;
+		}
+		else if (str[i] == '<' || str[i] == '>' || str[i] == '|')
+		{
+			if ((str[i] == '<' || str[i] == '>') && str[i + 1] == str[i])
+			{
+				words[j] = ft_substr(str, i, 2);
+				i++;
+			}
+			else
+				words[j] = ft_substr(str, i, 1);
+			j++;
+		}
+		else
+		{
+			start = i;
+			while (str[i] && str[i] != ' ' && str[i] != '\t'
+				&& str[i] != '<' && str[i] != '>'
+				&& str[i] != '|')
+				i++;
+			words[j] = ft_substr(str, start, i - start);
+			j++;
+		}
+		i++;
 	}
+	words[j] = NULL;
 	return (words);
 }
