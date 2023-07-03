@@ -12,26 +12,34 @@
 
 #include "minishell.h"
 
-char	**alloc_words_aux(t_lexer *temp, t_cmds *cmds, int redir)
+char	**alloc_words_aux(t_lexer *lexer, t_cmds *cmds, int redir)
 {
 	int		i;
+	int		j;
+	t_lexer	*temp;
 	char	**words;
-
-	i = -1;
+	
+	i = 0;
+	j = 0;
+	temp = lexer;
 	words = malloc(sizeof(char *) * (cmds->count_words + 1));
 	if (!words)
 		return (NULL);
-	while (++i < cmds->count_words)
+	while (j < cmds->count_words)
 	{
-		words[i] = ft_strdup(temp->word);
+		if (i == 0 || (i != redir && i != redir + 1))
+		{
+			words[j] = ft_strdup(temp->word);
+			j++;
+		}
+		i++;
 		temp = temp->next;
 	}
-	words[i] = NULL;
-	if (redir == 1)
+	words[j] = NULL;
+	if (redir > 0)
 	{
-		cmds->token = ft_strdup(temp->word);
-		temp = temp->next;
-		cmds->redi = ft_strdup(temp->word);
+		cmds->token = ft_strdup(lexer[redir].word);
+		cmds->redi = ft_strdup(lexer[redir + 1].word);
 	}
 	else
 	{
@@ -41,26 +49,52 @@ char	**alloc_words_aux(t_lexer *temp, t_cmds *cmds, int redir)
 	return (words);
 }
 
+int	valid_redir(char *redi)
+{
+	DIR*	dir;
+	char	*str;
+
+	str = ft_strtrim(redi, "\"");
+	dir = opendir(str);
+	free(str);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+	else if (ENOENT == errno)
+		return (0);
+	else
+		return (1);
+}
+
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {
 	char	**words;
+	int		i;
 	t_lexer	*temp;
 	int		redir;
 
 	cmds->count_words = 0;
-	redir = 0;
+	redir = -1;
 	temp = lexer;
+	i = 0;
 	while (temp)
 	{
 		if (temp->word[0] == '|')
 			break ;
 		if (is_redir(temp->word))
 		{
-			redir = 1;
-			break ;
+			redir = i;
+			temp = temp->next;
+			if (!valid_redir(temp->word))
+				return (NULL);
+			i++;
 		}
-		cmds->count_words++;
+		else
+			cmds->count_words++;
 		temp = temp->next;
+		i++;
 	}
 	words = alloc_words_aux(lexer, cmds, redir);
 	return (words);

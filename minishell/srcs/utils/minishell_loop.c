@@ -47,6 +47,7 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 {
 	t_cmds		*cmds;
 	t_lexer		*lexer;
+	char		*str;
 	size_t		count;
 
 	count = count_words(words);
@@ -56,7 +57,14 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 	if (cmds == NULL)
 	{
 		change_exit_st(mshell);
-		clear_mem(mshell, cmds);
+		return ;
+	}
+	if (cmds->redi != NULL)
+	{
+		str = expand_env(cmds->redi, mshell);
+		free(cmds->redi);
+		cmds->redi = ft_strdup(str);
+		free(str);
 	}
 	parser(cmds, mshell);
 	change_exit_st(mshell);

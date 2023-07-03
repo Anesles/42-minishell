@@ -54,11 +54,11 @@ void	check_redirect(t_cmds *cmds)
 	{
 		if (!ft_strncmp(cmds->token, ">>", 2))
 			token_more(cmds, 1);
-		else if (!ft_strncmp(cmds->token, "<<", 2))
+		else if (!ft_strncmp(cmds->token, "<<", 2) && !is_builtins(cmds->words[0]))
 			token_less(cmds, 1);
 		else if (!ft_strncmp(cmds->token, ">", 1))
 			token_more(cmds, 0);
-		else if (!ft_strncmp(cmds->token, "<", 1))
+		else if (!ft_strncmp(cmds->token, "<", 1) && !is_builtins(cmds->words[0]))
 			token_less(cmds, 0);
 	}
 }

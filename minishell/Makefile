@@ -66,6 +66,6 @@ fclean: clean
 re: fclean all
 
 run: re
-	./$(NAME)
+	clear && ./$(NAME)
 
 .SILENT:

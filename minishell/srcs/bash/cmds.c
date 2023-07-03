@@ -62,6 +62,11 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 			cmds[i].next = &cmds[i + 1];
 		cmds[i].built = &builtins;
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
+		if (cmds[i].words == NULL)
+		{
+			error_cd(NULL);
+			return (-1);
+		}
 		if (check_validcmd(cmds[i]))
 			return (-1);
 		start += cmds[i].count_words + 1;

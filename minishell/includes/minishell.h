@@ -15,6 +15,7 @@
 # define READ 0
 # define WRITE 1
 # include <stdio.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <dirent.h>
