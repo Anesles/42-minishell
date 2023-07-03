@@ -37,7 +37,7 @@ int	nalloc_words(char *str)
 			i--;
 		}
 		else if ((str[i] == '<' || str[i] == '>'
-				|| str[i] == '|') && str[i + 1] != ' ')
+				|| str[i] == '|'))
 		{
 			count++;
 			i++;
@@ -91,6 +91,8 @@ char	**init_words(char	*str)
 		}
 		else
 		{
+			while (str[i] == ' ' || str[i] == '\t')
+				i++;
 			start = i;
 			while (str[i] && str[i] != ' ' && str[i] != '\t'
 				&& str[i] != '<' && str[i] != '>'

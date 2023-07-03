@@ -20,10 +20,10 @@ int	var_exists(char *var, t_mshell *mshell)
 	while (mshell->envior[i] != NULL)
 	{
 		if (ft_strncmp(var, mshell->envior[i], ft_strlen(var)) == 0)
-			return (EXIT_SUCCESS);
+			return (1);
 		i++;
 	}
-	return (EXIT_FAILURE);
+	return (0);
 }
 
 int	b_unset(char *variable, t_mshell *mshell)
@@ -34,7 +34,7 @@ int	b_unset(char *variable, t_mshell *mshell)
 
 	if (!variable)
 		return (EXIT_SUCCESS);
-	if (var_exists(variable, mshell))
+	if (!var_exists(variable, mshell))
 		return (EXIT_SUCCESS);
 	count = 0;
 	while (mshell->envior[count] != NULL)
