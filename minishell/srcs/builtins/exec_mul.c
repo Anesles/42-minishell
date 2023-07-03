@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/02 21:36:46 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:22:23 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ void	exec_child(t_mshell *mshell, t_cmds *cmds, int (*pipefd)[2], int i)
 	signal(SIGINT, &sig_cont_child);
 	if (i == 0)
 	{
-		dup2(pipefd[i][1], STDOUT_FILENO);
-		close(pipefd[i][0]);
-		close(pipefd[i][1]);
+		dup2(pipefd[i][WRITE], STDOUT_FILENO);
+		close(pipefd[i][READ]);
+		close(pipefd[i][WRITE]);
 	}
 	else if (i == mshell->n_cmds - 1)
 	{
-		dup2(pipefd[i - 1][0], STDIN_FILENO);
-		close(pipefd[i - 1][1]);
-		close(pipefd[i - 1][0]);
+		dup2(pipefd[i - 1][READ], STDIN_FILENO);
+		close(pipefd[i - 1][READ]);
+		close(pipefd[i - 1][WRITE]);
 	}
 	else
 	{
-		dup2(pipefd[i - 1][0], STDIN_FILENO);
-		dup2(pipefd[i][1], STDOUT_FILENO);
-		close(pipefd[i - 1][1]);
-		close(pipefd[i - 1][0]);
-		close(pipefd[i][0]);
-		close(pipefd[i][1]);
+		dup2(pipefd[i - 1][READ], STDIN_FILENO);
+		dup2(pipefd[i][WRITE], STDOUT_FILENO);
+		close(pipefd[i - 1][READ]);
+		close(pipefd[i - 1][WRITE]);
+		close(pipefd[i][READ]);
+		close(pipefd[i][WRITE]);
 	}
 	if (is_builtins(cmds[i].words[0]))
 		g_exit_status = cmds[i].built(&cmds[i], mshell);
@@ -73,18 +73,20 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 			exit(EXIT_FAILURE);
 		else if (pid[i] == 0)
 			exec_child(mshell, cmds, pipefd, i);
-	}
-	i = -1;
-	while (++i < mshell->n_cmds - 1)
-	{
-		close(pipefd[i][0]);
-		close(pipefd[i][1]);
+		if (i > 0)
+			close(pipefd[i - 1][READ]);
+		if (i < mshell->n_cmds - 1)
+			close(pipefd[i][WRITE]);
 	}
 	i = -1;
 	while (++i < mshell->n_cmds)
 	{
-		ft_printf("waiting for pid number: %d\n", i);
 		waitpid(pid[i], &status, 0);
+		if (i < mshell->n_cmds - 1)
+		{
+			close(pipefd[i][READ]);
+			close(pipefd[i][WRITE]);
+		}
 	}
 	free(pid);
 	free(pipefd);

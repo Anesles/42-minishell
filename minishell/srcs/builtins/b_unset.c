@@ -34,7 +34,7 @@ int	b_unset(char *variable, t_mshell *mshell)
 
 	if (!variable)
 		return (EXIT_SUCCESS);
-	if (!var_exists(variable, mshell) == 0)
+	if (!var_exists(variable, mshell))
 		return (EXIT_SUCCESS);
 	count = 0;
 	while (mshell->envior[count] != NULL)

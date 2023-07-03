@@ -43,6 +43,7 @@ SRC = main.c \
 		srcs/bash/expand/get_nsize.c \
 		srcs/builtins/b_export_neq.c \
 		srcs/bash/expand/expand_env.c
+
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/
@@ -63,5 +64,8 @@ fclean: clean
 	rm -f $(LIBFTPATH)$(LIBFTNAME) $(NAME)
 
 re: fclean all
+
+run: re
+	./$(NAME)
 
 .SILENT:

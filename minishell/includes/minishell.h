@@ -12,6 +12,8 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define READ 0
+# define WRITE 1
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
