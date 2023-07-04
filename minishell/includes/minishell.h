@@ -101,6 +101,7 @@ void	executables(char **cmd, t_mshell *mshell);
 //Pipe
 void	token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
+void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell);
 //Words
 char	**init_words(char *str);
 //Expand
@@ -116,7 +117,7 @@ char	*get_env(char *str, char **envir);
 int		error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
 //Alloc_words
-char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
+char	**alloc_words(t_lexer *lexer, t_cmds *cmds, int i, int max);
 //Clear_mem
 void	clear_mem(t_mshell *mshell, t_cmds *cmds);
 void	free_lexer(t_lexer *lexer, int count);

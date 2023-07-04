@@ -39,6 +39,8 @@ int	nalloc_words(char *str)
 		else if (str[i] == '<' || str[i] == '>'
 				|| str[i] == '|')
 		{
+			if (i > 0 && str[i - 1] != ' ' && str[i - 1] != '\t')
+				count++;
 			count++;
 			i++;
 			if ((str[i] == '<' || str[i] == '>') && str[i] == str[i - 1])
@@ -119,6 +121,8 @@ char	**init_words(char	*str)
 				&& str[i] != '|')
 				i++;
 			words[j] = ft_substr(str, start, i - start);
+			if (str[i] && (str[i] == '<' || str[i] == '>' || str[i] == '|'))
+				i--;
 			j++;
 		}
 		i++;

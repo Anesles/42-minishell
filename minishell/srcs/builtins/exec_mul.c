@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/04 16:55:50 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:52:07 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,7 @@ void	sig_cont_child(int signum)
 void	exec_child(t_mshell *mshell, t_cmds *cmds, int (*pipefd)[2], int i)
 {
 	signal(SIGINT, &sig_cont_child);
-	check_redirect(cmds);
-	if (i == 0)
-	{
-		if (cmds->token == NULL && cmds->token[0] != '>' && ft_strncmp(cmds->token, ">>", 2) != 0)
-			dup2(pipefd[i][WRITE], STDOUT_FILENO);
-		close(pipefd[i][READ]);
-		close(pipefd[i][WRITE]);
-	}
-	else if (i == mshell->n_cmds - 1)
-	{
-		if (cmds->token == NULL && cmds->token[0] != '<' && ft_strncmp(cmds->token, "<<", 2) != 0)
-			dup2(pipefd[i - 1][READ], STDIN_FILENO);
-		close(pipefd[i - 1][READ]);
-		close(pipefd[i - 1][WRITE]);
-	}
-	else
-	{
-		if (cmds->token == NULL && cmds->token[0] != '<' && ft_strncmp(cmds->token, "<<", 2) != 0)
-			dup2(pipefd[i - 1][READ], STDIN_FILENO);
-		if (cmds->token == NULL && cmds->token[0] != '>' && ft_strncmp(cmds->token, ">>", 2) != 0)
-			dup2(pipefd[i][WRITE], STDOUT_FILENO);
-		close(pipefd[i - 1][READ]);
-		close(pipefd[i - 1][WRITE]);
-		close(pipefd[i][READ]);
-		close(pipefd[i][WRITE]);
-	}
+	handle_pipes(i, pipefd, mshell);
 	if (is_builtins(cmds[i].words[0]))
 		g_exit_status = cmds[i].built(&cmds[i], mshell);
 	else

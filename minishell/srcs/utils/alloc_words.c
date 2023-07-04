@@ -68,7 +68,7 @@ int	valid_redir(char *redi)
 		return (1);
 }
 
-char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
+char	**alloc_words(t_lexer *lexer, t_cmds *cmds, int num, int max)
 {
 	char	**words;
 	int		i;
@@ -87,7 +87,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		{
 			redir = i;
 			temp = temp->next;
-			if (!valid_redir(temp->word))
+			if (num == max - 1 && !valid_redir(temp->word))
 				return (NULL);
 			i++;
 		}
