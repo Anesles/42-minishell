@@ -81,6 +81,7 @@ void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
 void	order_array(char **str);
 int		next_one(char *s, char c);
+void	check_redirect(t_cmds *cmds);
 //Exc_mul
 void	multiple_cmds(t_mshell *mshell, t_cmds *cmds);
 //B_unset

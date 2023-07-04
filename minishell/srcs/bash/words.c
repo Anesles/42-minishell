@@ -49,6 +49,8 @@ int	nalloc_words(char *str)
 		}
 		i++;
 	}
+	if (str[i - 1] == ' ' || str[i - 1] == '\t')
+		return (count);
 	return (count + 1);
 }
 
