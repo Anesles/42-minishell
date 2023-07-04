@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/04 18:53:20 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/04 21:48:14 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,30 @@ void	exec_child(t_mshell *mshell, t_cmds *cmds, int (*pipefd)[2], int i)
 	exit(g_exit_status);
 }
 
+void	end_exec(t_mshell *mshell, pid_t *pid, int (*pipefd)[2])
+{
+	int	i;
+	int	status;
+
+	i = -1;
+	while (++i < mshell->n_cmds)
+	{
+		waitpid(pid[i], &status, 0);
+		if (i < mshell->n_cmds - 1)
+		{
+			close(pipefd[i][READ]);
+			close(pipefd[i][WRITE]);
+		}
+	}
+	free(pid);
+	free(pipefd);
+	if (!WTERMSIG(status))
+		g_exit_status = WEXITSTATUS(status);
+}
+
 void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 {
 	int		(*pipefd)[2];
-	int		status;
 	pid_t	*pid;
 	int		i;
 
@@ -58,18 +78,5 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 		if (i < mshell->n_cmds - 1)
 			close(pipefd[i][WRITE]);
 	}
-	i = -1;
-	while (++i < mshell->n_cmds)
-	{
-		waitpid(pid[i], &status, 0);
-		if (i < mshell->n_cmds - 1)
-		{
-			close(pipefd[i][READ]);
-			close(pipefd[i][WRITE]);
-		}
-	}
-	free(pid);
-	free(pipefd);
-	if (!WTERMSIG(status))
-		g_exit_status = WEXITSTATUS(status);
+	end_exec(mshell, pid, pipefd);
 }

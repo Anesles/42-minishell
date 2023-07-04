@@ -18,7 +18,6 @@ CFLAGS = -Wall -Wextra -Werror -I ./includes -g -fsanitize=address
 
 SRC = main.c \
 		srcs/bash/cmds.c \
-		srcs/bash/words.c \
 		srcs/bash/lexer.c \
 		srcs/bash/errors.c \
 		srcs/utils/utils.c \
@@ -30,6 +29,7 @@ SRC = main.c \
 		srcs/utils/clear_mem.c \
 		srcs/builtins/b_echo.c \
 		srcs/builtins/b_unset.c \
+		srcs/bash/words/nalloc.c \
 		srcs/builtins/exec_mul.c \
 		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
@@ -40,6 +40,7 @@ SRC = main.c \
 		srcs/utils/ft_replace_env.c \
 		srcs/utils/minishell_loop.c \
 		srcs/builtins/builtins_aux.c \
+		srcs/bash/words/init_words.c \
 		srcs/bash/expand/get_nsize.c \
 		srcs/builtins/b_export_neq.c \
 		srcs/bash/expand/expand_env.c
