@@ -105,6 +105,7 @@ void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell);
 //Words
 char	**init_words(char *str);
 int		nalloc_words(char *str);
+int	ft_strcmp(const char *s1, const char *s2);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);

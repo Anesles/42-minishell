@@ -93,7 +93,7 @@ int	nalloc_words(char *str)
 			i = nalloc_words_word(str, i);
 		i++;
 	}
-	if (is_space(str[i - 1]))
+	if (is_space(str[i - 1]) || is_special_char(str[i - 1]))
 		return (count);
 	return (count + 1);
 }

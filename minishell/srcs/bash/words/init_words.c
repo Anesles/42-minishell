@@ -102,6 +102,13 @@ char	**init_words(char	*str)
 		return (NULL);
 	count = nalloc_words(str);
 	words = malloc(sizeof(char *) * (count + 1));
+	if (!words)
+		return (NULL);
 	init_words_loop(str, words, count);
+	if (!ft_strncmp(words[--count], "|", 1) )
+	{
+		ft_printf("minishell: syntax error near unexpected token '|'\n");
+		return (NULL);
+	}	
 	return (words);
 }
