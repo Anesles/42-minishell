@@ -62,7 +62,7 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 			cmds[i].next = &cmds[i + 1];
 		cmds[i].built = &builtins;
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
-		if (cmds[i].words == NULL)
+		if (cmds[i].words == NULL && i == n - 1)
 		{
 			error_cd(NULL);
 			return (-1);
@@ -87,6 +87,7 @@ t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
 	cmds = malloc(sizeof(t_cmds) * n);
 	if (alloc_cmds(cmds, n, lexer) == -1)
 	{
+		g_exit_status = 1;
 		free(cmds);
 		return (NULL);
 	}

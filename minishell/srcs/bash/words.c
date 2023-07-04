@@ -17,11 +17,9 @@ int	nalloc_words(char *str)
 	int		i;
 	char	c;
 	int		count;
-	bool	quote;
 
 	i = 0;
 	count = 0;
-	quote = false;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -31,23 +29,24 @@ int	nalloc_words(char *str)
 			while (str[i] && str[i] != c)
 				i++;
 		}
-		if ((str[i] == ' ' || str[i] == '\t') && !quote)
+		if (str[i] == ' ' || str[i] == '\t')
 		{
 			count++;
 			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 				i++;
 			i--;
 		}
-		else if ((str[i] == '<' || str[i] == '>'
-				|| str[i] == '|') && !quote)
+		else if (str[i] == '<' || str[i] == '>'
+				|| str[i] == '|')
 		{
 			count++;
 			i++;
 			if ((str[i] == '<' || str[i] == '>') && str[i] == str[i - 1])
 				i++;
+			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+				i++;
+			i--;
 		}
-		else if (str[i] == '\'')
-			quote = !quote;
 		i++;
 	}
 	return (count + 1);
@@ -60,7 +59,6 @@ char	**init_words(char	*str)
 	int		start;
 	int		count;
 	char	**words;
-	bool	quote;
 
 	if (str[0] == '\0')
 		return (NULL);
@@ -70,7 +68,6 @@ char	**init_words(char	*str)
 		return (NULL);
 	count = nalloc_words(str);
 	words = malloc(sizeof(char *) * (count + 1));
-	quote = false;
 	j = 0;
 	i = 0;
 	while (j < count)
@@ -81,7 +78,22 @@ char	**init_words(char	*str)
 			i++;
 			while (str[i] && str[i] != str[start])
 				i++;
-			words[j] = ft_substr(str, start, i - start + 1);
+			if (str[i + 1] && (str[i + 1] != ' ' && str[i + 1] != '\t'))
+			{
+				while (str[i] && (str[i] != ' ' && str[i] != '\t'))
+					i++;
+				if (str[i] && (str[i] == ' ' || str[i] == '\t'))
+					i--;
+				words[j] = ft_substr(str, start, i - start + 1);
+			}
+			else
+			{
+				words[j] = ft_substr(str, start, i - start + 1);
+				i++;
+				while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+					i++;
+				i--;
+			}
 			j++;
 		}
 		else if (str[i] == '<' || str[i] == '>' || str[i] == '|')
@@ -97,21 +109,13 @@ char	**init_words(char	*str)
 		}
 		else
 		{
-			while ((str[i] == ' ' || str[i] == '\t' || (str[i] == '\"' && quote)) && str[i])
-			{
-				if (str[i] == '\'')
-				quote = !quote;
+			while ((str[i] == ' ' || str[i] == '\t') && str[i])
 				i++;
-			}
 			start = i;
 			while (str[i] && str[i] != ' ' && str[i] != '\t'
 				&& str[i] != '<' && str[i] != '>'
 				&& str[i] != '|')
-			{
-				if (str[i] == '\'')
-					quote = !quote;
 				i++;
-			}
 			words[j] = ft_substr(str, start, i - start);
 			j++;
 		}
