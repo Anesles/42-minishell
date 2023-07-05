@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/02 18:14:07 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 01:32:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,29 @@ void	clear_cmds(t_cmds *cmds, int n_cmds)
 			j++;
 		}
 		free(cmds[i].words);
-		if (cmds[i].redi != NULL)
+		if (cmds[i].redin)
+			free(cmds[i].redin);
+		if (cmds[i].tokenin)
+			free(cmds[i].tokenin);
+		if (cmds[i].redout)
 		{
-			free(cmds[i].redi);
-			free(cmds[i].token);
+			free(cmds[i].redout);
+			free(cmds[i].tokenout);
 		}
 		i++;
 	}
 	free(cmds);
 }
 
-void	free_lexer(t_lexer *lexer, int count)
+void	free_lexer(t_lexer *lexer)
 {
-	int	i;
+	t_lexer	*temp;
 
-	i = 0;
-	while (i < count)
+	temp = lexer;
+	while (temp)
 	{
-		free(lexer[i].word);
-		i++;
+		free(temp->word);
+		temp = temp->next;
 	}
 	free(lexer);
 }

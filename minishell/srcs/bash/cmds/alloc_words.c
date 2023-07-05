@@ -12,71 +12,88 @@
 
 #include "minishell.h"
 
-char	**alloc_words_aux(t_lexer *lexer, t_cmds *cmds, int redir)
+void	free_until_cmd(t_cmds *cmds)
 {
 	int		i;
+
+	cmds = cmds->prev;
+	while (cmds)
+	{
+		i = 0;
+		while (cmds->words[i])
+		{
+			free(cmds->words[i]);
+			i++;
+		}
+		if (cmds->words)
+			free(cmds->words);
+		if (cmds->redin)
+			free(cmds->redin);
+		if (cmds->tokenin)
+			free(cmds->tokenin);
+		if (cmds->redout)
+		{
+			free(cmds->redout);
+			free(cmds->tokenout);
+		}
+		cmds = cmds->prev;
+	}
+}
+
+int	get_return(t_cmds *cmds, t_lexer *lexer, char **words)
+{
+	int	i;
+
+	if (find_redir(lexer, cmds) == -1)
+	{
+		i = 0;
+		while (words[i])
+		{
+			free(words[i]);
+			i++;
+		}
+		free(words);
+		free_until_cmd(cmds);
+		return (-1);
+	}
+	return (0);
+}
+
+char	**alloc_words_aux(t_lexer *lexer, t_cmds *cmds)
+{
 	int		j;
-	t_lexer	*temp;
 	char	**words;
-	
-	i = 0;
+	t_lexer	*temp;
+
 	j = 0;
-	temp = lexer;
 	words = malloc(sizeof(char *) * (cmds->count_words + 1));
 	if (!words)
 		return (NULL);
+	temp = lexer;
 	while (j < cmds->count_words)
 	{
-		if (i == 0 || (i != redir && i != redir + 1))
+		if (j == 0 || !is_redir(temp->word))
 		{
 			words[j] = ft_strdup(temp->word);
 			j++;
 		}
-		i++;
+		else
+			temp = temp->next;
 		temp = temp->next;
 	}
 	words[j] = NULL;
-	if (redir > 0)
-	{
-		cmds->token = ft_strdup(lexer[redir].word);
-		cmds->redi = ft_strdup(lexer[redir + 1].word);
-	}
-	else
-	{
-		cmds->token = NULL;
-		cmds->redi = NULL;
-	}
+	if (get_return(cmds, lexer, words) == -1)
+		return (NULL);
 	return (words);
 }
 
-int	valid_redir(char *redi)
-{
-	DIR*	dir;
-	char	*str;
-
-	str = ft_strtrim(redi, "\"");
-	dir = opendir(str);
-	free(str);
-	if (dir)
-	{
-		closedir(dir);
-		return (1);
-	}
-	else if (ENOENT == errno)
-		return (0);
-	else
-		return (1);
-}
-
-char	**alloc_words(t_lexer *lexer, t_cmds *cmds, int num, int max)
+char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {
 	char	**words;
 	int		i;
 	t_lexer	*temp;
-	int		redir;
 
 	cmds->count_words = 0;
-	redir = -1;
 	temp = lexer;
 	i = 0;
 	while (temp)
@@ -85,10 +102,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds, int num, int max)
 			break ;
 		if (is_redir(temp->word))
 		{
-			redir = i;
 			temp = temp->next;
-			if (num == max - 1 && !valid_redir(temp->word))
-				return (NULL);
 			i++;
 		}
 		else
@@ -96,6 +110,6 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds, int num, int max)
 		temp = temp->next;
 		i++;
 	}
-	words = alloc_words_aux(lexer, cmds, redir);
+	words = alloc_words_aux(lexer, cmds);
 	return (words);
 }

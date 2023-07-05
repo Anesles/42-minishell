@@ -50,16 +50,19 @@ int	b_env(t_mshell *mshell)
 
 void	check_redirect(t_cmds *cmds)
 {
-	if (cmds->token != NULL)
+	if (cmds->tokenin != NULL)
 	{
-		if (!ft_strncmp(cmds->token, ">>", 2))
-			token_more(cmds, 1);
-		else if (!ft_strncmp(cmds->token, "<<", 2) && !is_builtins(cmds->words[0]))
+		if (!ft_strncmp(cmds->tokenin, "<<", 2))
 			token_less(cmds, 1);
-		else if (!ft_strncmp(cmds->token, ">", 1))
-			token_more(cmds, 0);
-		else if (!ft_strncmp(cmds->token, "<", 1) && !is_builtins(cmds->words[0]))
+		else if (!ft_strncmp(cmds->tokenin, "<", 1))
 			token_less(cmds, 0);
+	}
+	if (cmds->tokenout != NULL)
+	{
+		if (!ft_strncmp(cmds->tokenout, ">>", 2))
+			token_more(cmds, 1);
+		else if (!ft_strncmp(cmds->tokenout, ">", 1))
+			token_more(cmds, 0);
 	}
 }
 

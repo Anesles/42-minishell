@@ -18,12 +18,12 @@ void	token_less(t_cmds *cmds, int mode)
 	char	*line;
 
 	if (mode == 0)
-		fd = open(cmds->redi, O_RDONLY);
+		fd = open(cmds->redin, O_RDONLY);
 	else
 	{
 		fd = open("temp", O_WRONLY | O_CREAT, 0644);
 		line = readline("> ");
-		while (ft_strncmp(line, cmds->redi, ft_strlen(line)))
+		while (ft_strncmp(line, cmds->redin, ft_strlen(line)))
 		{
 			write(fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
 			line = readline("> ");
@@ -40,9 +40,9 @@ void	token_more(t_cmds *cmds, int mode)
 	int	fd;
 
 	if (mode == 1)
-		fd = open(cmds->redi, O_CREAT | O_RDWR | O_APPEND, 0644);
+		fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
 	else
-		fd = open(cmds->redi, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		fd = open(cmds->redout, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
@@ -70,4 +70,10 @@ void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell)
 		close(pipefd[num][READ]);
 		close(pipefd[num][WRITE]);
 	}
+}
+
+void	reset_fds(t_mshell *mshell)
+{
+	dup2(mshell->res_pipes[READ], STDIN_FILENO);
+	dup2(mshell->res_pipes[WRITE], STDOUT_FILENO);
 }

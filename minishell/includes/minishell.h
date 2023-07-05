@@ -40,6 +40,7 @@ typedef struct s_mshell
 	int		n_cmds;
 	int		current_cmd;
 	char	**envior;
+	int		res_pipes[2];
 	int		i;
 	int		j;
 }	t_mshell;
@@ -51,11 +52,20 @@ typedef struct s_cmds
 	char			**words;
 	int				count_words;
 	int				(*built)(t_cmds *, t_mshell *);
-	char			*token;
-	char			*redi;
+	char			*tokenin;
+	char			*tokenout;
+	char			*redin;
+	char			*redout;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }	t_cmds;
+
+typedef struct s_panic
+{
+	t_cmds		*cmds;
+	t_mshell	*mshell;
+	t_lexer		*lexer;
+}	t_panic;
 
 //Utils
 size_t	count_words(char **words);
@@ -73,10 +83,12 @@ int		valid_words(char **words);
 t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
-int		builtins(t_cmds *cmds, t_mshell *mshell);
+int		find_redir(t_lexer *lexer, t_cmds *cmds);
+void	fix_redir(t_cmds *cmds, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
+int		builtins(t_cmds *cmds, t_mshell *mshell);
 void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
 void	order_array(char **str);
@@ -102,10 +114,11 @@ void	executables(char **cmd, t_mshell *mshell);
 void	token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
 void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell);
+void	reset_fds(t_mshell *mshell);
 //Words
 char	**init_words(char *str);
 int		nalloc_words(char *str);
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);
@@ -119,10 +132,10 @@ char	*get_env(char *str, char **envir);
 int		error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
 //Alloc_words
-char	**alloc_words(t_lexer *lexer, t_cmds *cmds, int i, int max);
+char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
 //Clear_mem
 void	clear_mem(t_mshell *mshell, t_cmds *cmds);
-void	free_lexer(t_lexer *lexer, int count);
+void	free_lexer(t_lexer *lexer);
 void	free_envior(t_mshell *mshell);
 
 #endif // MINISHELL_H

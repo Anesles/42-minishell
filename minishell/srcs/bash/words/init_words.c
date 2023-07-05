@@ -105,7 +105,7 @@ char	**init_words(char	*str)
 	if (!words)
 		return (NULL);
 	init_words_loop(str, words, count);
-	if (!ft_strncmp(words[--count], "|", 1) )
+	if (!ft_strncmp(words[--count], "|", 1))
 	{
 		ft_printf("minishell: syntax error near unexpected token '|'\n");
 		return (NULL);

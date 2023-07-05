@@ -17,7 +17,6 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -I ./includes -g -fsanitize=address
 
 SRC = main.c \
-		srcs/bash/cmds.c \
 		srcs/bash/lexer.c \
 		srcs/bash/errors.c \
 		srcs/utils/utils.c \
@@ -26,6 +25,7 @@ SRC = main.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
 		srcs/utils/ft_remc.c \
+		srcs/bash/cmds/cmds.c \
 		srcs/utils/clear_mem.c \
 		srcs/builtins/b_echo.c \
 		srcs/builtins/b_unset.c \
@@ -33,16 +33,17 @@ SRC = main.c \
 		srcs/builtins/exec_mul.c \
 		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
-		srcs/utils/alloc_words.c \
 		srcs/utils/valid_words.c \
 		srcs/bash/expand/expand.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
 		srcs/utils/minishell_loop.c \
+		srcs/bash/cmds/alloc_words.c \
 		srcs/builtins/builtins_aux.c \
 		srcs/bash/words/init_words.c \
 		srcs/bash/expand/get_nsize.c \
 		srcs/builtins/b_export_neq.c \
+		srcs/bash/cmds/alloc_redirs.c \
 		srcs/bash/expand/expand_env.c
 
 OBJ = $(SRC:.c=.o)

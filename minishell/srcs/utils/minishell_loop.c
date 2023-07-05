@@ -47,25 +47,19 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 {
 	t_cmds		*cmds;
 	t_lexer		*lexer;
-	char		*str;
 	size_t		count;
 
 	count = count_words(words);
 	lexer = init_lexer(words, count, mshell);
 	cmds = init_cmds(lexer, mshell);
-	free_lexer(lexer, count);
+	free(lexer);
 	if (cmds == NULL)
 	{
-		change_exit_st(mshell);
+		b_export_one("?=1", mshell);
+		ft_printf("minishell: syntax error\n");
 		return ;
 	}
-	if (cmds->redi != NULL)
-	{
-		str = expand_env(cmds->redi, mshell);
-		free(cmds->redi);
-		cmds->redi = ft_strdup(str);
-		free(str);
-	}
+	fix_redir(cmds, mshell);
 	parser(cmds, mshell);
 	change_exit_st(mshell);
 	clear_mem(mshell, cmds);
@@ -94,6 +88,8 @@ void	minishell_loop(t_mshell *mshell)
 
 	while (1)
 	{
+		mshell->res_pipes[READ] = dup(STDIN_FILENO);
+		mshell->res_pipes[WRITE] = dup(STDOUT_FILENO);
 		words = start_loop(mshell);
 		if (words == NULL)
 		{
@@ -110,5 +106,6 @@ void	minishell_loop(t_mshell *mshell)
 				b_export_one("?=2", mshell);
 			}
 		}
+		reset_fds(mshell);
 	}
 }
