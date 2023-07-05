@@ -15,11 +15,20 @@
 void	init_words_quotes(char *str, int *i, int *j, char **words)
 {
 	int		start;
+	int		temp;
 
 	start = *i;
 	(*i)++;
 	while (str[*i] && str[*i] != str[start])
 		(*i)++;
+	if (str[*i + 1] && is_quote(str[*i + 1]))
+	{
+		(*i)++;
+		temp = *i;
+		(*i)++;
+		while (str[*i] && str[*i] != str[temp])
+			(*i)++;
+	}
 	if (str[*i + 1] && (str[*i + 1] != ' ' && str[*i + 1] != '\t'))
 	{
 		while (str[*i] && (str[*i] != ' ' && str[*i] != '\t'))
@@ -107,7 +116,6 @@ char	**init_words(char	*str)
 		ft_printf("minishell: syntax error unclosed\n");
 		return (NULL);
 	}
-	ft_printf("count:%d\n", count);
 	words = malloc(sizeof(char *) * (count + 1));
 	if (!words)
 		return (NULL);

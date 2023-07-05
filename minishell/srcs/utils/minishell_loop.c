@@ -35,7 +35,7 @@ char	*prompt_read(t_mshell *mshell)
 	if (line == NULL)
 	{
 		free(line);
-		write (1, "readline failed. exiting\n", 5);
+		write (1, "exit\n", 5);
 		b_exit(1, mshell);
 	}
 	if (ft_strlen(line) > 0)
@@ -69,7 +69,6 @@ char	**start_loop(t_mshell *mshell)
 {
 	char		*prompt;
 	char		**words;
-	int	i;
 
 	prompt = prompt_read(mshell);
 	change_exit_st(mshell);
@@ -78,12 +77,6 @@ char	**start_loop(t_mshell *mshell)
 	{
 		free(prompt);
 		return (NULL);
-	}
-	i = 0;
-	while(words[i])
-	{
-		ft_printf("word[%d]=:%s:\n", i, words[i]);
-		i++;
 	}
 	free(prompt);
 	return (words);

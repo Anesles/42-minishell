@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 02:30:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:30:41 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 	int		status;
 
 	init_redir(cmds);
-	while (lexer)
+	while (lexer && lexer->word[0] != '|')
 	{
 		if (is_redir(lexer->word))
 		{
@@ -86,6 +86,8 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 		free(lexer->word);
 		lexer = lexer->next;
 	}
+	if (lexer && lexer->word[0] == '|')
+		free(lexer->word);
 	return (0);
 }
 
