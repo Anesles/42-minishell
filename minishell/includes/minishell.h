@@ -142,4 +142,9 @@ void	clear_mem(t_mshell *mshell, t_cmds *cmds);
 void	free_lexer(t_lexer *lexer);
 void	free_envior(t_mshell *mshell);
 void	free_array(char **array);
+//Signal
+void	sigint_handle_child(int signum);
+void	sig_continue(int signum);
+void	sig_quit_child(int signum);
+void	reset_signals(void);
 #endif // MINISHELL_H

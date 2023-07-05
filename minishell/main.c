@@ -14,16 +14,6 @@
 
 int	g_exit_status = 0;
 
-void	sig_continue(int signum)
-{
-	(void)signum;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_exit_status = 130;
-}
-
 char	**arraydup(char **old)
 {
 	char	**new;

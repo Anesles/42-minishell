@@ -42,14 +42,17 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 			g_exit_status = cmds->built(cmds, mshell);
 		else
 		{
-			signal(SIGINT, SIG_IGN);
+			signal(SIGINT, &sigint_handle_child);
+			signal(SIGQUIT, &sig_quit_child);
 			pid = fork();
 			if (pid == 0)
 				cmds[0].built(&cmds[0], mshell);
 			else
 				waitpid(pid, &status, 0);
-			g_exit_status = WEXITSTATUS(status);
+			if (g_exit_status != 130 && g_exit_status != 131)
+				g_exit_status = WEXITSTATUS(status);
 		}
 		mshell->current_cmd++;
 	}
+	reset_signals();
 }

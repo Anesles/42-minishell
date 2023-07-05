@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 17:00:01 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:22:40 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 	pid_t	*pid;
 	int		i;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, &sigint_handle_child);
+	signal(SIGQUIT, &sig_quit_child);
 	pipefd = malloc(sizeof(int [mshell->n_cmds - 1][2]));
 	pid = malloc(sizeof(pid_t) * mshell->n_cmds);
 	i = -1;

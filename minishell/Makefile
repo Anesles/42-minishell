@@ -21,6 +21,7 @@ SRC = main.c \
 		srcs/bash/errors.c \
 		srcs/utils/utils.c \
 		srcs/bash/parser.c \
+		srcs/utils/signals.c \
 		srcs/utils/get_env.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
