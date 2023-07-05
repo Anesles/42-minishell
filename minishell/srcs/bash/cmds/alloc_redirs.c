@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 02:19:33 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 02:30:55 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	attr_redir(t_cmds *cmds, t_lexer *lexer, int mode)
 			free(aux->word);
 			return (-1);
 		}
-		cmds->redin = ft_strdup(lexer->word);
+		cmds->redin = ft_strdup(aux->word);
 	}
 	return (0);
 }
