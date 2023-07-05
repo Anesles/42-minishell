@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/04 21:48:14 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:00:01 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,8 @@
 
 extern int	g_exit_status;
 
-void	sig_cont_child(int signum)
-{
-	(void) signum;
-	write(1, "\n", 1);
-	g_exit_status = 130;
-	exit(130);
-}
-
 void	exec_child(t_mshell *mshell, t_cmds *cmds, int (*pipefd)[2], int i)
 {
-	signal(SIGINT, &sig_cont_child);
 	handle_pipes(i, pipefd, mshell);
 	if (is_builtins(cmds[i].words[0]))
 		g_exit_status = cmds[i].built(&cmds[i], mshell);
@@ -60,6 +51,7 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 	pid_t	*pid;
 	int		i;
 
+	signal(SIGINT, SIG_IGN);
 	pipefd = malloc(sizeof(int [mshell->n_cmds - 1][2]));
 	pid = malloc(sizeof(pid_t) * mshell->n_cmds);
 	i = -1;
