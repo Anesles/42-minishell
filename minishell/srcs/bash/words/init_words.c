@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	init_words_quotes(char *str, int *i, int *j, char **words)
 {
 	int		start;
@@ -78,6 +77,8 @@ void	init_words_loop(char *str, char **words, int count)
 	i = 0;
 	while (j < count)
 	{
+		while (is_space(str[i]))
+			i++;
 		if (str[i] == '\'' || str[i] == '\"')
 			init_words_quotes(str, &i, &j, words);
 		else if (str[i] == '<' || str[i] == '>' || str[i] == '|')
@@ -101,6 +102,12 @@ char	**init_words(char	*str)
 	if (*str == '\0')
 		return (NULL);
 	count = nalloc_words(str);
+	if (count == -1)
+	{
+		ft_printf("minishell: syntax error unclosed\n");
+		return (NULL);
+	}
+	ft_printf("count:%d\n", count);
 	words = malloc(sizeof(char *) * (count + 1));
 	if (!words)
 		return (NULL);
@@ -109,6 +116,6 @@ char	**init_words(char	*str)
 	{
 		ft_printf("minishell: syntax error near unexpected token '|'\n");
 		return (NULL);
-	}	
+	}
 	return (words);
 }

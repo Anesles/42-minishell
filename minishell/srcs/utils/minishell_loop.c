@@ -69,6 +69,7 @@ char	**start_loop(t_mshell *mshell)
 {
 	char		*prompt;
 	char		**words;
+	int	i;
 
 	prompt = prompt_read(mshell);
 	change_exit_st(mshell);
@@ -77,6 +78,12 @@ char	**start_loop(t_mshell *mshell)
 	{
 		free(prompt);
 		return (NULL);
+	}
+	i = 0;
+	while(words[i])
+	{
+		ft_printf("word[%d]=:%s:\n", i, words[i]);
+		i++;
 	}
 	free(prompt);
 	return (words);

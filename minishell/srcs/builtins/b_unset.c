@@ -32,9 +32,7 @@ int	b_unset(char *variable, t_mshell *mshell)
 	int		track;
 	char	**new_environ;
 
-	if (!variable)
-		return (EXIT_SUCCESS);
-	if (!var_exists(variable, mshell))
+	if (!variable || !var_exists(variable, mshell))
 		return (EXIT_SUCCESS);
 	count = 0;
 	while (mshell->envior[count] != NULL)

@@ -119,6 +119,10 @@ void	reset_fds(t_mshell *mshell);
 char	**init_words(char *str);
 int		nalloc_words(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
+int		is_space(char c);
+int		is_quote(char c);
+int		is_special_char(char c);
+int		is_double_special_char(char c1, char c2);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);

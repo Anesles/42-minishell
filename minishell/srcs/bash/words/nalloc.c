@@ -12,27 +12,6 @@
 
 #include "minishell.h"
 
-
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
-
-int	is_space(char c)
-{
-	return (c == ' ' || c == '\t');
-}
-
-int	is_special_char(char c)
-{
-	return (c == '<' || c == '>' || c == '|');
-}
-
-int	is_double_special_char(char c1, char c2)
-{
-	return (c1 == c2 && (c1 == '<' || c1 == '>'));
-}
-
 int	nalloc_words_quotes(char *str, int i)
 {
 	char	c;
@@ -40,8 +19,15 @@ int	nalloc_words_quotes(char *str, int i)
 	c = str[i];
 	i++;
 	while (str[i] && str[i] != c)
+	{
+		if (str[i] == c)
+			return (i);
 		i++;
-	return (i);
+	}
+	if (str[i] == c)
+		return (i);
+	else
+		return (-1);
 }
 
 int	nalloc_words_space(char *str, int i, int *count)
@@ -51,7 +37,6 @@ int	nalloc_words_space(char *str, int i, int *count)
 		i++;
 	return (i - 1);
 }
-
 
 int	nalloc_words_special_chars(char *str, int i, int *count)
 {
@@ -65,7 +50,6 @@ int	nalloc_words_special_chars(char *str, int i, int *count)
 		i++;
 	return (i - 1);
 }
-
 
 int	nalloc_words_word(char *str, int i)
 {
@@ -87,10 +71,12 @@ int	nalloc_words(char *str)
 			i = nalloc_words_quotes(str, i);
 		else if (is_space(str[i]))
 			i = nalloc_words_space(str, i, &count);
-		else if (is_special_char(str[i]))
+		else if (is_special_char(str[i])) 
 			i = nalloc_words_special_chars(str, i, &count);
 		else
 			i = nalloc_words_word(str, i);
+		if (i == -1)
+			return (-1);
 		i++;
 	}
 	if (is_space(str[i - 1]) || is_special_char(str[i - 1]))

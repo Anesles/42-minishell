@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 void	sig_cont_child(int signum)
 {
