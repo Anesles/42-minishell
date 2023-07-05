@@ -6,11 +6,22 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 17:46:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:37:37 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array[i]);
+	free(array);
+}
 
 void	clear_cmds(t_cmds *cmds, int n_cmds)
 {

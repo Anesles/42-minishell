@@ -45,6 +45,7 @@ SRC = main.c \
 		srcs/bash/cmds/alloc_redirs.c \
 		srcs/bash/expand/expand_env.c \
 		srcs/bash/words/words_utils.c
+
 OBJ = $(SRC:.c=.o)
 
 LIBFTPATH = ./libft/
