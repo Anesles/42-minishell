@@ -24,7 +24,6 @@ SRC = main.c \
 		srcs/utils/get_env.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
-		srcs/utils/ft_remc.c \
 		srcs/bash/cmds/cmds.c \
 		srcs/utils/clear_mem.c \
 		srcs/builtins/b_echo.c \
@@ -33,7 +32,6 @@ SRC = main.c \
 		srcs/builtins/exec_mul.c \
 		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
-		srcs/utils/valid_words.c \
 		srcs/bash/expand/expand.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
@@ -43,6 +41,7 @@ SRC = main.c \
 		srcs/bash/words/init_words.c \
 		srcs/bash/expand/get_nsize.c \
 		srcs/builtins/b_export_neq.c \
+		srcs/bash/words/valid_words.c \
 		srcs/bash/cmds/alloc_redirs.c \
 		srcs/bash/expand/expand_env.c \
 		srcs/bash/words/words_utils.c

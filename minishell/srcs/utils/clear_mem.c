@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 01:32:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:46:40 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ void	clear_cmds(t_cmds *cmds, int n_cmds)
 		i++;
 	}
 	free(cmds);
+}
+
+void	free_envior(t_mshell *mshell)
+{
+	int	i;
+
+	i = -1;
+	while (mshell->envior[++i])
+		free(mshell->envior[i]);
+	free(mshell->envior[i]);
+	free(mshell->envior);
 }
 
 void	free_lexer(t_lexer *lexer)

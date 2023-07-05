@@ -78,7 +78,6 @@ int		valid_nvar(char **nvar);
 int		valid_nvar_one(char *nvar);
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
-int		valid_words(char **words);
 //Lexer
 t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
@@ -123,6 +122,7 @@ int		is_space(char c);
 int		is_quote(char c);
 int		is_special_char(char c);
 int		is_double_special_char(char c1, char c2);
+int		valid_words(char **words);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);

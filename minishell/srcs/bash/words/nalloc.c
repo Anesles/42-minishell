@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 21:38:50 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 15:45:11 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:48:51 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	nalloc_words(char *str)
 			i = nalloc_words_quotes(str, i);
 		else if (is_space(str[i]))
 			i = nalloc_words_space(str, i, &count);
-		else if (is_special_char(str[i])) 
+		else if (is_special_char(str[i]))
 			i = nalloc_words_special_chars(str, i, &count);
 		else
 			i = nalloc_words_word(str, i);
