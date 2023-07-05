@@ -26,12 +26,13 @@ SRC = main.c \
 		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
 		srcs/bash/cmds/cmds.c \
+		srcs/utils/free_mem.c \
+		srcs/utils/ft_strcmp.c \
 		srcs/utils/clear_mem.c \
 		srcs/builtins/b_echo.c \
 		srcs/builtins/b_unset.c \
 		srcs/bash/words/nalloc.c \
 		srcs/builtins/exec_mul.c \
-		srcs/builtins/b_export.c \
 		srcs/builtins/builtins.c \
 		srcs/bash/expand/expand.c \
 		srcs/builtins/executable.c \
@@ -41,11 +42,13 @@ SRC = main.c \
 		srcs/builtins/builtins_aux.c \
 		srcs/bash/words/init_words.c \
 		srcs/bash/expand/get_nsize.c \
-		srcs/builtins/b_export_neq.c \
 		srcs/bash/words/valid_words.c \
 		srcs/bash/cmds/alloc_redirs.c \
 		srcs/bash/expand/expand_env.c \
-		srcs/bash/words/words_utils.c
+		srcs/bash/words/words_utils.c \
+		srcs/builtins/b_export/b_export.c \
+		srcs/builtins/b_export/b_export_neq.c \
+		srcs/builtins/b_export/b_export_aux.c
 
 OBJ = $(SRC:.c=.o)
 

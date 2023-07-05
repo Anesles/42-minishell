@@ -77,11 +77,8 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 
 	temp = ft_strtrim(cmd[0], " \t");
 	available = available_path(mshell);
-	if (available == NULL)
-	{
-		free(temp);
+	if (free_mem(available, temp) == -1)
 		return (NULL);
-	}
 	if (!access(temp, X_OK))
 	{
 		i = -1;

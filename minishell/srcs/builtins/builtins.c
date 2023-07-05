@@ -66,35 +66,8 @@ void	check_redirect(t_cmds *cmds)
 	}
 }
 
-int	valid_exit(char	**str)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (str[i])
-	{
-		if (i >= 1)
-			exit(1);
-		if (str[i][0] == '-' || str[i][0] == '+')
-			j = 1;
-		else
-			j = 0;
-		while (str[i][j])
-		{
-			if (!ft_isdigit(str[i][j]))
-				return (EXIT_FAILURE);
-			j++;
-		}
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	builtins(t_cmds *cmds, t_mshell *mshell)
 {
-	int	var;
-	
 	check_redirect(cmds);
 	if (cmds->words)
 	{
@@ -108,23 +81,8 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 				return (EXIT_FAILURE);
 			return (b_cd(cmds->words[1], mshell));
 		}
-		else if (!ft_strncmp("exit", cmds->words[0], 4))
-		{
-			if (valid_exit(&cmds->words[1]))
-				return (2);
-			if (cmds->words[1] == NULL)
-				b_exit(0, mshell);
-			var = ft_atoi(cmds->words[1]);
-			b_exit(var, mshell);
-		}
-		else if (!ft_strncmp("env", cmds->words[0], 3))
-			return (b_env(mshell));
-		else if (!ft_strncmp("export", cmds->words[0], 6))
-			return (b_export(cmds->words, mshell));
-		else if (!ft_strncmp("unset", cmds->words[0], 5))
-			return (b_unset(cmds->words, mshell));
 		else
-			executables(cmds->words, mshell);
+			return (builtins_aux(cmds, mshell));
 	}
 	return (error_cmd_not_found(cmds->words[0]));
 }

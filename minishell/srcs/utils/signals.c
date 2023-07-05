@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:13:23 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 20:23:56 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:26:34 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	sigint_handle_child(int signum)
 	write(1, "\n", 1);
 	g_exit_status = 130;
 }
-
 
 void	sig_quit_child(int signum)
 {

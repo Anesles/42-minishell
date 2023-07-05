@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 16:07:58 by brumarti          #+#    #+#             */
-/*   Updated: 2023/06/30 20:35:20 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:54:46 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	handle_expand(char *str, t_mshell *mshell, t_env *env)
 {
 	size_t	j;
 
-	if (str[env->i] == '$' && env->sing == false && str[env->i + 1] 
+	if (str[env->i] == '$' && env->sing == false && str[env->i + 1]
 		&& (ft_isalnum(str[env->i + 1]) || str[env->i + 1] == '?'))
 	{
 		env->name = get_name(str + env->i);

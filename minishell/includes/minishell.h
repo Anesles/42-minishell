@@ -87,6 +87,7 @@ void	fix_redir(t_cmds *cmds, t_mshell *mshell);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
+int		builtins_aux(t_cmds *cmds, t_mshell *mshell);
 int		builtins(t_cmds *cmds, t_mshell *mshell);
 void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
@@ -109,6 +110,7 @@ int		b_cd(char *direct, t_mshell *mshell);
 //Executables
 char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
+int		free_mem(char **available, char *temp);
 //Pipe
 void	token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
@@ -123,6 +125,7 @@ int		is_quote(char c);
 int		is_special_char(char c);
 int		is_double_special_char(char c1, char c2);
 int		valid_words(char **words);
+void	another_quote(int *i, char *str);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);
