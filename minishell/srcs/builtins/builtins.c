@@ -122,7 +122,7 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		else if (!ft_strncmp("export", cmds->words[0], 6))
 			return (b_export(cmds->words, mshell));
 		else if (!ft_strncmp("unset", cmds->words[0], 5))
-			return (b_unset(cmds->words[1], mshell));
+			return (b_unset(cmds->words, mshell));
 		else
 			executables(cmds->words, mshell);
 	}

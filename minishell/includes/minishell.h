@@ -97,7 +97,7 @@ void	check_redirect(t_cmds *cmds);
 //Exc_mul
 void	multiple_cmds(t_mshell *mshell, t_cmds *cmds);
 //B_unset
-int		b_unset(char *variable, t_mshell *mshell);
+int		b_unset(char **variable, t_mshell *mshell);
 //B_export
 void	handle_neq(char *n_var, t_mshell *mshell);
 int		b_export(char **n_var, t_mshell *mshell);
@@ -141,5 +141,5 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
 void	clear_mem(t_mshell *mshell, t_cmds *cmds);
 void	free_lexer(t_lexer *lexer);
 void	free_envior(t_mshell *mshell);
-
+void	free_array(char **array);
 #endif // MINISHELL_H

@@ -22,3 +22,14 @@ void	free_envior(t_mshell *mshell)
 	free(mshell->envior[i]);
 	free(mshell->envior);
 }
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array[i]);
+	free(array);
+}
