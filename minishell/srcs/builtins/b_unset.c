@@ -26,31 +26,43 @@ int	var_exists(char *var, t_mshell *mshell)
 	return (0);
 }
 
-int	b_unset(char *variable, t_mshell *mshell)
+int	b_unset(char **variable, t_mshell *mshell)
 {
 	int		count;
 	int		track;
 	char	**new_environ;
 
-	if (!variable || !var_exists(variable, mshell))
-		return (EXIT_SUCCESS);
-	count = 0;
-	while (mshell->envior[count] != NULL)
-		count++;
-	new_environ = (char **)malloc(sizeof(char *) * count);
-	count = 0;
-	track = 0;
-	while (mshell->envior[count] != NULL)
+	int i = 1;
+	while (variable[i])
 	{
-		if (ft_strncmp(variable, mshell->envior[count], ft_strlen(variable)))
+		if (!var_exists(variable[i], mshell))
 		{
-			new_environ[track] = ft_strdup(mshell->envior[count]);
-			track++;
+			i++;
+			continue ;
 		}
-		count++;
+		else
+		{
+			count = 0;
+			while (mshell->envior[count] != NULL)
+				count++;
+			new_environ = (char **)malloc(sizeof(char *) * count);
+			count = 0;
+			track = 0;
+			while (mshell->envior[count] != NULL)
+			{
+				if (ft_strncmp(variable[i], mshell->envior[count], ft_strlen(variable[i])))
+				{
+					new_environ[track] = ft_strdup(mshell->envior[count]);
+					track++;
+				}
+				count++;
+			}
+			new_environ[track] = NULL;
+			free_envior(mshell);
+			mshell->envior = arraydup(new_environ);
+			free_array(new_environ);
+		}
+		i++;
 	}
-	new_environ[track] = NULL;
-	free_envior(mshell);
-	mshell->envior = new_environ;
 	return (EXIT_SUCCESS);
 }
