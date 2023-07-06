@@ -12,16 +12,36 @@
 
 #include "minishell.h"
 
-void	token_less(t_cmds *cmds, int mode)
+int	bad_fd_error(t_cmds *cmds, char *str, int fd)
+{
+	if (fd == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		if (cmds->fork == 1)
+			exit(1);
+		return (-1);
+	}
+	return (0);
+}
+
+int	token_less(t_cmds *cmds, int mode)
 {
 	int		fd;
 	char	*line;
 
 	if (mode == 0)
+	{
 		fd = open(cmds->redin, O_RDONLY);
+		if (bad_fd_error(cmds, cmds->redin, fd) == -1)
+			return (-1);
+	}
 	else
 	{
 		fd = open("temp", O_WRONLY | O_CREAT, 0644);
+		if (bad_fd_error(cmds, cmds->redin, fd) == -1)
+			return (-1);
 		line = readline("> ");
 		while (ft_strncmp(line, cmds->redin, ft_strlen(line)))
 		{
@@ -31,8 +51,8 @@ void	token_less(t_cmds *cmds, int mode)
 		close(fd);
 		fd = open("temp", O_RDONLY);
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	dup_fd(fd);
+	return (0);
 }
 
 void	token_more(t_cmds *cmds, int mode)

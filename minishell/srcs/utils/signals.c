@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:13:23 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 20:26:34 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:39:11 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void	sig_continue(int signum)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_exit_status = 130;
+}
+
+void	sig_fork(void)
+{
+	signal(SIGINT, &sigint_handle_child);
+	signal(SIGQUIT, &sig_quit_child);
 }
 
 void	reset_signals(void)

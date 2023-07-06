@@ -42,8 +42,8 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 			g_exit_status = cmds->built(cmds, mshell);
 		else
 		{
-			signal(SIGINT, &sigint_handle_child);
-			signal(SIGQUIT, &sig_quit_child);
+			cmds[0].fork = 1;
+			sig_fork();
 			pid = fork();
 			if (pid == 0)
 				cmds[0].built(&cmds[0], mshell);

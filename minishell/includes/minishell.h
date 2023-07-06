@@ -50,6 +50,7 @@ typedef struct s_cmds	t_cmds;
 typedef struct s_cmds
 {
 	char			**words;
+	int				fork;
 	int				count_words;
 	int				(*built)(t_cmds *, t_mshell *);
 	char			*tokenin;
@@ -82,8 +83,12 @@ void	minishell_loop(t_mshell *mshell);
 t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
+//Redirs
 int		find_redir(t_lexer *lexer, t_cmds *cmds);
 void	fix_redir(t_cmds *cmds, t_mshell *mshell);
+int		valid_redir(char *redi);
+int		attr_redir_in(t_cmds *cmds, t_lexer *lexer);
+int		check_status(int status, t_lexer *lexer);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
@@ -93,7 +98,7 @@ void	b_exit(int status, t_mshell *mshell);
 int		b_env(t_mshell *mshell);
 void	order_array(char **str);
 int		next_one(char *s, char c);
-void	check_redirect(t_cmds *cmds);
+int		check_redirect(t_cmds *cmds);
 //Exc_mul
 void	multiple_cmds(t_mshell *mshell, t_cmds *cmds);
 //B_unset
@@ -112,10 +117,11 @@ char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
 int		free_mem(char **available, char *temp);
 //Pipe
-void	token_less(t_cmds *cmds, int mode);
+int		token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
 void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell);
 void	reset_fds(t_mshell *mshell);
+void	dup_fd(int fd);
 //Words
 char	**init_words(char *str);
 int		nalloc_words(char *str);
@@ -146,8 +152,7 @@ void	free_lexer(t_lexer *lexer);
 void	free_envior(t_mshell *mshell);
 void	free_array(char **array);
 //Signal
-void	sigint_handle_child(int signum);
 void	sig_continue(int signum);
-void	sig_quit_child(int signum);
 void	reset_signals(void);
+void	sig_fork(void);
 #endif // MINISHELL_H

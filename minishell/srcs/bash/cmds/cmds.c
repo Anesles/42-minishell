@@ -74,6 +74,7 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 	{
 		set_neighbour(cmds, i, n);
 		cmds[i].built = &builtins;
+		cmds[i].fork = 0;
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
 		if (cmds[i].words == NULL)
 			return (-1);

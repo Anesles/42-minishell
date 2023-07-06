@@ -48,14 +48,20 @@ int	b_env(t_mshell *mshell)
 	return (EXIT_SUCCESS);
 }
 
-void	check_redirect(t_cmds *cmds)
+int	check_redirect(t_cmds *cmds)
 {
 	if (cmds->tokenin != NULL)
 	{
 		if (!ft_strncmp(cmds->tokenin, "<<", 2))
-			token_less(cmds, 1);
+		{
+			if (token_less(cmds, 1) == -1)
+				return (-1);
+		}
 		else if (!ft_strncmp(cmds->tokenin, "<", 1))
-			token_less(cmds, 0);
+		{
+			if (token_less(cmds, 0) == -1)
+				return (-1);
+		}
 	}
 	if (cmds->tokenout != NULL)
 	{
@@ -64,11 +70,16 @@ void	check_redirect(t_cmds *cmds)
 		else if (!ft_strncmp(cmds->tokenout, ">", 1))
 			token_more(cmds, 0);
 	}
+	return (0);
 }
 
 int	builtins(t_cmds *cmds, t_mshell *mshell)
 {
-	check_redirect(cmds);
+	if (check_redirect(cmds) == -1)
+	{
+		ft_putstr_fd("minishell: no such file or directory\n", 2);
+		return (EXIT_FAILURE);
+	}
 	if (cmds->words)
 	{
 		if (!ft_strncmp("pwd", cmds->words[0], 3))

@@ -23,7 +23,6 @@ SRC = main.c \
 		srcs/bash/parser.c \
 		srcs/utils/signals.c \
 		srcs/utils/get_env.c \
-		srcs/builtins/pipe.c \
 		srcs/builtins/b_cd.c \
 		srcs/bash/cmds/cmds.c \
 		srcs/utils/free_mem.c \
@@ -34,6 +33,7 @@ SRC = main.c \
 		srcs/bash/words/nalloc.c \
 		srcs/builtins/exec_mul.c \
 		srcs/builtins/builtins.c \
+		srcs/builtins/pipe/pipe.c \
 		srcs/bash/expand/expand.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
@@ -42,10 +42,12 @@ SRC = main.c \
 		srcs/builtins/builtins_aux.c \
 		srcs/bash/words/init_words.c \
 		srcs/bash/expand/get_nsize.c \
+		srcs/builtins/pipe/pipe_aux.c \
 		srcs/bash/words/valid_words.c \
 		srcs/bash/cmds/alloc_redirs.c \
 		srcs/bash/expand/expand_env.c \
 		srcs/bash/words/words_utils.c \
+		srcs/bash/cmds/alloc_redirs_aux.c \
 		srcs/builtins/b_export/b_export.c \
 		srcs/builtins/b_export/b_export_neq.c \
 		srcs/builtins/b_export/b_export_aux.c

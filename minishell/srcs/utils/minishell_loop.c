@@ -56,7 +56,7 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 	if (cmds == NULL)
 	{
 		b_export_one("?=1", mshell);
-		ft_printf("minishell: syntax error\n");
+		write(2, "minishell: syntax error\n", 24);
 		return ;
 	}
 	fix_redir(cmds, mshell);

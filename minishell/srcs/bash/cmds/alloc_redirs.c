@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 15:30:41 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:32:57 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,18 @@ int	valid_redir(char *redi)
 
 int	attr_redir(t_cmds *cmds, t_lexer *lexer, int mode)
 {
-	t_lexer	*aux;
-
 	if (mode == 0)
 	{
+		if (cmds->tokenout != NULL)
+			free(cmds->tokenout);
 		cmds->tokenout = ft_strdup(lexer->word);
 		lexer = lexer->next;
+		if (cmds->redout != NULL)
+			free(cmds->redout);
 		cmds->redout = ft_strdup(lexer->word);
 	}
-	else
-	{
-		cmds->tokenin = ft_strdup(lexer->word);
-		aux = lexer->next;
-		if (cmds->next == NULL && !valid_redir(aux->word))
-		{
-			free(lexer->word);
-			free(cmds->tokenin);
-			free(aux->word);
-			return (-1);
-		}
-		cmds->redin = ft_strdup(aux->word);
-	}
+	else if (attr_redir_in(cmds, lexer) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -80,7 +71,7 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 			else if (ft_strncmp(lexer->word, "<<", 2) == 0
 				|| ft_strncmp(lexer->word, "<", 1) == 0)
 				status = attr_redir(cmds, lexer, 1);
-			if (status == -1)
+			if (check_status(status, lexer) == -1)
 				return (-1);
 		}
 		free(lexer->word);
