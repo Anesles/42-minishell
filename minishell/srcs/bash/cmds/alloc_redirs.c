@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/06 18:32:57 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:08:18 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,25 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 void	fix_redir(t_cmds *cmds, t_mshell *mshell)
 {
 	char	*str;
+	int		i;
 
-	if (cmds->redin != NULL)
+	i = 0;
+	while (i < mshell->n_cmds)
 	{
-		str = expand_env(cmds->redin, mshell);
-		free(cmds->redin);
-		cmds->redin = ft_strdup(str);
-		free(str);
-	}
-	if (cmds->redout != NULL)
-	{
-		str = expand_env(cmds->redout, mshell);
-		free(cmds->redout);
-		cmds->redout = ft_strdup(str);
-		free(str);
+		if (cmds[i].redin != NULL)
+		{
+			str = expand_env(cmds[i].redin, mshell);
+			free(cmds[i].redin);
+			cmds[i].redin = ft_strdup(str);
+			free(str);
+		}
+		if (cmds[i].redout != NULL)
+		{
+			str = expand_env(cmds[i].redout, mshell);
+			free(cmds[i].redout);
+			cmds[i].redout = ft_strdup(str);
+			free(str);
+		}
+		i++;
 	}
 }
