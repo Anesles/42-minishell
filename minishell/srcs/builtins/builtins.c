@@ -82,11 +82,11 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 	}
 	if (cmds->words)
 	{
-		if (!ft_strncmp("pwd", cmds->words[0], 3))
+		if (!ft_strncmp("pwd", cmds->words[0], 4))
 			return (b_pwd());
-		else if (!ft_strncmp("echo", cmds->words[0], 4))
+		else if (!ft_strncmp("echo", cmds->words[0], 5))
 			return (b_echo(&cmds->words[1], cmds->count_words - 1));
-		else if (!ft_strncmp("cd", cmds->words[0], 2))
+		else if (!ft_strncmp("cd", cmds->words[0], 3))
 			return (b_cd(cmds->words[1], mshell));
 		else
 			return (builtins_aux(cmds, mshell));

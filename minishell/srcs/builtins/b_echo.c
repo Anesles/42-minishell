@@ -44,7 +44,7 @@ int	b_echo(char **words, int max_words)
 		return (EXIT_SUCCESS);
 	}
 	i = 0;
-	while (!ft_strncmp(words[i], "-n", 2))
+	while (words[i] && !ft_strncmp(words[i], "-n", 2))
 		i++;
 	b_echo_aux(i, words, max_words);
 	return (EXIT_SUCCESS);

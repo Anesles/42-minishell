@@ -68,19 +68,19 @@ int	is_redir(char *str)
 
 int	is_builtins(char *str)
 {
-	if (ft_strncmp(str, "echo", 4) == 0)
+	if (ft_strncmp(str, "echo", 5) == 0)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(str, "cd", 2) == 0)
+	else if (ft_strncmp(str, "cd", 3) == 0)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(str, "pwd", 3) == 0)
+	else if (ft_strncmp(str, "pwd", 4) == 0)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(str, "export", 6) == 0)
+	else if (ft_strncmp(str, "export", 7) == 0)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(str, "unset", 5) == 0)
+	else if (ft_strncmp(str, "unset", 6) == 0)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(str, "env", 3) == 0)
+	else if (ft_strncmp(str, "env", 4) == 0)
 		return (EXIT_FAILURE);
-	else if (ft_strncmp(str, "exit", 4) == 0)
+	else if (ft_strncmp(str, "exit", 5) == 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/06 19:08:18 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:32:33 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	valid_redir(char *redi)
 
 int	attr_redir(t_cmds *cmds, t_lexer *lexer, int mode)
 {
+	int	fd;
+	
 	if (mode == 0)
 	{
 		if (cmds->tokenout != NULL)
@@ -42,6 +44,8 @@ int	attr_redir(t_cmds *cmds, t_lexer *lexer, int mode)
 		if (cmds->redout != NULL)
 			free(cmds->redout);
 		cmds->redout = ft_strdup(lexer->word);
+		fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
+		close(fd);
 	}
 	else if (attr_redir_in(cmds, lexer) == -1)
 		return (-1);
