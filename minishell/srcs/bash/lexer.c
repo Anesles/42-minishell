@@ -44,7 +44,9 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 	i = -1;
 	while (++i < n)
 	{
-		if (i != 0 && !is_redir(lexer[i - 1].word))
+		if (i == 0)
+			str = expand_env(lexer[i].word, mshell);
+		else if (!is_redir(lexer[i - 1].word))
 			str = expand_env(lexer[i].word, mshell);
 		else
 			str = ft_strdup(lexer[i].word);
