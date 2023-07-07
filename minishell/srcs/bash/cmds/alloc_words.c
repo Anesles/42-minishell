@@ -87,6 +87,17 @@ char	**alloc_words_aux(t_lexer *lexer, t_cmds *cmds)
 	return (words);
 }
 
+int	is_valid(t_lexer *temp)
+{
+	if (temp->word && (temp->word[0] == '|'
+			|| temp->word[0] == '<' || temp->word[0] == '>'))
+	{
+		free(temp->word);
+		return (-1);
+	}
+	return (0);
+}
+
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {
 	char	**words;
@@ -95,6 +106,8 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 
 	cmds->count_words = 0;
 	temp = lexer;
+	if (is_valid(temp) == -1)
+		return (NULL);
 	i = 0;
 	while (temp)
 	{

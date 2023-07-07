@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/07 15:32:33 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:51:59 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	valid_redir(char *redi)
 int	attr_redir(t_cmds *cmds, t_lexer *lexer, int mode)
 {
 	int	fd;
-	
+
 	if (mode == 0)
 	{
 		if (cmds->tokenout != NULL)
