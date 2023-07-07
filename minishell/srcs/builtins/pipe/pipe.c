@@ -65,7 +65,7 @@ void	token_more(t_cmds *cmds, int mode)
 	close(fd);
 }
 
-void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell)
+void	handle_pipes(int num, int **pipefd, t_mshell *mshell)
 {
 	if (num == 0)
 	{

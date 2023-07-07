@@ -118,7 +118,7 @@ int		free_mem(char **available, char *temp);
 //Pipe
 int		token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
-void	handle_pipes(int num, int (*pipefd)[2], t_mshell *mshell);
+void	handle_pipes(int num, int **pipefd, t_mshell *mshell);
 void	reset_fds(t_mshell *mshell);
 void	dup_fd(int fd);
 //Words

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/06 18:40:29 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:58:50 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-void	exec_child(t_mshell *mshell, t_cmds *cmds, int (*pipefd)[2], int i)
+void	exec_child(t_mshell *mshell, t_cmds *cmds, int **pipefd, int i)
 {
 	handle_pipes(i, pipefd, mshell);
 	if (is_builtins(cmds[i].words[0]))
@@ -24,22 +24,27 @@ void	exec_child(t_mshell *mshell, t_cmds *cmds, int (*pipefd)[2], int i)
 	exit(g_exit_status);
 }
 
-void	end_exec(t_mshell *mshell, pid_t *pid, int (*pipefd)[2])
+void	end_exec(t_mshell *mshell, pid_t *pid, int **pipefd)
 {
 	int	i;
 	int	status;
 
-	i = -1;
-	while (++i < mshell->n_cmds)
+	i = mshell->n_cmds - 1;
+	while (i >= 0)
 	{
 		waitpid(pid[i], &status, 0);
-		if (i < mshell->n_cmds - 1)
+		if (i != 0)
 		{
-			close(pipefd[i][READ]);
-			close(pipefd[i][WRITE]);
+			printf("closing pipes of pid %d\n", i);
+			close(pipefd[i - 1][READ]);
+			close(pipefd[i - 1][WRITE]);	
 		}
+		i--;
 	}
 	free(pid);
+	i = 0;
+	while (i < mshell->n_cmds - 1)
+		free(pipefd[i++]);
 	free(pipefd);
 	if (!WTERMSIG(status))
 		g_exit_status = WEXITSTATUS(status);
@@ -47,29 +52,31 @@ void	end_exec(t_mshell *mshell, pid_t *pid, int (*pipefd)[2])
 
 void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 {
-	int		(*pipefd)[2];
+	int		**pipefd;
 	pid_t	*pid;
 	int		i;
 
 	sig_fork();
-	pipefd = malloc(sizeof(int [mshell->n_cmds - 1][2]));
+	pipefd = malloc(sizeof(int *) * mshell->n_cmds);
 	pid = malloc(sizeof(pid_t) * mshell->n_cmds);
 	i = -1;
 	while (++i < mshell->n_cmds - 1)
+	{
+		pipefd[i] = malloc(sizeof(int) * 2);
 		pipe(pipefd[i]);
+	}
 	i = -1;
 	while (++i < mshell->n_cmds)
 	{
-		cmds[i].fork = 1;
 		pid[i] = fork();
 		if (pid[i] < 0)
 			exit(EXIT_FAILURE);
 		else if (pid[i] == 0)
 			exec_child(mshell, cmds, pipefd, i);
-		if (i > 0)
-			close(pipefd[i - 1][READ]);
 		if (i < mshell->n_cmds - 1)
 			close(pipefd[i][WRITE]);
+		if (i > 0)
+			close(pipefd[i - 1][READ]);
 	}
 	end_exec(mshell, pid, pipefd);
 }
