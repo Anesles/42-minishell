@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 19:38:31 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:59:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_array(char **array)
 	i = -1;
 	while (array[++i])
 		free(array[i]);
-	free(array[i]);
 	free(array);
 }
 

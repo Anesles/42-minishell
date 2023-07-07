@@ -87,7 +87,11 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		else if (!ft_strncmp("echo", cmds->words[0], 5))
 			return (b_echo(&cmds->words[1], cmds->count_words - 1));
 		else if (!ft_strncmp("cd", cmds->words[0], 3))
+		{
+			if (cmds->words[1] != NULL && cmds->words[2] != NULL)
+				return (error_too_many_args());
 			return (b_cd(cmds->words[1], mshell));
+		}
 		else
 			return (builtins_aux(cmds, mshell));
 	}

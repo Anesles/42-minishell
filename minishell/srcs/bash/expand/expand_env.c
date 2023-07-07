@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:45:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 20:54:35 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:49:10 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,17 @@ typedef struct s_env
 	int		j;
 }	t_env;
 
-void	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
+int	check_value(t_env *env)
+{
+	if (env->value == NULL)
+	{
+		free(env->name);
+		return (-1);
+	}
+	return (0);
+}
+
+int	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
 {
 	size_t	j;
 
@@ -30,6 +40,8 @@ void	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
 	{
 		env->name = get_name(str + env->i);
 		env->value = get_env(env->name, mshell->envior);
+		if (check_value(env) == -1)
+			return (-1);
 		while (*env->value)
 			ret[env->j++] = *(env->value++);
 		env->i++;
@@ -43,13 +55,17 @@ void	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
 	}
 	else
 		ret[env->j++] = str[env->i++];
+	return (0);
 }
 
 void	handle_db(char *str, t_mshell *mshell, t_env *env, char *ret)
 {
 	env->i++;
 	while (str[env->i] != '\"' && str[env->i] != 0)
-		handle_expand(str, mshell, env, ret);
+	{
+		if (handle_expand(str, mshell, env, ret) == -1)
+			return ;
+	}
 	if (str[env->i] == '\"')
 		env->i++;
 }
@@ -68,7 +84,10 @@ void	expand_env_aux(char *str, t_mshell *mshell, char *ret, t_env env)
 		if (str[env.i] == '\"' && env.sing == false)
 			handle_db(str, mshell, &env, ret);
 		else if (str[env.i] == '$' && env.sing == false)
-			handle_expand(str, mshell, &env, ret);
+		{
+			if (handle_expand(str, mshell, &env, ret) == -1)
+				return ;
+		}
 		else
 			ret[env.j++] = str[env.i++];
 	}

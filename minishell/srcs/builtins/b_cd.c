@@ -31,9 +31,9 @@ int	b_cd(char *direct, t_mshell *mshell)
 	temp = ft_strjoin("PWD=", str);
 	b_export_one(temp, mshell);
 	free(temp);
-	free(new_dir);
 	if (error != 0)
 		return (error_cd(new_dir));
+	free(new_dir);
 	if (direct == NULL)
 		free (direct);
 	return (EXIT_SUCCESS);

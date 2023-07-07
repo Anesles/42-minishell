@@ -46,6 +46,8 @@ char	*returnvalue_aux(char **available, char *temp)
 	char	*str;
 
 	i = 0;
+	if (check_temp(temp, available) == -1)
+		return (NULL);
 	while (available[i])
 	{
 		str = ft_strjoin(available[i], "/");
@@ -54,9 +56,7 @@ char	*returnvalue_aux(char **available, char *temp)
 		free(str);
 		if (!access(fin, X_OK))
 		{
-			while (available[++i])
-				free(available[i]);
-			free(available);
+			free_available(available, i);
 			free(temp);
 			return (fin);
 		}
@@ -85,7 +85,8 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 		while (available[++i])
 			free(available[i]);
 		free(available);
-		return (temp);
+		free(temp);
+		return (NULL);
 	}
 	else
 	{

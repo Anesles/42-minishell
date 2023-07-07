@@ -143,6 +143,7 @@ char	*get_env(char *str, char **envir);
 //Errors
 int		error_cmd_not_found(char *cmd);
 int		error_cd(char *cmd);
+int		error_too_many_args(void);
 //Alloc_words
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds);
 //Clear_mem
@@ -150,6 +151,8 @@ void	clear_mem(t_mshell *mshell, t_cmds *cmds);
 void	free_lexer(t_lexer *lexer);
 void	free_envior(t_mshell *mshell);
 void	free_array(char **array);
+int		check_temp(char *temp, char **available);
+void	free_available(char **available, int i);
 //Signal
 void	sig_continue(int signum);
 void	reset_signals(void);
