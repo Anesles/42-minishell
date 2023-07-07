@@ -40,8 +40,6 @@ int	token_less(t_cmds *cmds, int mode)
 	else
 	{
 		fd = open("temp", O_WRONLY | O_CREAT, 0644);
-		if (bad_fd_error(cmds, cmds->redin, fd) == -1)
-			return (-1);
 		line = readline("> ");
 		while (ft_strncmp(line, cmds->redin, ft_strlen(line)))
 		{
