@@ -88,8 +88,8 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 			return (b_echo(&cmds->words[1], cmds->count_words - 1));
 		else if (!ft_strncmp("cd", cmds->words[0], 2))
 		{
-			if (cmds->words[2] != NULL)
-				return (EXIT_FAILURE);
+/* 			if (cmds->words[1] != NULL)
+				return (EXIT_FAILURE); */
 			return (b_cd(cmds->words[1], mshell));
 		}
 		else
