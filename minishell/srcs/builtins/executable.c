@@ -85,8 +85,7 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 		while (available[++i])
 			free(available[i]);
 		free(available);
-		free(temp);
-		return (NULL);
+		return (temp);
 	}
 	else
 	{
