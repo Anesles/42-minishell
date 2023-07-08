@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/07 19:58:50 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/08 14:35:48 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ void	end_exec(t_mshell *mshell, pid_t *pid, int **pipefd)
 		waitpid(pid[i], &status, 0);
 		if (i != 0)
 		{
-			printf("closing pipes of pid %d\n", i);
 			close(pipefd[i - 1][READ]);
-			close(pipefd[i - 1][WRITE]);	
+			close(pipefd[i - 1][WRITE]);
 		}
 		i--;
 	}
@@ -50,6 +49,18 @@ void	end_exec(t_mshell *mshell, pid_t *pid, int **pipefd)
 		g_exit_status = WEXITSTATUS(status);
 }
 
+void	init_pipefd(int **pipefd, t_mshell *mshell)
+{
+	int		i;
+
+	i = -1;
+	while (++i < mshell->n_cmds - 1)
+	{
+		pipefd[i] = malloc(sizeof(int) * 2);
+		pipe(pipefd[i]);
+	}
+}
+
 void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 {
 	int		**pipefd;
@@ -59,12 +70,7 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 	sig_fork();
 	pipefd = malloc(sizeof(int *) * mshell->n_cmds);
 	pid = malloc(sizeof(pid_t) * mshell->n_cmds);
-	i = -1;
-	while (++i < mshell->n_cmds - 1)
-	{
-		pipefd[i] = malloc(sizeof(int) * 2);
-		pipe(pipefd[i]);
-	}
+	init_pipefd(pipefd, mshell);
 	i = -1;
 	while (++i < mshell->n_cmds)
 	{
