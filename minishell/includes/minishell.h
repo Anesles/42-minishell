@@ -57,6 +57,7 @@ typedef struct s_cmds
 	char			*tokenout;
 	char			*redin;
 	char			*redout;
+	int				all_words;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }	t_cmds;
@@ -77,7 +78,7 @@ int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
 int		valid_nvar(char **nvar);
 int		valid_nvar_one(char *nvar);
-char    *remove_quotes(char *str);
+char	*remove_quotes(char *str);
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
 //Lexer
@@ -89,7 +90,7 @@ int		find_redir(t_lexer *lexer, t_cmds *cmds);
 void	fix_redir(t_cmds *cmds, t_mshell *mshell);
 int		valid_redir(char *redi);
 int		attr_redir_in(t_cmds *cmds, t_lexer *lexer);
-int		check_status(int status, t_lexer *lexer);
+int		check_status(int status);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins

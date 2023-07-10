@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:57:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/08 14:36:05 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/10 21:20:38 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,15 @@ int	attr_redir_in(t_cmds *cmds, t_lexer *lexer)
 	return (0);
 }
 
-int	check_status(int status, t_lexer *lexer)
+int	check_status(int status)
 {
 	if (status == -1)
 	{
-		while (lexer)
-		{
-			free(lexer->word);
-			lexer = lexer->next;
-		}
 		g_exit_status = 1;
 		return (-1);
 	}
 	else if (status == -2)
 	{
-		while (lexer)
-		{
-			free(lexer->word);
-			lexer = lexer->next;
-		}
 		g_exit_status = 2;
 		return (-1);
 	}

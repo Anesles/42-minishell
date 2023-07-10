@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/07 15:51:59 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/10 21:16:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ int	valid_redir(char *redi)
 		return (1);
 }
 
-int	attr_redir_out(t_cmds *cmds, t_lexer *lexer)
+int	attr_redir_out(t_cmds *cmds, t_lexer *aux)
 {
-	int	fd;
+	int		fd;
 
 	if (cmds->tokenout != NULL)
 		free(cmds->tokenout);
-	cmds->tokenout = ft_strdup(lexer->word);
-	lexer = lexer->next;
-	if (lexer == NULL)
+	cmds->tokenout = ft_strdup(aux->word);
+	aux = aux->next;
+	if (aux == NULL)
 	{
 		free(cmds->tokenout);
 		return (-2);
 	}
 	if (cmds->redout != NULL)
 		free(cmds->redout);
-	cmds->redout = ft_strdup(lexer->word);
+	cmds->redout = ft_strdup(aux->word);
 	fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
 	close(fd);
 	return (0);
@@ -63,26 +63,27 @@ void	init_redir(t_cmds *cmds)
 int	find_redir(t_lexer *lexer, t_cmds *cmds)
 {
 	int		status;
+	t_lexer	*aux;
 
 	init_redir(cmds);
-	while (lexer && lexer->word[0] != '|')
+	aux = lexer;
+	while (aux && aux->word[0] != '|')
 	{
-		if (is_redir(lexer->word))
+		if (is_redir(aux->word))
 		{
-			if (ft_strncmp(lexer->word, ">>", 2) == 0
-				|| ft_strncmp(lexer->word, ">", 1) == 0)
-				status = attr_redir_out(cmds, lexer);
-			else if (ft_strncmp(lexer->word, "<<", 2) == 0
-				|| ft_strncmp(lexer->word, "<", 1) == 0)
-				status = attr_redir_in(cmds, lexer);
-			if (check_status(status, lexer) == -1)
+			if (ft_strncmp(aux->word, ">>", 2) == 0
+				|| ft_strncmp(aux->word, ">", 1) == 0)
+				status = attr_redir_out(cmds, aux);
+			else if (ft_strncmp(aux->word, "<<", 2) == 0
+				|| ft_strncmp(aux->word, "<", 1) == 0)
+				status = attr_redir_in(cmds, aux);
+			if (check_status(status) == -1)
 				return (-1);
 		}
-		free(lexer->word);
-		lexer = lexer->next;
+		free(aux->word);
+		cmds->all_words++;
+		aux = aux->next;
 	}
-	if (lexer && lexer->word[0] == '|')
-		free(lexer->word);
 	return (0);
 }
 

@@ -52,7 +52,6 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 	count = count_words(words);
 	lexer = init_lexer(words, count, mshell);
 	cmds = init_cmds(lexer, mshell);
-	free(lexer);
 	if (cmds == NULL)
 	{
 		b_export_one("?=1", mshell);

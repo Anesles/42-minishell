@@ -74,17 +74,14 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 	{
 		set_neighbour(cmds, i, n);
 		cmds[i].built = &builtins;
+		cmds[i].all_words = 0;
 		cmds[i].fork = 0;
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
 		if (cmds[i].words == NULL)
 			return (-1);
 		if (check_validcmd(cmds[i]))
 			return (-1);
-		if (cmds[i].tokenin != NULL)
-			start += 2;
-		if (cmds[i].tokenout != NULL)
-			start += 2;
-		start += cmds[i].count_words + 1;
+		start += cmds[i].all_words + 1;
 	}
 	return (0);
 }

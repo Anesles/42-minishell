@@ -98,8 +98,6 @@ int	is_valid(t_lexer *temp)
 	return (0);
 }
 
-//echo hi >./outfiles/outfile01 >./outfiles/outfile02 | echo bye
-
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {
 	char	**words;
@@ -117,7 +115,7 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		{
 			temp = temp->next;
 			if (temp == NULL)
-				break;
+				break ;
 		}
 		else
 			cmds->count_words++;
