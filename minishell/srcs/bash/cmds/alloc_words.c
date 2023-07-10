@@ -98,17 +98,17 @@ int	is_valid(t_lexer *temp)
 	return (0);
 }
 
+//echo hi >./outfiles/outfile01 >./outfiles/outfile02 | echo bye
+
 char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 {
 	char	**words;
-	int		i;
 	t_lexer	*temp;
 
 	cmds->count_words = 0;
 	temp = lexer;
 	if (is_valid(temp) == -1)
 		return (NULL);
-	i = 0;
 	while (temp)
 	{
 		if (temp->word[0] == '|')
@@ -116,12 +116,12 @@ char	**alloc_words(t_lexer *lexer, t_cmds *cmds)
 		if (is_redir(temp->word))
 		{
 			temp = temp->next;
-			i++;
+			if (temp == NULL)
+				break;
 		}
 		else
 			cmds->count_words++;
 		temp = temp->next;
-		i++;
 	}
 	words = alloc_words_aux(lexer, cmds);
 	return (words);

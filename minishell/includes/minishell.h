@@ -77,6 +77,7 @@ int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
 int		valid_nvar(char **nvar);
 int		valid_nvar_one(char *nvar);
+char    *remove_quotes(char *str);
 //Minishell_loop
 void	minishell_loop(t_mshell *mshell);
 //Lexer
@@ -141,7 +142,7 @@ int		get_nsize(char *str, t_mshell *mshell);
 //Get_env
 char	*get_env(char *str, char **envir);
 //Errors
-int		error_cmd_not_found(char *cmd);
+int		error_cmd_not_found(t_cmds *cmds);
 int		error_cd(char *cmd);
 int		error_too_many_args(void);
 //Alloc_words

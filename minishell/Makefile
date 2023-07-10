@@ -49,6 +49,7 @@ SRC = main.c \
 		srcs/bash/words/words_utils.c \
 		srcs/bash/cmds/alloc_redirs_aux.c \
 		srcs/builtins/b_export/b_export.c \
+		srcs/utils/remove_quotes.c \
 		srcs/builtins/b_export/b_export_aux.c
 
 OBJ = $(SRC:.c=.o)

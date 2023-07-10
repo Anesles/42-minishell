@@ -31,24 +31,24 @@ int	valid_redir(char *redi)
 		return (1);
 }
 
-int	attr_redir(t_cmds *cmds, t_lexer *lexer, int mode)
+int	attr_redir_out(t_cmds *cmds, t_lexer *lexer)
 {
 	int	fd;
 
-	if (mode == 0)
+	if (cmds->tokenout != NULL)
+		free(cmds->tokenout);
+	cmds->tokenout = ft_strdup(lexer->word);
+	lexer = lexer->next;
+	if (lexer == NULL)
 	{
-		if (cmds->tokenout != NULL)
-			free(cmds->tokenout);
-		cmds->tokenout = ft_strdup(lexer->word);
-		lexer = lexer->next;
-		if (cmds->redout != NULL)
-			free(cmds->redout);
-		cmds->redout = ft_strdup(lexer->word);
-		fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
-		close(fd);
+		free(cmds->tokenout);
+		return (-2);
 	}
-	else if (attr_redir_in(cmds, lexer) == -1)
-		return (-1);
+	if (cmds->redout != NULL)
+		free(cmds->redout);
+	cmds->redout = ft_strdup(lexer->word);
+	fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
+	close(fd);
 	return (0);
 }
 
@@ -71,10 +71,10 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 		{
 			if (ft_strncmp(lexer->word, ">>", 2) == 0
 				|| ft_strncmp(lexer->word, ">", 1) == 0)
-				status = attr_redir(cmds, lexer, 0);
+				status = attr_redir_out(cmds, lexer);
 			else if (ft_strncmp(lexer->word, "<<", 2) == 0
 				|| ft_strncmp(lexer->word, "<", 1) == 0)
-				status = attr_redir(cmds, lexer, 1);
+				status = attr_redir_in(cmds, lexer);
 			if (check_status(status, lexer) == -1)
 				return (-1);
 		}
@@ -96,14 +96,14 @@ void	fix_redir(t_cmds *cmds, t_mshell *mshell)
 	{
 		if (cmds[i].redin != NULL)
 		{
-			str = expand_env(cmds[i].redin, mshell);
+			str = remove_quotes(cmds[i].redin);
 			free(cmds[i].redin);
 			cmds[i].redin = ft_strdup(str);
 			free(str);
 		}
 		if (cmds[i].redout != NULL)
 		{
-			str = expand_env(cmds[i].redout, mshell);
+			str = remove_quotes(cmds[i].redout);
 			free(cmds[i].redout);
 			cmds[i].redout = ft_strdup(str);
 			free(str);

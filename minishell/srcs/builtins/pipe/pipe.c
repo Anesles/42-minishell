@@ -30,6 +30,7 @@ int	token_less(t_cmds *cmds, int mode)
 {
 	int		fd;
 	char	*line;
+	char 	*str;
 
 	if (mode == 0)
 	{
@@ -43,7 +44,9 @@ int	token_less(t_cmds *cmds, int mode)
 		line = readline("> ");
 		while (ft_strncmp(line, cmds->redin, ft_strlen(line)))
 		{
-			write(fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
+			str = ft_strjoin(line, "\n");
+			write(fd, str, ft_strlen(line) + 1);
+			free(str);
 			line = readline("> ");
 		}
 		close(fd);

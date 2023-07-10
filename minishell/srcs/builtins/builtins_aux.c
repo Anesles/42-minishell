@@ -58,5 +58,5 @@ int	builtins_aux(t_cmds *cmds, t_mshell *mshell)
 		return (b_unset(cmds->words, mshell));
 	else
 		executables(cmds->words, mshell);
-	return (error_cmd_not_found(cmds->words[0]));
+	return (error_cmd_not_found(cmds));
 }

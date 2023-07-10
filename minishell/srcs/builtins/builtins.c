@@ -95,5 +95,5 @@ int	builtins(t_cmds *cmds, t_mshell *mshell)
 		else
 			return (builtins_aux(cmds, mshell));
 	}
-	return (error_cmd_not_found(cmds->words[0]));
+	return (error_cmd_not_found(cmds));
 }

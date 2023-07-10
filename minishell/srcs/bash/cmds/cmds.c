@@ -100,7 +100,6 @@ t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
 	cmds = malloc(sizeof(t_cmds) * n);
 	if (alloc_cmds(cmds, n, lexer) == -1)
 	{
-		g_exit_status = 1;
 		free(cmds);
 		return (NULL);
 	}

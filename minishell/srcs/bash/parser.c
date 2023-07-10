@@ -49,8 +49,7 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 				cmds[0].built(&cmds[0], mshell);
 			else
 				waitpid(pid, &status, 0);
-			if (g_exit_status != 130 && g_exit_status != 131)
-				g_exit_status = WEXITSTATUS(status);
+			g_exit_status = WEXITSTATUS(status);
 		}
 		mshell->current_cmd++;
 	}

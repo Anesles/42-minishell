@@ -12,14 +12,15 @@
 
 #include "minishell.h"
 
-int	error_cmd_not_found(char *cmd)
+int	error_cmd_not_found(t_cmds *cmds)
 {
+
 	ft_putstr_fd("Command '", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(cmds->words[0], STDERR_FILENO);
 	ft_putstr_fd("' not found\n", STDERR_FILENO);
-	if (cmd[0] == 0)
+	if (cmds->words[0][0] == 0)
 		exit(0);
-	else if (valid_redir(cmd))
+	else if (valid_redir(cmds->words[0]))
 		exit(126);
 	exit (127);
 }
