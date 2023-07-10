@@ -35,6 +35,7 @@ SRC = main.c \
 		srcs/builtins/builtins.c \
 		srcs/builtins/pipe/pipe.c \
 		srcs/bash/expand/expand.c \
+		srcs/utils/remove_quotes.c \
 		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
 		srcs/utils/minishell_loop.c \
@@ -49,7 +50,6 @@ SRC = main.c \
 		srcs/bash/words/words_utils.c \
 		srcs/bash/cmds/alloc_redirs_aux.c \
 		srcs/builtins/b_export/b_export.c \
-		srcs/utils/remove_quotes.c \
 		srcs/builtins/b_export/b_export_aux.c
 
 OBJ = $(SRC:.c=.o)
