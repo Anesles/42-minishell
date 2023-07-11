@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:37:06 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:54:43 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	valid_redir(char *redi)
 	DIR		*dir;
 	char	*str;
 
+	if (ft_strncmp(redi, ">", 2) == 0)
+		return (1);
 	str = ft_strtrim(redi, "\"");
 	dir = opendir(str);
 	free(str);
@@ -39,6 +41,8 @@ int	attr_redir_out(t_cmds *cmds, t_lexer *aux)
 		free(cmds->tokenout);
 	cmds->tokenout = ft_strdup(aux->word);
 	aux = aux->next;
+	if (cmds->tokenin && ft_strncmp(cmds->tokenin, "<", 2) == 0 && cmds->redin == NULL)
+		cmds->redin = ft_strdup(aux->word);
 	if (aux == NULL)
 	{
 		free(cmds->tokenout);

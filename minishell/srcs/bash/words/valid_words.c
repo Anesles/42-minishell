@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:57:18 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/07/07 15:15:20 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:46:47 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int	valid_words(char **words)
 		return (0);
 	while (words[i])
 	{
+		if (words[i][0] == '<' && words[i + 1][0] == '>')
+		{
+			i++;
+			continue ;
+		}
 		if (words[i + 1] && (is_redir(words[i]) && is_redir(words[i + 1])))
 			return (0);
 		i++;
