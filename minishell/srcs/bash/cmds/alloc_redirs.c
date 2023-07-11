@@ -77,7 +77,11 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 				status = attr_redir_in(cmds, lexer);
 			if (check_status(status) == -1)
 			{
-				free(lexer->word);
+				while (lexer)
+				{
+					free(lexer->word);
+					lexer = lexer->next;
+				}
 				return (-1);
 			}
 		}
