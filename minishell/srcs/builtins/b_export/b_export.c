@@ -74,11 +74,6 @@ int	b_export(char **n_var, t_mshell *mshell)
 		return (EXIT_FAILURE);
 	while (n_var[i])
 	{
-/* 		if (find_char(n_var[i], '=') == -1)
-		{
-			i++;
-			continue ;
-		} */
 		if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 32)
 			n_var[i] = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
 		vars = get_vars(n_var[i], mshell);

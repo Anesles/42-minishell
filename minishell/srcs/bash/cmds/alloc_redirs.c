@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:54:43 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:00:09 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	attr_redir_out(t_cmds *cmds, t_lexer *aux)
 		free(cmds->tokenout);
 	cmds->tokenout = ft_strdup(aux->word);
 	aux = aux->next;
-	if (cmds->tokenin && ft_strncmp(cmds->tokenin, "<", 2) == 0 && cmds->redin == NULL)
+	if (cmds->tokenin && ft_strncmp(cmds->tokenin, "<", 2) == 0
+		&& cmds->redin == NULL)
 		cmds->redin = ft_strdup(aux->word);
 	if (aux == NULL)
 	{
@@ -81,11 +82,7 @@ int	find_redir(t_lexer *lexer, t_cmds *cmds)
 				status = attr_redir_in(cmds, lexer);
 			if (check_status(status) == -1)
 			{
-				while (lexer)
-				{
-					free(lexer->word);
-					lexer = lexer->next;
-				}
+				free_lexer(lexer);
 				return (-1);
 			}
 		}

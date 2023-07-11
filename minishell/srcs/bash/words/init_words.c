@@ -79,7 +79,6 @@ void	init_words_loop(char *str, char **words, int count)
 	i = 0;
 	while (j < count)
 	{
-		//ft_printf("count:%d\nstr:%s, inicio em:%c\n", count, str, str[i]);
 		while (is_space(str[i]))
 			i++;
 		if (str[i] == '\'' || str[i] == '\"')

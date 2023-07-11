@@ -6,17 +6,33 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:57:18 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/07/11 14:46:47 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:04:13 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	valid_words(char **words)
+int	valid_aux(char **words)
 {
 	int	i;
 
 	i = 0;
+	while (words[i])
+	{
+		if (words[i][0] == '<' && words[i + 1][0] == '>')
+		{
+			i++;
+			continue ;
+		}
+		if (words[i + 1] && (is_redir(words[i]) && is_redir(words[i + 1])))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	valid_words(char **words)
+{
 	if (words[0] == NULL)
 		return (0);
 	else if (words[0][0] == '|')
@@ -29,17 +45,8 @@ int	valid_words(char **words)
 		return (0);
 	else if (words[0][0] == '&')
 		return (0);
-	while (words[i])
-	{
-		if (words[i][0] == '<' && words[i + 1][0] == '>')
-		{
-			i++;
-			continue ;
-		}
-		if (words[i + 1] && (is_redir(words[i]) && is_redir(words[i + 1])))
-			return (0);
-		i++;
-	}
+	if (valid_aux(words) == 0)
+		return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/07 16:59:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:00:18 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	free_lexer(t_lexer *lexer)
 		free(temp->word);
 		temp = temp->next;
 	}
-	free(lexer);
 }
 
 void	clear_mem(t_mshell *mshell, t_cmds *cmds)
