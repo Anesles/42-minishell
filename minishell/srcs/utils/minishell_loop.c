@@ -54,6 +54,7 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 	cmds = init_cmds(lexer, mshell);
 	if (cmds == NULL)
 	{
+		free(lexer);
 		b_export_one("?=1", mshell);
 		write(2, "minishell: No such file or directory\n", 37);
 		return ;
