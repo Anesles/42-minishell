@@ -26,36 +26,6 @@ int	bad_fd_error(t_cmds *cmds, char *str, int fd)
 	return (0);
 }
 
-int	token_less(t_cmds *cmds, int mode)
-{
-	int		fd;
-	char	*line;
-	char 	*str;
-
-	if (mode == 0)
-	{
-		fd = open(cmds->redin, O_RDONLY);
-		if (bad_fd_error(cmds, cmds->redin, fd) == -1)
-			return (-1);
-	}
-	else
-	{
-		fd = open("temp", O_WRONLY | O_CREAT, 0644);
-		line = readline("> ");
-		while (ft_strncmp(line, cmds->redin, ft_strlen(line)))
-		{
-			str = ft_strjoin(line, "\n");
-			write(fd, str, ft_strlen(line) + 1);
-			free(str);
-			line = readline("> ");
-		}
-		close(fd);
-		fd = open("temp", O_RDONLY);
-	}
-	dup_fd(fd);
-	return (0);
-}
-
 void	token_more(t_cmds *cmds, int mode)
 {
 	int	fd;

@@ -104,4 +104,5 @@ void	executables(char **cmd, t_mshell *mshell)
 	if (bin == NULL)
 		return ;
 	execve(bin, cmd, mshell->envior);
+	free(bin);
 }

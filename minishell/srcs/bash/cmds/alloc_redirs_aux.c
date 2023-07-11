@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:57:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/10 21:20:38 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 01:05:38 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,29 @@ void	cr_heredoc(t_cmds *cmds)
 	close(fd);
 }
 
+void	condit_redir(t_lexer *lexer)
+{
+	if (lexer && lexer->word[0] == '|')
+		free(lexer->word);
+}
+
+int	attr_redir_in_aux(t_cmds *cmds, t_lexer *aux)
+{
+	if (cmds->next == NULL && !valid_redir(aux->word)
+		&& ft_strncmp(cmds->tokenin, "<<", 2) != 0)
+	{
+		free(aux->word);
+		free(cmds->tokenin);
+		if (cmds->redin != NULL)
+			free(cmds->redin);
+		return (-1);
+	}
+	if (cmds->redin != NULL)
+		free(cmds->redin);
+	cmds->redin = ft_strdup(aux->word);
+	return (0);
+}
+
 int	attr_redir_in(t_cmds *cmds, t_lexer *lexer)
 {
 	t_lexer	*aux;
@@ -49,17 +72,8 @@ int	attr_redir_in(t_cmds *cmds, t_lexer *lexer)
 		free(cmds->tokenin);
 		return (-2);
 	}
-	if (cmds->next == NULL && !valid_redir(aux->word)
-		&& ft_strncmp(cmds->tokenin, "<<", 2) != 0)
-	{
-		free(cmds->tokenin);
-		if (cmds->redin != NULL)
-			free(cmds->redin);
+	if (attr_redir_in_aux(cmds, aux) == -1)
 		return (-1);
-	}
-	if (cmds->redin != NULL)
-		free(cmds->redin);
-	cmds->redin = ft_strdup(aux->word);
 	return (0);
 }
 

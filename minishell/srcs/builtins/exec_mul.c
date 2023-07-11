@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/08 14:35:48 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 01:06:03 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	end_exec(t_mshell *mshell, pid_t *pid, int **pipefd)
 void	init_pipefd(int **pipefd, t_mshell *mshell, t_cmds *cmds)
 {
 	int		i;
-	(void)cmds;
+
+	(void) cmds;
 	i = -1;
 	while (++i < mshell->n_cmds - 1)
 	{
@@ -86,56 +87,6 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 			close(pipefd[i][WRITE]);
 		if (i > 0)
 			close(pipefd[i - 1][READ]);
-//		waitpid(pid[i], &status, WNOHANG);
 	}
 	end_exec(mshell, pid, pipefd);
 }
-/* 
-void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
-{
-	int fdin;
-	int tmpin;
-	int tmpout;
-	int	ret;
-	int	fdout;
-	int	i;
-	int	fdpipe[2];
-
-	tmpin = dup(0);
-	tmpout = dup(1);
-	fdin = dup(tmpin);
-	i = 0;
-	while(i < mshell->n_cmds)
-	{
-		dup2(fdin, 0);
-		close(fdin);
-		if (i == mshell->n_cmds -1)
-		{
-			fdout=dup(tmpout);
-		}
-		else
-		{
-			pipe(fdpipe);
-			fdout = fdpipe[1];
-			fdin = fdpipe[0];
-		}
-		dup2(fdout, 1);
-		close(fdout);
-		ret = fork ();
-		if (ret == 0)
-		{
-			if (is_builtins(cmds[i].words[0]))
-				g_exit_status = cmds[i].built(&cmds[i], mshell);
-			else
-				cmds[i].built(&cmds[i], mshell);
-			exit(g_exit_status);
-		}
-		dup2(tmpin, 0);
-		dup2(tmpout, 1);
-
-		i++;
-	}
-	close(tmpin);
-	close(tmpout);
-
-} */

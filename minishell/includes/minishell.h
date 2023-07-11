@@ -91,6 +91,8 @@ void	fix_redir(t_cmds *cmds, t_mshell *mshell);
 int		valid_redir(char *redi);
 int		attr_redir_in(t_cmds *cmds, t_lexer *lexer);
 int		check_status(int status);
+void	condit_redir(t_lexer *lexer);
+int		bad_fd_error(t_cmds *cmds, char *str, int fd);
 //Parser
 void	parser(t_cmds *cmds, t_mshell *mshell);
 //Builtins
@@ -155,6 +157,7 @@ void	free_envior(t_mshell *mshell);
 void	free_array(char **array);
 int		check_temp(char *temp, char **available);
 void	free_available(char **available, int i);
+void	free_redout(t_cmds *cmds);
 //Signal
 void	sig_continue(int signum);
 void	reset_signals(void);

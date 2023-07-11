@@ -48,6 +48,7 @@ SRC = main.c \
 		srcs/bash/cmds/alloc_redirs.c \
 		srcs/bash/expand/expand_env.c \
 		srcs/bash/words/words_utils.c \
+		srcs/builtins/pipe/token_less.c \
 		srcs/bash/cmds/alloc_redirs_aux.c \
 		srcs/builtins/b_export/b_export.c \
 		srcs/builtins/b_export/b_export_aux.c

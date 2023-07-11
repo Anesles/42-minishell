@@ -14,7 +14,6 @@
 
 int	error_cmd_not_found(t_cmds *cmds)
 {
-
 	ft_putstr_fd("Command '", STDERR_FILENO);
 	ft_putstr_fd(cmds->words[0], STDERR_FILENO);
 	ft_putstr_fd("' not found\n", STDERR_FILENO);

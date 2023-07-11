@@ -16,6 +16,7 @@ void	free_until_cmd(t_cmds *cmds)
 {
 	int		i;
 
+	free_redout(cmds);
 	cmds = cmds->prev;
 	while (cmds)
 	{
@@ -31,11 +32,7 @@ void	free_until_cmd(t_cmds *cmds)
 			free(cmds->redin);
 		if (cmds->tokenin)
 			free(cmds->tokenin);
-		if (cmds->redout)
-		{
-			free(cmds->redout);
-			free(cmds->tokenout);
-		}
+		free_redout(cmds);
 		cmds = cmds->prev;
 	}
 }

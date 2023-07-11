@@ -80,9 +80,13 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 		if (cmds[i].words == NULL)
 			return (-1);
 		if (check_validcmd(cmds[i]))
+		{
+			free(lexer);
 			return (-1);
+		}
 		start += cmds[i].all_words + 1;
 	}
+	free(lexer);
 	return (0);
 }
 
