@@ -135,6 +135,8 @@ int		is_special_char(char c);
 int		is_double_special_char(char c1, char c2);
 int		valid_words(char **words);
 void	another_quote(int *i, char *str);
+void	dollar_check(char *str, int *count);
+void	init_dollar(char *str, int *j, char **words);
 //Expand
 char	*get_name(char *str);
 char	*expand(char *str, t_mshell *mshell);

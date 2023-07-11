@@ -40,6 +40,7 @@ SRC = main.c \
 		srcs/utils/ft_replace_env.c \
 		srcs/utils/minishell_loop.c \
 		srcs/bash/cmds/alloc_words.c \
+		srcs/bash/words/nalloc_aux.c \
 		srcs/builtins/builtins_aux.c \
 		srcs/bash/words/init_words.c \
 		srcs/bash/expand/get_nsize.c \

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 21:38:50 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:42:22 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:14:00 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	nalloc_words(char *str)
 	count = 0;
 	while (str[i])
 	{
+		if (i == 0 && count == 0 && find_char(str, ' ') == -1)
+			dollar_check(str, &count);
 		if (is_quote(str[i]))
 			i = nalloc_words_quotes(str, i);
 		else if (is_space(str[i]))

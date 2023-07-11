@@ -74,7 +74,7 @@ int	b_export(char **n_var, t_mshell *mshell)
 		return (EXIT_FAILURE);
 	while (n_var[i])
 	{
-		if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 32)
+		if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 31)
 			n_var[i] = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
 		vars = get_vars(n_var[i], mshell);
 		mshell->envior = b_export_aux(mshell, n_var[i], vars);

@@ -99,10 +99,18 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 void	executables(char **cmd, t_mshell *mshell)
 {
 	char	*bin;
+	char 	*temp;
 
 	bin = returnvalue(cmd, mshell);
 	if (bin == NULL)
 		return ;
+	if (cmd[1] && find_char(cmd[1], '-') != -1)
+	{
+		temp = ft_strtrim(cmd[1], " \t");
+		free(cmd[1]);
+		cmd[1] = ft_strdup(temp);
+		free(temp);
+	}
 	execve(bin, cmd, mshell->envior);
 	free(bin);
 }
