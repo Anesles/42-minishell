@@ -65,11 +65,11 @@ void	init_words_word(char *str, int *i, int *j, char **words)
 	while (str[*i] && str[*i] != ' ' && str[*i] != '\t'
 		&& str[*i] != '<' && str[*i] != '>'
 		&& str[*i] != '|')
-		{
-			if (is_quote(str[*i]))
-				quote = !quote;
-			(*i)++;
-		}
+	{
+		if (is_quote(str[*i]))
+			quote = !quote;
+		(*i)++;
+	}
 	while (!is_quote(str[*i]) && quote && str[*i])
 		(*i)++;
 	words[*j] = ft_substr(str, start, *i - start);

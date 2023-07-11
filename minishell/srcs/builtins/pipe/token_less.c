@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:59:23 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 01:07:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:44:41 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	less_aux(t_cmds *cmds)
 
 	fd = open("temp", O_WRONLY | O_CREAT, 0644);
 	line = readline("> ");
-	while (ft_strncmp(line, cmds->redin, ft_strlen(line)))
+	while (ft_strncmp(line, cmds->redin, ft_strlen(cmds->redin) + 1))
 	{
 		str = ft_strjoin(line, "\n");
 		write(fd, str, ft_strlen(line) + 1);

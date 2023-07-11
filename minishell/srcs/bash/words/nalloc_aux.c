@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:48:04 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 16:15:15 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 20:11:16 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	dollar_check(char *str, int *count)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '$')
 		{
@@ -44,7 +44,7 @@ void	init_dollar(char *str, int *j, char **words)
 	start = 0;
 	while (is_space(str[i]))
 		i++;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '$')
 		{

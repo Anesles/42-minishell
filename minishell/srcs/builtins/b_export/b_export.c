@@ -65,6 +65,7 @@ char	**b_export_aux(t_mshell *mshell, char *n_var, t_vars vars)
 int	b_export(char **n_var, t_mshell *mshell)
 {
 	t_vars	vars;
+	char	*temp;
 	int		i;
 
 	i = 1;
@@ -75,7 +76,12 @@ int	b_export(char **n_var, t_mshell *mshell)
 	while (n_var[i])
 	{
 		if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 31)
-			n_var[i] = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
+		{
+			temp = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
+			free(n_var[i]);
+			n_var[i] = ft_strdup(temp);
+			free(temp);
+		}
 		vars = get_vars(n_var[i], mshell);
 		mshell->envior = b_export_aux(mshell, n_var[i], vars);
 		i++;
@@ -86,6 +92,7 @@ int	b_export(char **n_var, t_mshell *mshell)
 int	b_export_one(char *n_var, t_mshell *mshell)
 {
 	t_vars	vars;
+	char	*temp;
 
 	if (find_char(n_var, '=') == -1)
 		return (EXIT_SUCCESS);
@@ -94,7 +101,12 @@ int	b_export_one(char *n_var, t_mshell *mshell)
 	if (valid_nvar_one(n_var))
 		return (EXIT_FAILURE);
 	if (*(n_var + find_char(n_var, '=') + 1) <= 32)
-		n_var = ft_substr(n_var, 0, find_char(n_var, '=') + 1);
+	{
+		temp = ft_substr(n_var, 0, find_char(n_var, '=') + 1);
+		free(n_var);
+		n_var = ft_strdup(temp);
+		free(temp);
+	}
 	vars = get_vars(n_var, mshell);
 	mshell->envior = b_export_aux(mshell, n_var, vars);
 	return (EXIT_SUCCESS);

@@ -42,7 +42,8 @@ int	b_env(t_mshell *mshell)
 	i = 0;
 	while (mshell->envior[i])
 	{
-		ft_printf("%s\n", mshell->envior[i]);
+		if (find_char(mshell->envior[i], '=') != -1)
+			ft_printf("%s\n", mshell->envior[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);
