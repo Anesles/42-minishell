@@ -46,11 +46,7 @@ int	b_cd(char *direct, t_mshell *mshell)
 	char	*new_dir;
 
 	ret = NULL;
-<<<<<<< HEAD
 	if (direct == NULL || !ft_strncmp(direct, "~", 2))
-=======
-	if (direct == NULL || !ft_strncmp(direct, "~", 2)) 
->>>>>>> 6b4a117866a781eddd97475de3779a7baa1f2d67
 	{
 		ret = get_env("HOME", mshell->envior);
 		if (ret == NULL)
