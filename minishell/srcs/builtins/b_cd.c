@@ -21,6 +21,10 @@ int	b_cd(char *direct, t_mshell *mshell)
 
 	if (direct == NULL)
 		new_dir = ft_strdup(get_env("HOME", mshell->envior));
+	else if(!ft_strncmp(direct, "-", 2))
+		new_dir = ft_strdup(get_env("OLDPWD", mshell->envior));
+	else if (!ft_strncmp(direct, "~", 2))
+		new_dir = ft_strdup(get_env("HOME", mshell->envior));
 	else
 		new_dir = ft_strdup(direct);
 	error = chdir((const char *)new_dir);
