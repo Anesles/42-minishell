@@ -37,6 +37,7 @@ void	b_echo_aux(int i, char **words, int max_words)
 int	b_echo(char **words, int max_words)
 {
 	int	i;
+	int	j;
 
 	if (!words[0])
 	{
@@ -44,8 +45,20 @@ int	b_echo(char **words, int max_words)
 		return (EXIT_SUCCESS);
 	}
 	i = 0;
-	while (words[i] && !ft_strncmp(words[i], "-n", 2))
+	while (words[i])
+	{
+		if (!ft_strncmp(words[i], "-n", 2))
+		{
+			j = 2;
+			while (words[i][j] == 'n')
+				j++;
+			if (words[i][j] != '\0')
+				break ;
+		}
+		else
+			break ;
 		i++;
+	}
 	b_echo_aux(i, words, max_words);
 	return (EXIT_SUCCESS);
 }

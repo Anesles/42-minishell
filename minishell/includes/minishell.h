@@ -49,6 +49,7 @@ typedef struct s_cmds	t_cmds;
 
 typedef struct s_cmds
 {
+	int				id;
 	char			**words;
 	int				fork;
 	int				count_words;

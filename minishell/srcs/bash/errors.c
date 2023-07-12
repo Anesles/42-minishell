@@ -28,6 +28,7 @@ int	error_cd(char *cmd)
 {
 	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
+	free(cmd);
 	ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 	return (EXIT_FAILURE);
 }

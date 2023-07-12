@@ -20,7 +20,7 @@ int	b_cd(char *direct, t_mshell *mshell)
 	char	str[256];
 	char	*new_dir;
 
-	if (!ft_strncmp(direct, "~", 2) || direct == NULL) 
+	if (direct == NULL || !ft_strncmp(direct, "~", 2)) 
 	{
 		ret = get_env("HOME", mshell->envior);
 		if (ret == NULL)
@@ -51,10 +51,7 @@ int	b_cd(char *direct, t_mshell *mshell)
 	b_export_one(temp, mshell);
 	free(temp);
 	if (error != 0)
-	{
-		free(new_dir);
 		return (error_cd(new_dir));
-	}
 	free(new_dir);
 	if (direct == NULL)
 		free (direct);

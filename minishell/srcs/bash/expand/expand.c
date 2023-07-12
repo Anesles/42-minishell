@@ -25,8 +25,11 @@ char	*get_name(char *str)
 		count = 1;
 	else
 	{
-		while (ft_isalnum(str[i++]))
+		while (ft_isalnum(str[i]) || str[i] == '_')
+		{
 			count++;
+			i++;
+		}
 	}
 	name = malloc(sizeof (char) * count + 1);
 	if (!name)

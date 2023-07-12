@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:57:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 12:52:24 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:59:23 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,17 @@ extern int	g_exit_status;
 void	cr_heredoc(t_cmds *cmds)
 {
 	int		fd;
+	char	*num;
+	char	*name;
 	char	*line;
 
-	fd = open("temp", O_WRONLY | O_CREAT, 0644);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	num = ft_itoa(cmds->id);
+	name = ft_strjoin("heredoc", num);
+	free(num);
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	free(name);
 	line = readline("> ");
 	if (line == NULL)
 	{
@@ -27,7 +35,12 @@ void	cr_heredoc(t_cmds *cmds)
 		return ;
 	}
 	while (ft_strncmp(line, cmds->redin, ft_strlen(cmds->redin) + 1))
+	{
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
 		line = readline("> ");
+	}
 	close(fd);
 }
 
@@ -52,6 +65,8 @@ int	attr_redir_in_aux(t_cmds *cmds, t_lexer *aux)
 	if (ft_strncmp(aux->word, ">", 2) == 0)
 		return (0);
 	cmds->redin = ft_strdup(aux->word);
+	if (ft_strncmp(cmds->tokenin, "<<", 2) == 0)
+		cr_heredoc(cmds);
 	return (0);
 }
 
@@ -60,11 +75,7 @@ int	attr_redir_in(t_cmds *cmds, t_lexer *lexer)
 	t_lexer	*aux;
 
 	if (cmds->tokenin != NULL)
-	{
-		if (ft_strncmp(cmds->tokenin, "<<", 2) == 0)
-			cr_heredoc(cmds);
 		free(cmds->tokenin);
-	}
 	cmds->tokenin = ft_strdup(lexer->word);
 	aux = lexer->next;
 	if (aux == NULL)

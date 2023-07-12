@@ -56,10 +56,14 @@ void	b_unset_aux(t_mshell *mshell, char **var, int i)
 int	b_unset(char **variable, t_mshell *mshell)
 {
 	int	i;
+	int	mode;
 
 	i = 1;
+	mode = 0;
 	while (variable[i])
 	{
+		if(find_char(variable[i], '=') != -1)
+			mode = 1;
 		if (!var_exists(variable[i], mshell))
 		{
 			i++;
@@ -69,5 +73,7 @@ int	b_unset(char **variable, t_mshell *mshell)
 			b_unset_aux(mshell, variable, i);
 		i++;
 	}
+	if (mode == 1)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

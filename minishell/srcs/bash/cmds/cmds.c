@@ -73,6 +73,7 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 	while (++i < n)
 	{
 		set_neighbour(cmds, i, n);
+		cmds[i].id = i;
 		cmds[i].built = &builtins;
 		cmds[i].all_words = 0;
 		cmds[i].fork = 0;
