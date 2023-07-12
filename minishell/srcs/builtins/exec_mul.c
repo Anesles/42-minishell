@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 01:06:03 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:42:27 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	end_exec(t_mshell *mshell, pid_t *pid, int **pipefd)
 	}
 	free(pid);
 	i = 0;
-	while (i < mshell->n_cmds - 1)
+	while (i < mshell->n_cmds - 1)	
 		free(pipefd[i++]);
 	free(pipefd);
 	if (!WTERMSIG(status))
