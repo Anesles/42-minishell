@@ -40,7 +40,11 @@ void	clear_dollar_aux(t_lexer *lexer, int i)
 {
 	char	*ret;
 
+<<<<<<< HEAD
 	if (ft_isdigit(lexer->word[i + 1]) == 1
+=======
+	if (ft_isdigit(lexer->word[i + 1]) == 1 
+>>>>>>> 6b4a117866a781eddd97475de3779a7baa1f2d67
 		&& lexer->word[i + 2] != '\0')
 		ret = ft_substr(lexer->word, i + 2, ft_strlen(lexer->word) - i - 2);
 	else
@@ -61,9 +65,15 @@ void	clear_dollar(t_lexer *lexer)
 	{
 		if (lexer->word[i] == '\'')
 			sing_quote = !sing_quote;
+<<<<<<< HEAD
 		else if (lexer->word[i] == '$' && sing_quote == false
 			&& lexer->word[i + 1] != '\0'
 			&& ft_isalpha(lexer->word[i + 1]) == 0
+=======
+		else if (lexer->word[i] == '$' && sing_quote == false 
+			&& lexer->word[i + 1] != '\0' 
+			&& ft_isalpha(lexer->word[i + 1]) == 0 
+>>>>>>> 6b4a117866a781eddd97475de3779a7baa1f2d67
 			&& lexer->word[i + 1] != '?' && lexer->word[i + 1] != '$')
 		{
 			clear_dollar_aux(lexer, i);
