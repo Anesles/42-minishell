@@ -43,7 +43,7 @@ void	parser(t_cmds *cmds, t_mshell *mshell)
 		else
 		{
 			cmds[0].fork = 1;
-			sig_fork();
+			sig_fork(cmds[0]);
 			pid = fork();
 			if (pid == 0)
 				cmds[0].built(&cmds[0], mshell);

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:13:23 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/07 19:36:20 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:48:08 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ void	sig_continue(int signum)
 	g_exit_status = 130;
 }
 
-void	sig_fork(void)
+void	sig_fork(t_cmds cmds)
 {
 	signal(SIGINT, &sigint_handle_child);
-	signal(SIGQUIT, &sig_quit_child);
+	if (cmds.tokenin != NULL && ft_strncmp(cmds.tokenin, "<<", 3) == 0)
+		signal(SIGQUIT, SIG_IGN);
+	else
+		signal(SIGQUIT, &sig_quit_child);
 }
 
 void	reset_signals(void)

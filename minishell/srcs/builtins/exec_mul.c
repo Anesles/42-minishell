@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 11:42:27 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:48:21 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ void	multiple_cmds(t_mshell *mshell, t_cmds *cmds)
 	pid_t	*pid;
 	int		i;
 
-	sig_fork();
 	pipefd = malloc(sizeof(int *) * mshell->n_cmds);
 	pid = malloc(sizeof(pid_t) * mshell->n_cmds);
 	init_pipefd(pipefd, mshell, cmds);
 	i = -1;
 	while (++i < mshell->n_cmds)
 	{
+		sig_fork(cmds[i]);
 		pid[i] = fork();
 		if (pid[i] < 0)
 			exit(EXIT_FAILURE);

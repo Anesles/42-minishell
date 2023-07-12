@@ -163,5 +163,6 @@ void	free_redout(t_cmds *cmds);
 //Signal
 void	sig_continue(int signum);
 void	reset_signals(void);
-void	sig_fork(void);
+void	sigint_handle_child(int signum);
+void	sig_fork(t_cmds cmds);
 #endif // MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:57:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/11 16:50:07 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:52:24 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	cr_heredoc(t_cmds *cmds)
 
 	fd = open("temp", O_WRONLY | O_CREAT, 0644);
 	line = readline("> ");
+	if (line == NULL)
+	{
+		write(1, "\n", 1);
+		return ;
+	}
 	while (ft_strncmp(line, cmds->redin, ft_strlen(cmds->redin) + 1))
 		line = readline("> ");
 	close(fd);
