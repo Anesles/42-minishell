@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:45:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 14:03:54 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:23:24 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ typedef struct s_env
 int	check_value(t_env *env)
 {
 	if (env->value == NULL)
+	{
+		env->i++;
+		env->i += ft_strlen(env->name);
+		free(env->name);
 		return (-1);
+	}
 	return (0);
 }
 
@@ -38,12 +43,7 @@ int	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
 		env->name = get_name(str + env->i);
 		env->value = get_env(env->name, mshell->envior);
 		if (check_value(env) == -1)
-		{
-			env->i++;
-			env->i += ft_strlen(env->name);
-			free(env->name);
 			return (-1);
-		}
 		while (*env->value)
 			ret[env->j++] = *(env->value++);
 		env->i++;

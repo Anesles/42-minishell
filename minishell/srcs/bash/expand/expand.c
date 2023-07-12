@@ -12,6 +12,15 @@
 
 #include "minishell.h"
 
+void	get_count(char *str, int *i, int *count)
+{
+	while (ft_isalnum(str[(*i)]) || str[(*i)] == '_')
+	{
+		(*count)++;
+		(*i)++;
+	}
+}
+
 char	*get_name(char *str)
 {
 	int		i;
@@ -24,13 +33,7 @@ char	*get_name(char *str)
 	if (str[i] == '?')
 		count = 1;
 	else
-	{
-		while (ft_isalnum(str[i]) || str[i] == '_')
-		{
-			count++;
-			i++;
-		}
-	}
+		get_count(str, &i, &count);
 	name = malloc(sizeof (char) * count + 1);
 	if (!name)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:09:22 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 17:31:20 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:48:55 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@ void	sigint_heredoc(int signum)
 	(void) signum;
 	write(1, "\n", 1);
 	exit(130);
+}
+
+void	continue_write(t_cmds *cmds, int fd, char *line)
+{
+	while (ft_strncmp(line, cmds->redin, ft_strlen(cmds->redin) + 1))
+	{
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+		line = readline("> ");
+	}
 }
 
 void	child_heredoc(t_cmds *cmds)
@@ -40,13 +51,7 @@ void	child_heredoc(t_cmds *cmds)
 		write(1, "\n", 1);
 		exit(0);
 	}
-	while (ft_strncmp(line, cmds->redin, ft_strlen(cmds->redin) + 1))
-	{
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-		line = readline("> ");
-	}
+	continue_write(cmds, fd, line);
 	close(fd);
 	exit(0);
 }

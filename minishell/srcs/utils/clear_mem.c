@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 23:16:29 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 16:31:55 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:06:13 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	clear_mem(t_mshell *mshell, t_cmds *cmds)
 	int		i;
 	char	*num;
 	char	*temp;
-	
+
 	clear_cmds(cmds, mshell->n_cmds);
 	i = 0;
 	while (i < mshell->n_cmds)
