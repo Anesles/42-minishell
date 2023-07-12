@@ -122,6 +122,7 @@ int		b_cd(char *direct, t_mshell *mshell);
 char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
 int		free_mem(char **available, char *temp);
+int		check_access(char *temp, char **available);
 //Pipe
 int		token_less(t_cmds *cmds, int mode);
 void	token_more(t_cmds *cmds, int mode);
@@ -130,6 +131,8 @@ void	reset_fds(t_mshell *mshell);
 void	dup_fd(int fd);
 //Words
 char	**init_words(char *str);
+int		check_pipe(char	**words, int count);
+int		init_w_quote_aux(char *str, int *i, char *c);
 int		nalloc_words(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 int		is_space(char c);

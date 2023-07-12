@@ -17,7 +17,7 @@ int	var_exists(char *var, t_mshell *mshell)
 	int	i;
 
 	i = 0;
-	if(find_char(var, '=') != -1)
+	if (find_char(var, '=') != -1)
 		return (0);
 	while (mshell->envior[i] != NULL)
 	{
@@ -64,7 +64,7 @@ int	b_unset(char **variable, t_mshell *mshell)
 	mode = 0;
 	while (variable[i])
 	{
-		if(find_char(variable[i], '=') != -1)
+		if (find_char(variable[i], '=') != -1)
 			mode = 1;
 		if (!var_exists(variable[i], mshell))
 		{

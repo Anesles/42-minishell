@@ -31,21 +31,10 @@ void	init_words_quotes(char *str, int *i, int *j, char **words)
 			(*i)++;
 			while (str[*i] == ' ')
 				(*i)++;
-			continue ; 
+			continue ;
 		}
-		else if (str[*i] && str[*i] != ' ' && str[*i] != '\t')
-		{
-			while (str[*i] && str[*i] != ' ' && str[*i] != '\t' && !is_quote(str[*i]))
-				(*i)++;
-			if (is_quote(str[*i]))
-			{
-				quote = str[*i];
-				(*i)++;
-				while (str[*i] == ' ')
-					(*i)++;
-				continue;
-			}
-		}
+		else if (init_w_quote_aux(str, i, &quote) == 0)
+			continue ;
 	}
 	words[*j] = ft_substr(str, start, *i - start);
 	(*j)++;
@@ -133,11 +122,7 @@ char	**init_words(char	*str)
 	if (!words)
 		return (NULL);
 	init_words_loop(str, words, count);
-	if (!ft_strncmp(words[--count], "|", 1))
-	{
-		free_array(words);
-		ft_printf("minishell: syntax error near unexpected token '|'\n");
+	if (check_pipe(words, count) == 0)
 		return (NULL);
-	}
 	return (words);
 }

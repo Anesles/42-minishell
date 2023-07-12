@@ -36,7 +36,6 @@ SRC = main.c \
 		srcs/builtins/pipe/pipe.c \
 		srcs/bash/expand/expand.c \
 		srcs/utils/remove_quotes.c \
-		srcs/builtins/executable.c \
 		srcs/utils/ft_replace_env.c \
 		srcs/utils/minishell_loop.c \
 		srcs/bash/cmds/alloc_words.c \
@@ -51,9 +50,12 @@ SRC = main.c \
 		srcs/bash/words/words_utils.c \
 		srcs/builtins/pipe/token_less.c \
 		srcs/bash/cmds/create_heredoc.c \
+		srcs/bash/words/init_words_aux.c \
 		srcs/bash/cmds/alloc_redirs_aux.c \
 		srcs/builtins/b_export/b_export.c \
-		srcs/builtins/b_export/b_export_aux.c
+		srcs/builtins/executables/exec_aux.c \
+		srcs/builtins/b_export/b_export_aux.c \
+		srcs/builtins/executables/executable.c 
 
 OBJ = $(SRC:.c=.o)
 
