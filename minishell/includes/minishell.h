@@ -86,6 +86,8 @@ void	minishell_loop(t_mshell *mshell);
 t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
+//Heredocs
+void	cr_heredoc(t_cmds *cmds);
 //Redirs
 int		find_redir(t_lexer *lexer, t_cmds *cmds);
 void	fix_redir(t_cmds *cmds, t_mshell *mshell);

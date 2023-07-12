@@ -71,7 +71,8 @@ char	**start_loop(t_mshell *mshell)
 	char		**words;
 
 	prompt = prompt_read(mshell);
-	change_exit_st(mshell);
+	if (g_exit_status == 130)
+		change_exit_st(mshell);
 	words = init_words(prompt);
 	if (words == NULL)
 	{
@@ -88,6 +89,7 @@ void	minishell_loop(t_mshell *mshell)
 
 	while (1)
 	{
+		g_exit_status = 0;
 		mshell->res_pipes[READ] = dup(STDIN_FILENO);
 		mshell->res_pipes[WRITE] = dup(STDOUT_FILENO);
 		words = start_loop(mshell);

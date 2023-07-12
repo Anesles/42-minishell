@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 16:50:05 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 17:32:51 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	end_exec(t_mshell *mshell, pid_t *pid, int **pipefd)
 	while (i < mshell->n_cmds - 1)	
 		free(pipefd[i++]);
 	free(pipefd);
-	if (!WTERMSIG(status))
+	if (!WTERMSIG(status) && g_exit_status != 130 && g_exit_status != 131)
 		g_exit_status = WEXITSTATUS(status);
 }
 
