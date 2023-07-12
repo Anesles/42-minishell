@@ -36,6 +36,34 @@ void	create_lexer(t_lexer *lexer, char **words, int n)
 	free(words);
 }
 
+void	clear_dollar(t_lexer *lexer)
+{
+	int		i;
+	char	*ret;
+	bool	sing_quote;
+
+	i = 0;
+	sing_quote = false;
+	while (lexer->word[i])
+	{
+		if (lexer->word[i] == '\'')
+			sing_quote = !sing_quote;
+		else if (lexer->word[i] == '$' && sing_quote == false 
+			&& lexer->word[i + 1] != '\0' && ft_isalpha(lexer->word[i + 1]) == 0 && lexer->word[i + 1] != '?')
+		{
+			if (ft_isdigit(lexer->word[i + 1]) == 1 && lexer->word[i + 2] != '\0')
+				ret = ft_substr(lexer->word, i + 2, ft_strlen(lexer->word) - i - 2);
+			else
+				ret = ft_strtrim(lexer->word, "$");
+			free(lexer->word);
+			lexer->word = ft_strdup(ret);
+			free(ret);
+			break ;
+		}
+		i++;
+	}
+}
+
 void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 {
 	int		i;
@@ -44,6 +72,7 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 	i = -1;
 	while (++i < n)
 	{
+		clear_dollar(&lexer[i]);
 		if (i == 0)
 			str = expand_env(lexer[i].word, mshell);
 		else if (!is_redir(lexer[i - 1].word))
