@@ -84,7 +84,7 @@ char	**start_loop(t_mshell *mshell)
 
 void	minishell_loop(t_mshell *mshell)
 {
-	char		**words;
+	char	**words;
 
 	while (1)
 	{
@@ -92,10 +92,7 @@ void	minishell_loop(t_mshell *mshell)
 		mshell->res_pipes[WRITE] = dup(STDOUT_FILENO);
 		words = start_loop(mshell);
 		if (words == NULL)
-		{
-			free(words);
 			continue ;
-		}
 		if (!(words[0] == NULL))
 		{
 			if (valid_words(words))

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 17:59:41 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 12:48:21 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 14:51:20 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_exit_status;
 
 void	exec_child(t_mshell *mshell, t_cmds *cmds, int **pipefd, int i)
 {
-	handle_pipes(i, pipefd, mshell);
+	handle_pipes(i, pipefd, mshell, &cmds[i]);
 	if (is_builtins(cmds[i].words[0]))
 		g_exit_status = cmds[i].built(&cmds[i], mshell);
 	else

@@ -38,7 +38,7 @@ void	token_more(t_cmds *cmds, int mode)
 	close(fd);
 }
 
-void	handle_pipes(int num, int **pipefd, t_mshell *mshell)
+void	handle_pipes(int num, int **pipefd, t_mshell *mshell, t_cmds *cmds)
 {
 	if (num == 0)
 	{
@@ -48,13 +48,15 @@ void	handle_pipes(int num, int **pipefd, t_mshell *mshell)
 	}
 	else if (num == mshell->n_cmds - 1)
 	{
-		dup2(pipefd[num - 1][READ], STDIN_FILENO);
+		if (cmds->redin == NULL)
+			dup2(pipefd[num - 1][READ], STDIN_FILENO);
 		close(pipefd[num - 1][READ]);
 		close(pipefd[num - 1][WRITE]);
 	}
 	else
 	{
-		dup2(pipefd[num - 1][READ], STDIN_FILENO);
+		if (cmds->redin == NULL)
+			dup2(pipefd[num - 1][READ], STDIN_FILENO);
 		dup2(pipefd[num][WRITE], STDOUT_FILENO);
 		close(pipefd[num - 1][READ]);
 		close(pipefd[num - 1][WRITE]);

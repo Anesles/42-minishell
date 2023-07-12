@@ -16,19 +16,34 @@ int	b_cd(char *direct, t_mshell *mshell)
 {
 	int		error;
 	char	*temp;
+	char	*ret;
 	char	str[256];
 	char	*new_dir;
 
-	if (direct == NULL)
-		new_dir = ft_strdup(get_env("HOME", mshell->envior));
+	if (!ft_strncmp(direct, "~", 2) || direct == NULL) 
+	{
+		ret = get_env("HOME", mshell->envior);
+		if (ret == NULL)
+			return (1);
+		new_dir = ft_strdup(ret);
+	}
 	else if(!ft_strncmp(direct, "-", 2))
-		new_dir = ft_strdup(get_env("OLDPWD", mshell->envior));
-	else if (!ft_strncmp(direct, "~", 2))
-		new_dir = ft_strdup(get_env("HOME", mshell->envior));
+	{
+		ret = get_env("OLDPWD", mshell->envior);
+		if (ret == NULL)
+			return (1);
+		new_dir = ft_strdup(ret);
+	}
 	else
 		new_dir = ft_strdup(direct);
 	error = chdir((const char *)new_dir);
-	temp = ft_strjoin("OLDPWD=", get_env("PWD", mshell->envior));
+	ret = get_env("PWD", mshell->envior);
+	if (ret == NULL)
+	{
+		free(new_dir);
+		return (1);
+	}
+	temp = ft_strjoin("OLDPWD=", ret);
 	b_export_one(temp, mshell);
 	free(temp);
 	getcwd(str, sizeof(str));
@@ -36,7 +51,10 @@ int	b_cd(char *direct, t_mshell *mshell)
 	b_export_one(temp, mshell);
 	free(temp);
 	if (error != 0)
+	{
+		free(new_dir);
 		return (error_cd(new_dir));
+	}
 	free(new_dir);
 	if (direct == NULL)
 		free (direct);
