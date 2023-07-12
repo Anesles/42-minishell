@@ -6,27 +6,27 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:13:20 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/07/12 12:37:54 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:58:08 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	valid_exit_aux(char **str, int i, int *j)
+int	valid_exit_aux(char **str, int i, int *j, t_mshell *mshell)
 {
 	while (str[i][(*j)])
 	{
 		if (!ft_isdigit(str[i][(*j)]))
 		{
 			ft_putstr_fd("exit: numeric value required\n", 2);
-			return (EXIT_SUCCESS);
+			b_exit(2, mshell);
 		}
 		(*j)++;
 	}
 	return (EXIT_FAILURE);
 }
 
-int	valid_exit(char	**str)
+int	valid_exit(char	**str, t_mshell *mshell)
 {
 	int	i;
 	int	j;
@@ -43,7 +43,7 @@ int	valid_exit(char	**str)
 			j = 1;
 		else
 			j = 0;
-		if (valid_exit_aux(str, i, &j) == EXIT_SUCCESS)
+		if (valid_exit_aux(str, i, &j, mshell) == EXIT_SUCCESS)
 			return (2);
 		i++;
 	}
@@ -58,8 +58,8 @@ int	builtins_aux(t_cmds *cmds, t_mshell *mshell)
 	{
 		if (cmds->words[1] == NULL)
 			b_exit(0, mshell);
-		if (valid_exit(&cmds->words[1]) == EXIT_FAILURE)
-			return (2);
+		if (valid_exit(&cmds->words[1], mshell) == EXIT_FAILURE)
+			return (1);
 		var = ft_atoi(cmds->words[1]);
 		b_exit(var, mshell);
 	}
