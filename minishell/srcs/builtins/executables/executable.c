@@ -84,7 +84,7 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 	{
 		if (find_char(temp, '/') != -1)
 		{
-			free_available(available, 0);
+			free_available(available, -1);
 			return (temp);
 		}
 		fin = returnvalue_aux(available, temp);

@@ -87,10 +87,12 @@ t_lexer	*init_lexer(char **words, int n, t_mshell *mshell);
 //Cmds
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell);
 //Heredocs
-void	cr_heredoc(t_cmds *cmds);
+void	cr_heredoc(int id, char *redin);
 //Redirs
 int		find_redir(t_lexer *lexer, t_cmds *cmds);
+int		only_redir(t_lexer *lexer);
 void	fix_redir(t_cmds *cmds, t_mshell *mshell);
+void	fix_pipe(t_cmds *cmds, t_mshell *mshell);
 int		valid_redir(char *redi);
 int		attr_redir_in(t_cmds *cmds, t_lexer *lexer);
 int		check_status(int status);
@@ -125,6 +127,7 @@ int		free_mem(char **available, char *temp);
 int		check_access(char *temp, char **available);
 //Pipe
 int		token_less(t_cmds *cmds, int mode);
+int		pipe_argument(char *str);
 void	token_more(t_cmds *cmds, int mode);
 void	handle_pipes(int num, int **pipefd, t_mshell *mshell, t_cmds *cmds);
 void	reset_fds(t_mshell *mshell);

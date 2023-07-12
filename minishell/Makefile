@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I ./includes -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I ./includes -g -fsanitize=address
 
 SRC = main.c \
 		srcs/bash/lexer.c \
@@ -38,6 +38,7 @@ SRC = main.c \
 		srcs/utils/remove_quotes.c \
 		srcs/utils/ft_replace_env.c \
 		srcs/utils/minishell_loop.c \
+		srcs/bash/cmds/only_redir.c \
 		srcs/bash/cmds/alloc_words.c \
 		srcs/bash/words/nalloc_aux.c \
 		srcs/builtins/builtins_aux.c \

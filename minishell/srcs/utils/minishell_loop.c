@@ -59,7 +59,14 @@ void	minishell_loopit(char **words, t_mshell *mshell)
 		write(2, "minishell: No such file or directory\n", 37);
 		return ;
 	}
+	else if (cmds[0].id == 1337)
+	{
+		free(lexer);
+		free(cmds);
+		return ;
+	}
 	fix_redir(cmds, mshell);
+	fix_pipe(cmds, mshell);
 	parser(cmds, mshell);
 	change_exit_st(mshell);
 	clear_mem(mshell, cmds);
@@ -101,6 +108,7 @@ void	minishell_loop(t_mshell *mshell)
 				minishell_loopit(words, mshell);
 			else
 			{
+				free_array(words);
 				ft_printf("minishell: syntax error\n");
 				b_export_one("?=2", mshell);
 			}

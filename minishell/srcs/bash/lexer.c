@@ -84,7 +84,7 @@ void	expand_lexer(t_lexer *lexer, t_mshell *mshell, int n)
 		clear_dollar(&lexer[i]);
 		if (i == 0)
 			str = expand_env(lexer[i].word, mshell);
-		else if (!is_redir(lexer[i - 1].word))
+		else if (!is_redir(lexer[i - 1].word) && !pipe_argument(lexer[i].word))
 			str = expand_env(lexer[i].word, mshell);
 		else
 			str = ft_strdup(lexer[i].word);

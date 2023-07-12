@@ -6,47 +6,56 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:57:18 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/07/12 11:32:39 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:14:30 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	valid_aux(char **words)
+int	multiple_redir(char *words)
 {
 	int	i;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (words[i])
 	{
-		if (words[i][0] == '<' && words[i + 1][0] == '>')
-		{
-			i++;
-			continue ;
-		}
-		if (words[i + 1] && (is_redir(words[i]) && is_redir(words[i + 1])))
-			return (0);
+		if (words[i] == '>' || words[i] == '<')
+			count++;
 		i++;
 	}
-	return (1);
+	if (count > 2)
+		return (1);
+	return (0);
 }
 
 int	valid_words(char **words)
 {
-	if (words[0] == NULL)
+	int	i;
+
+	if (words[0] == NULL || words[0][0] == '|')
 		return (0);
-	else if (words[0][0] == '|')
+	if (words[0][0] == '<' && words[0][1] == '\0')
 		return (0);
-	else if (words[0][0] == ';')
-		return (0);
-	else if (words[0][0] == '<')
-		return (0);
-	else if (words[0][0] == '>')
-		return (0);
-	else if (words[0][0] == '&')
-		return (0);
-	if (valid_aux(words) == 0)
-		return (0);
+	i = -1;
+	while (words[++i])
+	{
+		if (is_quote(words[i][0]))
+			continue ;
+		if (words[i][0] == ';')
+			return (0);
+		else if (words[i][0] == '&' || words[i][0] == '(')
+			return (0);
+		else if (words[i][ft_strlen(words[i]) - 1] == ')')
+			return (0);
+		else if (ft_strncmp(words[i], "||", 3) == 0 || multiple_redir(words[i]))
+			return (0);
+		else if (ft_strncmp(words[i], "><", 3) == 0)
+			return (0);
+		else if (is_redir(words[i]) && words[i + 1] == NULL)
+			return (0);
+	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:39:42 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 18:27:45 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:13:18 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ int	check_temp(char *temp, char **available)
 	i = -1;
 	if (temp[0] == 0)
 	{
-		while (available[++i])
-			free(available[i]);
-		free(available);
+		free_available(available, i);
 		free(temp);
 		return (-1);
 	}

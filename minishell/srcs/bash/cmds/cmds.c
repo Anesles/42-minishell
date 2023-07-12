@@ -51,8 +51,12 @@ int	check_validcmd(t_cmds cmds)
 	return (0);
 }
 
-void	set_neighbour(t_cmds *cmds, int i, int n)
+void	set_init(t_cmds *cmds, int i, int n)
 {
+	cmds[i].id = i;
+	cmds[i].built = &builtins;
+	cmds[i].all_words = 0;
+	cmds[i].fork = 0;
 	if (i == 0)
 		cmds[i].prev = NULL;
 	else
@@ -70,13 +74,11 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 
 	i = -1;
 	start = 0;
+	if (only_redir(lexer) == 1)
+		return (2);
 	while (++i < n)
 	{
-		set_neighbour(cmds, i, n);
-		cmds[i].id = i;
-		cmds[i].built = &builtins;
-		cmds[i].all_words = 0;
-		cmds[i].fork = 0;
+		set_init(cmds, i, n);
 		cmds[i].words = alloc_words(&lexer[start], &cmds[i]);
 		if (cmds[i].words == NULL)
 			return (-1);
@@ -94,16 +96,23 @@ int	alloc_cmds(t_cmds *cmds, int n, t_lexer *lexer)
 t_cmds	*init_cmds(t_lexer *lexer, t_mshell *mshell)
 {
 	t_cmds	*cmds;
+	int		status;
 	int		n;
 
 	n = count_cmds(lexer);
 	mshell->n_cmds = n;
 	mshell->current_cmd = -1;
 	cmds = malloc(sizeof(t_cmds) * n);
-	if (alloc_cmds(cmds, n, lexer) == -1)
+	status = alloc_cmds(cmds, n, lexer);
+	if (status == -1)
 	{
 		free(cmds);
 		return (NULL);
+	}
+	else if (status == 2)
+	{
+		cmds[0].id = 1337;
+		return (cmds);
 	}
 	return (cmds);
 }
