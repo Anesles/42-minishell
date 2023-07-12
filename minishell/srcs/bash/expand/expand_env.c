@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:45:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/07 16:49:10 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 14:03:54 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ typedef struct s_env
 int	check_value(t_env *env)
 {
 	if (env->value == NULL)
-	{
-		free(env->name);
 		return (-1);
-	}
 	return (0);
 }
 
@@ -41,7 +38,12 @@ int	handle_expand(char *str, t_mshell *mshell, t_env *env, char *ret)
 		env->name = get_name(str + env->i);
 		env->value = get_env(env->name, mshell->envior);
 		if (check_value(env) == -1)
+		{
+			env->i++;
+			env->i += ft_strlen(env->name);
+			free(env->name);
 			return (-1);
+		}
 		while (*env->value)
 			ret[env->j++] = *(env->value++);
 		env->i++;
@@ -84,10 +86,7 @@ void	expand_env_aux(char *str, t_mshell *mshell, char *ret, t_env env)
 		if (str[env.i] == '\"' && env.sing == false)
 			handle_db(str, mshell, &env, ret);
 		else if (str[env.i] == '$' && env.sing == false)
-		{
-			if (handle_expand(str, mshell, &env, ret) == -1)
-				return ;
-		}
+			handle_expand(str, mshell, &env, ret);
 		else
 			ret[env.j++] = str[env.i++];
 	}
@@ -105,5 +104,10 @@ char	*expand_env(char *str, t_mshell *mshell)
 	ret = (char *) malloc(sizeof(char) * (size + 1));
 	ret[size] = 0;
 	expand_env_aux(str, mshell, ret, env);
+	if (ret[0] == 0)
+	{
+		free(ret);
+		return (NULL);
+	}
 	return (ret);
 }

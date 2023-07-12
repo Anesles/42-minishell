@@ -15,29 +15,39 @@
 void	init_words_quotes(char *str, int *i, int *j, char **words)
 {
 	int		start;
+	char	quote;
 
 	start = *i;
+	quote = str[*i];
 	(*i)++;
-	while (str[*i] && str[*i] != str[start])
-		(*i)++;
-	if (str[*i + 1] && is_quote(str[*i + 1]))
-		another_quote(i, str);
-	if (str[*i + 1] && (str[*i + 1] != ' ' && str[*i + 1] != '\t'))
+	while (str[*i] && str[*i] != ' ')
 	{
-		while (str[*i] && (str[*i] != ' ' && str[*i] != '\t'))
+		while (str[*i] && str[*i] != quote)
 			(*i)++;
-		if (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
-			(*i)--;
-		words[*j] = ft_substr(str, start, *i - start + 1);
-	}
-	else
-	{
-		words[*j] = ft_substr(str, start, *i - start + 1);
 		(*i)++;
-		while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
+		if (is_quote(str[*i]))
+		{
+			quote = str[*i];
 			(*i)++;
-		(*i)--;
+			while (str[*i] == ' ')
+				(*i)++;
+			continue ; 
+		}
+		else if (str[*i] && str[*i] != ' ' && str[*i] != '\t')
+		{
+			while (str[*i] && str[*i] != ' ' && str[*i] != '\t' && !is_quote(str[*i]))
+				(*i)++;
+			if (is_quote(str[*i]))
+			{
+				quote = str[*i];
+				(*i)++;
+				while (str[*i] == ' ')
+					(*i)++;
+				continue;
+			}
+		}
 	}
+	words[*j] = ft_substr(str, start, *i - start);
 	(*j)++;
 }
 

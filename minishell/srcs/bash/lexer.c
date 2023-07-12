@@ -49,7 +49,8 @@ void	clear_dollar(t_lexer *lexer)
 		if (lexer->word[i] == '\'')
 			sing_quote = !sing_quote;
 		else if (lexer->word[i] == '$' && sing_quote == false 
-			&& lexer->word[i + 1] != '\0' && ft_isalpha(lexer->word[i + 1]) == 0 && lexer->word[i + 1] != '?')
+			&& lexer->word[i + 1] != '\0' && ft_isalpha(lexer->word[i + 1]) == 0 
+			&& lexer->word[i + 1] != '?' && lexer->word[i + 1] != '$')
 		{
 			if (ft_isdigit(lexer->word[i + 1]) == 1 && lexer->word[i + 2] != '\0')
 				ret = ft_substr(lexer->word, i + 2, ft_strlen(lexer->word) - i - 2);
