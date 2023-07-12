@@ -14,13 +14,21 @@
 
 void	b_echo_aux(int i, char **words, int max_words)
 {
-	int	mode;
+	int		mode;
+	char	*aux;
 
 	mode = 0;
 	if (i > 0)
 		mode = 1;
 	while (words[i])
 	{
+		if (words[i][0] == '$' && words[i][1] != '\0')
+		{
+			aux = ft_strtrim(words[i], "$");
+			free(words[i]);
+			words[i] = ft_strdup(aux);
+			free(aux);
+		}
 		if (i == max_words - 1)
 		{
 			if (mode == 0)
