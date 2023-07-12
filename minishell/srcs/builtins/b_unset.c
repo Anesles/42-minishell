@@ -17,6 +17,8 @@ int	var_exists(char *var, t_mshell *mshell)
 	int	i;
 
 	i = 0;
+	if(find_char(var, '=') != -1)
+		return (0);
 	while (mshell->envior[i] != NULL)
 	{
 		if (ft_strncmp(var, mshell->envior[i], ft_strlen(var)) == 0)

@@ -6,7 +6,7 @@
 #    By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 14:37:51 by brumarti          #+#    #+#              #
-#    Updated: 2023/06/14 16:06:35 by brumarti         ###   ########.fr        #
+#    Updated: 2023/07/12 17:40:23 by brumarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I ./includes -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I ./includes -g #-fsanitize=address
 
 SRC = main.c \
 		srcs/bash/lexer.c \

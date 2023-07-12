@@ -81,6 +81,7 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 		return (NULL);
 	if (!access(temp, X_OK))
 	{
+		ft_printf("cmd[0]: %s\n", temp);
 		i = -1;
 		while (available[++i])
 			free(available[i]);
@@ -89,6 +90,14 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 	}
 	else
 	{
+		if (find_char(temp, '/') != -1)
+		{
+			i = -1;
+			while (available[++i])
+				free(available[i]);
+			free(available);
+			return (temp);
+		}
 		fin = returnvalue_aux(available, temp);
 		if (fin != NULL)
 			return (fin);
