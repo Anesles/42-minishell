@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:57:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 21:26:05 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:41:16 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	condit_redir(t_lexer *lexer)
 
 int	attr_redir_in_aux(t_cmds *cmds, t_lexer *aux)
 {
+	char	*temp;
 	if (cmds->next == NULL && !valid_redir(aux->word)
 		&& ft_strncmp(cmds->tokenin, "<<", 2) != 0)
 	{
@@ -36,7 +37,11 @@ int	attr_redir_in_aux(t_cmds *cmds, t_lexer *aux)
 		return (0);
 	cmds->redin = ft_strdup(aux->word);
 	if (ft_strncmp(cmds->tokenin, "<<", 2) == 0)
-		cr_heredoc(cmds->id, cmds->redin);
+	{
+		temp = remove_quotes(cmds->redin);
+		cr_heredoc(cmds->id, temp);
+		free(temp);
+	}	
 	return (0);
 }
 
