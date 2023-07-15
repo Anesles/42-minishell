@@ -125,6 +125,7 @@ char	**arraydup(char **old);
 void	executables(char **cmd, t_mshell *mshell);
 int		free_mem(char **available, char *temp);
 int		check_access(char *temp, char **available);
+int		return_aux(char *temp, char **available);
 //Pipe
 int		token_less(t_cmds *cmds, int mode);
 int		pipe_argument(char *str);

@@ -78,7 +78,7 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 	available = available_path(mshell);
 	if (free_mem(available, temp) == -1)
 	{
-		if(!access(cmd[0], X_OK))
+		if (!access(cmd[0], X_OK))
 			return (cmd[0]);
 		else
 			return (NULL);
@@ -87,11 +87,8 @@ char	*returnvalue(char **cmd, t_mshell *mshell)
 		return (temp);
 	else
 	{
-		if (find_char(temp, '/') != -1)
-		{
-			free_available(available, -1);
+		if (return_aux(temp, available) == -1)
 			return (temp);
-		}
 		fin = returnvalue_aux(available, temp);
 		if (fin != NULL)
 			return (fin);
