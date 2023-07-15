@@ -71,6 +71,8 @@ int	valid_nvar(char **nvar)
 			return (EXIT_SUCCESS);
 		if (!ft_isalpha(nvar[i][0]) && nvar[i][0] != '_')
 			return (EXIT_FAILURE);
+		if (find_char(nvar[i], '=') == -1)
+			return (EXIT_FAILURE);
 		j = 1;
 		while (nvar[i][j] != '=' && nvar[i][j] != '\0')
 		{
