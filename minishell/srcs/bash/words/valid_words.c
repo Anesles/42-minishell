@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:57:18 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/07/12 22:14:30 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:14:04 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int	valid_nvar(char **nvar)
 		if (nvar[i][0] == '?')
 			return (EXIT_SUCCESS);
 		if (!ft_isalpha(nvar[i][0]) && nvar[i][0] != '_')
-			return (EXIT_FAILURE);
-		if (find_char(nvar[i], '=') == -1)
 			return (EXIT_FAILURE);
 		j = 1;
 		while (nvar[i][j] != '=' && nvar[i][j] != '\0')
