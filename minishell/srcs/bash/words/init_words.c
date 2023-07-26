@@ -61,11 +61,10 @@ void	init_words_word(char *str, int *i, int *j, char **words)
 	start = *i;
 	while (str[*i] && str[*i] != ' ' && str[*i] != '\t'
 		&& str[*i] != '<' && str[*i] != '>'
-		&& str[*i] != '|' && !is_quote(str[*i]))
+		&& str[*i] != '|')
 		(*i)++;
 	words[*j] = ft_substr(str, start, *i - start);
-	if (str[*i] && (str[*i] == '<' || str[*i] == '>' || str[*i] == '|'
-			|| is_quote(str[*i])))
+	if (str[*i] && (str[*i] == '<' || str[*i] == '>' || str[*i] == '|'))
 		(*i)--;
 	(*j)++;
 }
@@ -106,7 +105,6 @@ char	**init_words(char	*str)
 	if (*str == '\0')
 		return (NULL);
 	count = nalloc_words(str);
-	ft_printf("count: %d\n", count);
 	if (count == -1)
 	{
 		ft_printf("minishell: syntax error unclosed\n");
@@ -118,7 +116,5 @@ char	**init_words(char	*str)
 	init_words_loop(str, words, count);
 	if (check_pipe(words, count) == 0)
 		return (NULL);
-	for (int i = 0; words[i]; i++)
-		ft_printf("words[%d]: %s\n", i, words[i]);
 	return (words);
 }

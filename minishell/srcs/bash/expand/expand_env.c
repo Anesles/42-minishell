@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:45:30 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 20:23:24 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:37:52 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	handle_db(char *str, t_mshell *mshell, t_env *env, char *ret)
 	while (str[env->i] != '\"' && str[env->i] != 0)
 	{
 		if (handle_expand(str, mshell, env, ret) == -1)
-			return ;
+			continue ;
 	}
 	if (str[env->i] == '\"')
 		env->i++;
