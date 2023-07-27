@@ -19,18 +19,15 @@ void	init_words_quotes(char *str, int *i, int *j, char **words)
 
 	start = *i;
 	quote = str[*i];
-	(*i)++;
-	while (str[*i] && str[*i] != ' ')
+	while (str[*i] && is_space(str[*i]) != 1)
 	{
+		(*i)++;
 		while (str[*i] && str[*i] != quote)
 			(*i)++;
 		(*i)++;
 		if (is_quote(str[*i]))
 		{
 			quote = str[*i];
-			(*i)++;
-			while (str[*i] == ' ')
-				(*i)++;
 			continue ;
 		}
 		else if (init_w_quote_aux(str, i, &quote) == 0)
@@ -57,12 +54,22 @@ void	init_words_special_chars(char *str, int *i, int *j, char **words)
 void	init_words_word(char *str, int *i, int *j, char **words)
 {
 	int		start;
+	char	c;
 
 	start = *i;
 	while (str[*i] && str[*i] != ' ' && str[*i] != '\t'
 		&& str[*i] != '<' && str[*i] != '>'
 		&& str[*i] != '|')
+	{
+		if (is_quote(str[*i]))
+		{
+			c = str[*i];
+			(*i)++;
+			while (str[*i] && str[*i] != c)
+				(*i)++;
+		}
 		(*i)++;
+	}
 	words[*j] = ft_substr(str, start, *i - start);
 	if (str[*i] && (str[*i] == '<' || str[*i] == '>' || str[*i] == '|'))
 		(*i)--;
