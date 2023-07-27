@@ -77,7 +77,7 @@ int		find_char(char *str, char c);
 int		is_redir(char *str);
 int		is_builtins(char *str);
 char	*ft_replace_env(char *str, char *substr, char *replace);
-int		valid_nvar(char **nvar);
+int		valid_nvar(char *nvar);
 int		valid_nvar_one(char *nvar);
 char	*remove_quotes(char *str);
 //Minishell_loop
@@ -116,6 +116,7 @@ int		b_unset(char **variable, t_mshell *mshell);
 int		b_export(char **n_var, t_mshell *mshell);
 int		b_declare(t_mshell *mshell);
 int		b_export_one(char *n_var, t_mshell *mshell);
+void	check_ex(char **n_var, int i);
 //B_echo
 int		b_echo(char **words, int max_words);
 //B_cd

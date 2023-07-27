@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:57:18 by dbraga-b          #+#    #+#             */
-/*   Updated: 2023/07/16 16:14:04 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:20:28 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,20 @@ int	valid_words(char **words)
 	return (1);
 }
 
-int	valid_nvar(char **nvar)
+int	valid_nvar(char *nvar)
 {
-	int	i;
 	int	j;
 
-	i = 1;
-	while (nvar[i])
+	if (nvar[0] == '?')
+		return (EXIT_SUCCESS);
+	if (!ft_isalpha(nvar[0]) && nvar[0] != '_')
+		return (EXIT_FAILURE);
+	j = 1;
+	while (nvar[j] != '=' && nvar[j] != '\0')
 	{
-		if (nvar[i][0] == '?')
-			return (EXIT_SUCCESS);
-		if (!ft_isalpha(nvar[i][0]) && nvar[i][0] != '_')
+		if (!(ft_isalnum(nvar[j])))
 			return (EXIT_FAILURE);
-		j = 1;
-		while (nvar[i][j] != '=' && nvar[i][j] != '\0')
-		{
-			if (!(ft_isalnum(nvar[i][j])))
-				return (EXIT_FAILURE);
-			j++;
-		}
-		i++;
+		j++;
 	}
 	return (EXIT_SUCCESS);
 }

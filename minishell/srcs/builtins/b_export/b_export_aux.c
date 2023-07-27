@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:29:47 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/05 20:30:11 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:31:42 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,17 @@ int	b_declare(t_mshell *mshell)
 	}
 	free(array);
 	return (EXIT_SUCCESS);
+}
+
+void	check_ex(char **n_var, int i)
+{
+	char	*temp;
+
+	if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 31)
+	{
+		temp = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
+		free(n_var[i]);
+		n_var[i] = ft_strdup(temp);
+		free(temp);
+	}
 }

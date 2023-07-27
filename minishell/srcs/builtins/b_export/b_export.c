@@ -65,28 +65,25 @@ char	**b_export_aux(t_mshell *mshell, char *n_var, t_vars vars)
 int	b_export(char **n_var, t_mshell *mshell)
 {
 	t_vars	vars;
-	char	*temp;
+	int		flag;
 	int		i;
 
-	i = 1;
+	i = 0;
+	flag = 0;
 	if (!n_var[1])
 		return (b_declare(mshell));
-	if (valid_nvar(n_var))
-		return (EXIT_FAILURE);
-	while (n_var[i])
+	while (n_var[++i])
 	{
-		if (*(n_var[i] + find_char(n_var[i], '=') + 1) <= 31)
+		if (valid_nvar(n_var[i]))
 		{
-			temp = ft_substr(n_var[i], 0, find_char(n_var[i], '=') + 1);
-			free(n_var[i]);
-			n_var[i] = ft_strdup(temp);
-			free(temp);
+			flag = 1;
+			continue ;
 		}
+		check_ex(n_var, i);
 		vars = get_vars(n_var[i], mshell);
 		mshell->envior = b_export_aux(mshell, n_var[i], vars);
-		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (flag);
 }
 
 int	b_export_one(char *n_var, t_mshell *mshell)
