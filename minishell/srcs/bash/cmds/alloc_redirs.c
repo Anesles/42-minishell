@@ -6,7 +6,7 @@
 /*   By: brumarti <brumarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 00:41:48 by brumarti          #+#    #+#             */
-/*   Updated: 2023/07/12 16:38:40 by brumarti         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:00:11 by brumarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	attr_redir_out(t_cmds *cmds, t_lexer *aux)
 	if (cmds->redout != NULL)
 		free(cmds->redout);
 	cmds->redout = ft_strdup(aux->word);
-	if (ft_strncmp(cmds->redout, ">>", 3) == 0)
-		fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
-	else
-		fd = open(cmds->redout, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	close(fd);
+	if (access(cmds->redout, F_OK) != 0)
+	{
+		fd = open(cmds->redout, O_CREAT | O_RDWR, 0644);
+		close(fd);
+	}
 	return (0);
 }
 

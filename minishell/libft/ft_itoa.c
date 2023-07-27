@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdlib.h>
-#include"libft.h"
-#include<stdio.h>
+#include <stdlib.h>
+#include "libft.h"
+#include <stdio.h>
 
 int	osizeitoa(int n)
 {

@@ -31,7 +31,12 @@ void	token_more(t_cmds *cmds, int mode)
 	int	fd;
 
 	if (mode == 1)
-		fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
+	{
+		if (access(cmds->redout, F_OK) == 0)
+			fd = open(cmds->redout, O_RDWR | O_APPEND, 0644);
+		else
+			fd = open(cmds->redout, O_CREAT | O_RDWR | O_APPEND, 0644);
+	}
 	else
 		fd = open(cmds->redout, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	dup2(fd, STDOUT_FILENO);

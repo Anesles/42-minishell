@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
-#include<stdlib.h>
+#include "libft.h"
+#include <stdlib.h>
 
 int	wordscount(char const *s, char c)
 {
