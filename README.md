@@ -18,8 +18,8 @@ make
 ./minishell
 ```
 * Have fun !
-  
-![ezgif com-video-to-gif](https://github.com/Anesles/42-minishell/assets/94494860/89ade2c9-a30c-4b54-8914-6429129dc76a)
+
+![minishell_gif](https://github.com/Anesles/42-minishell/assets/94494860/68f34658-c78f-46ab-b404-ec23aaf2c5a8)
 
 ---
 
