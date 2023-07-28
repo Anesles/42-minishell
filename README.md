@@ -2,4 +2,4 @@
 ## **Grade: WIP**
 ---
 ### **Summary:**
-In this project me an @dbraga-b had to make a simpler shell, our own bash !
+In this project me and [dbraga-b](https://github.com/DiogoBaptista97) had to make a simpler shell, our own bash !
