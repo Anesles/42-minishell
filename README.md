@@ -19,7 +19,7 @@ make
 ```
 * Have fun !
 
-![minishell_gif](https://github.com/Anesles/42-minishell/assets/94494860/68f34658-c78f-46ab-b404-ec23aaf2c5a8)
+![minishell_gif](https://github.com/Anesles/42-minishell/assets/94494860/45bc2559-0896-442a-bded-3f6835a0f22e)
 
 ---
 
